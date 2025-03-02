@@ -68,7 +68,7 @@
 </template>
 
 <script>
-import axios from "axios"
+import apiClient from "@/services/index"
 import ItemComponent from "./content/item"
 export default
     {
@@ -129,7 +129,7 @@ export default
                 try {
                     this.isLoading = true;
                     setTimeout(async () => {
-                        const response = await axios.get(`http://127.0.0.1:8000/api/account`, {
+                        const response = await apiClient.get(`/account`, {
                             params: {
                                 search: this.searchQuery,
                                 page: this.currentPage,

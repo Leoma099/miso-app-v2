@@ -3,7 +3,7 @@
         <td class="table-data">
             <router-link :to="`/administration/equipment/view?id=${item?.id}`">
                 <div v-if="isLoading" class="shimmer-loader"></div>
-                <span v-else>{{ item.equipment_type }}</span>
+                <span v-else>{{ item.type }}</span>
             </router-link>
         </td>
         <td class="table-data">

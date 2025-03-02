@@ -72,7 +72,7 @@
 </template>
 
 <script>
-import axios from "axios"
+import apiClient from "@/services/index"
 import ItemComponent from "./content/item"
 export default
     {
@@ -133,7 +133,7 @@ export default
                 try {
                     this.isLoading = true;
                     setTimeout(async () => {
-                        const response = await axios.get(`http://127.0.0.1:8000/api/equipment`, {
+                        const response = await apiClient.get(`/equipment`, {
                             params: {
                                 search: this.searchQuery,
                                 page: this.currentPage,
@@ -211,37 +211,6 @@ export default
     background-color: #007bff;
     color: #ffffff;
 }
-
-/* .loader-container
-{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 50vh;
-}
-.loader
-{
-    width: 48px;
-    height: 48px;
-    border: 5px solid #00d7ff;
-    border-bottom-color: transparent;
-    border-radius: 50%;
-    display: inline-block;
-    box-sizing: border-box;
-    animation: rotation 1s linear infinite;
-}
-
-@keyframes rotation
-{
-    0%
-    {
-        transform: rotate(0deg);
-    }
-    100%
-    {
-        transform: rotate(360deg);
-    }
-}  */
 .pagination-container {
     display: flex;
     justify-content: space-between;

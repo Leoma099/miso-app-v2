@@ -8,7 +8,7 @@
 
         <div class="right">
 
-        <router-link to="/administration/my-account">
+        <router-link to="/my-account">
             <p class="mb-0">ADMINISTRATION</p>
         </router-link>
 

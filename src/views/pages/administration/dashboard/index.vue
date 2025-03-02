@@ -10,11 +10,11 @@
 
             <div class="row mb-3">
 
-                <div class="col-md-6">
+                <div class="col-md-8">
                     <borrower-statistic />
                 </div>
 
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <equipment-statistic />
                 </div>
 

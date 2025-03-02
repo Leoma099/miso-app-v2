@@ -1,12 +1,48 @@
 <template>
     <form @submit.prevent="submit()" class="mt-4">
         <div class="card card-body shadow-sm border-0 rounded-0 col-6 mx-auto">
-            <h4 class="mb-5">Fill out the field approximately.</h4>
-            <h3 class="mb-0 text-title">ACCOUNT DETAILS</h3>
+            <h4 class="mb-3">Fill out the field approximately.</h4>
+            <h3 class="mb-3 text-title">ACCOUNT DETAILS</h3>
+
+            <div class="row">
+
+                <div class="col-md-4">
+                    <div class="form-group mb-3">
+                        <label for="" class="form-label">* ID Number:</label>
+                        <input type="text" class="form-control rounded-0" placeholder="ex.1234567" v-model="form.id_number">
+                    </div>
+                </div>
+
+                <div class="col-md-8">
+                    <div class="form-group mb-3">
+                        <label for="" class="form-label">* Full Name:</label>
+                        <input type="text" class="form-control rounded-0" placeholder="ex. Juan Dela Cruz" v-model="form.full_name">
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+
+                <div class="col-md-7">
+                    <div class="form-group mb-3">
+                        <label for="" class="form-label">* Office Name:</label>
+                        <input type="text" class="form-control rounded-0" placeholder="ex. LAKERS" v-model="form.office_name">
+                    </div>
+                </div>
+
+                <div class="col-md-5">
+                    <div class="form-group mb-3">
+                        <label for="" class="form-label">* Position:</label>
+                        <input type="text" class="form-control rounded-0" placeholder="ex. Shooting Guard" v-model="form.position">
+                    </div>
+                </div>
+
+            </div>
 
             <div class="form-group mb-3">
-                <label for="" class="form-label">* Full Name:</label>
-                <input type="text" class="form-control rounded-0" placeholder="ex. Juan Dela Cruz" v-model="form.name">
+                <label for="" class="form-label">* Office Address:</label>
+                <input type="text" class="form-control rounded-0" placeholder="ex. Los Angeles" v-model="form.office_address">
             </div>
 
             <div class="form-group mb-3">
@@ -48,7 +84,7 @@
                     <div class="form-group mb-3">
                         <label for="" class="form-label">Role:</label>
                         <select class="form-select rounded-0" v-model="form.role">
-                            <option disabled selected>- select role -</option>
+                            <option value="0" disabled selected>- select role -</option>
                             <option value="1">Admin</option>
                             <option value="2">Client</option>
                         </select>
@@ -65,18 +101,22 @@
 </template>
 
 <script>
-import axios from "axios";
+import apiClient from "@/services/index";
 export default {
     data() {
         return {
             form: {
-                name: "",
+                full_name: "",
                 email: "",
                 mobile_number: "",
                 address: "",
-                role: "2",
+                role: "0",
                 username: "",
-                password: "", // Ensures the password is part of the form data
+                password: "",
+                id_number: "",
+                office_address: "",
+                office_name: "",
+                position: "",
             }
         };
     },
@@ -96,7 +136,7 @@ export default {
 
         async submit() {
             try {
-                const response = await axios.post('http://127.0.0.1:8000/api/account', this.form);
+                const response = await apiClient.post('/account', this.form);
                 console.log(response.data);
                 this.$router.push('/administration/account');
             } catch (error) {

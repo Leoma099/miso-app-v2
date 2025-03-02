@@ -44,8 +44,16 @@ export default
             // Clear the localStorage
             localStorage.removeItem('role');
             localStorage.removeItem('access_token');  // If token is stored as well
-            localStorage.removeItem('name');
             localStorage.removeItem('user_id');  // If token is stored as well
+
+            // ACCOUNT INFO
+            localStorage.removeItem('account');
+            localStorage.removeItem('full_name');
+            localStorage.removeItem('id_number');
+            localStorage.removeItem('office_name');
+            localStorage.removeItem('office_address');
+            localStorage.removeItem('position');
+            localStorage.removeItem('mobile_number');
 
             // Redirect the user to the login page and reload the page to reset everything
             window.location.href = '/signin';

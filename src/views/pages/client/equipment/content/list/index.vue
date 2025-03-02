@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import axios from "axios"
+import apiClient from "@/services/index"
 import ItemComponent from "./content/item.vue";
 export default
 {
@@ -45,7 +45,7 @@ export default
         {
             try
             {
-                const response = await axios.get(`http://127.0.0.1:8000/api/equipment`);
+                const response = await apiClient.get(`/equipment`);
 
                 console.log("Fetched Equipment Data:", response.data);
 

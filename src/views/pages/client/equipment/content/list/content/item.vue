@@ -4,7 +4,7 @@
         <div class="card card-body shadow-sm border-0 rounded-0">
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <label class="form-label mb-0">EQUIPMENT TYPE:</label>
-                <input type="text" class="form-control input-field border-0" :value="item.equipment_type" disabled>
+                <input type="text" class="form-control input-field border-0" :value="item.type" disabled>
             </div>
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <label class="form-label mb-0">BRAND:</label>
@@ -14,7 +14,7 @@
                 <label class="form-label mb-0">MODEL:</label>
                 <input type="text" class="form-control input-field border-0" :value="item.model" disabled>
             </div>
-            <router-link :to="`/client/equipment/create?id=${item?.id}`" class="btn button-signin w-100 mt-3">VIEW DETAILS</router-link>
+            <router-link :to="`/client/borrow/create?id=${item?.id}`" class="btn button-signin w-100 mt-3">VIEW DETAILS</router-link>
         </div>
     </div>
 

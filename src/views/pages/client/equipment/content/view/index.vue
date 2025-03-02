@@ -12,7 +12,7 @@
                         <img src="" class="img-fluid">
                     </div>
                     <div class="equipment-details">
-                        <h2 class="mb-0 text-center">{{ item.equipment_type }}</h2>
+                        <h2 class="mb-0 text-center">{{ item.type }}</h2>
                     </div>
                 </div>
             </div>
@@ -65,7 +65,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import apiClient from "@/services/index";
 export default
 {
 
@@ -87,7 +87,7 @@ export default
         {
             try
             {
-                const response = await axios.get(`http://127.0.0.1:8000/api/equipment/${this.$route.query.id}`);
+                const response = await apiClient.get(`/equipment/${this.$route.query.id}`);
                 this.item = response.data; // Assign fetched data
             }
             catch (error)

@@ -1,117 +1,104 @@
 <template>
-    <div class="card card-body shadow-sm border-0">
-        <div class="d-flex justify-content-between align-items-center">
-            <p class="mb-0">BORROWER STATISTIC</p>
-            <div>
-                <select class="form-select" v-model="timeFrame" @change="fetchData">
-                    <option value="daily">Daily</option>
-                    <option value="weekly">Weekly</option>
-                    <option value="monthly">Monthly</option>
-                </select>
-            </div>
-        </div>
-        <div class="mt-3">
-            <canvas ref="chartCanvas" height="300"></canvas>
+    <div class="card card-body shadow-sm border-0 rounded-0">
+        <p class="mb-0">Borrow Statistics</p>
+        <div class="metric-chart">
+            <canvas ref="lineReport" height="300"></canvas>
         </div>
     </div>
 </template>
 
 <script>
 import { Chart, registerables } from "chart.js";
-import axios from "axios";
+import apiClient from "@/services/index"; // Your API client (axios)
 
 Chart.register(...registerables);
 
 export default {
     data() {
         return {
-            timeFrame: "daily", // Default timeframe
-            myChart: null, // Store chart instance
-            apiUrl: "http://127.0.0.1:8000/api/borrow", // Your Laravel API URL
+            lineChart: null,
         };
     },
 
     methods: {
-        async fetchData() {
+        async fetchBorrowStatistics() {
             try {
-                const response = await axios.get(`${this.apiUrl}?timeframe=${this.timeFrame}`);
-                this.processData(response.data);
+                const response = await apiClient.get('/borrow-statistics');
+                const borrowStats = response.data;
+                
+                // Mapping numeric status to labels
+                const labels = ["Pending", "Approved", "Returned"];
+                const data = [
+                    borrowStats.pending,  // Corresponds to status 1 (Pending)
+                    borrowStats.approved, // Corresponds to status 2 (Approved)
+                    borrowStats.returned  // Corresponds to status 3 (Returned)
+                ];
+
+                // Create the chart with real data
+                this.createLineChart(labels, data);
             } catch (error) {
-                console.error("Error fetching data:", error);
+                console.error("Error fetching borrow statistics:", error);
             }
         },
 
-        processData(borrowData) {
-            let labels = [];
-            let data = [];
-
-            if (this.timeFrame === "daily") {
-                labels = borrowData.map(item => item.day);
-                data = borrowData.map(item => item.total);
-            } else if (this.timeFrame === "weekly") {
-                labels = borrowData.map(item => `Week ${item.week}`);
-                data = borrowData.map(item => item.total);
-            } else if (this.timeFrame === "monthly") {
-                labels = borrowData.map(item => item.month);
-                data = borrowData.map(item => item.total);
+        createLineChart(labels, values) {
+            if (this.lineChart) {
+                this.lineChart.destroy();
             }
 
-            // Ensure the canvas is ready before creating the chart
-            this.$nextTick(() => {
-                this.createChart(labels, data);
-            });
-        },
-
-        createChart(labels, values) {
-            if (!this.$refs.chartCanvas) {
-                console.warn("Chart canvas not yet mounted.");
-                return;
-            }
-
-            if (this.myChart) {
-                this.myChart.destroy(); // Destroy previous chart before creating a new one
-            }
-
-            const ctx = this.$refs.chartCanvas.getContext("2d");
-            if (!ctx) {
-                console.error("Failed to get canvas context.");
-                return;
-            }
-
-            this.myChart = new Chart(ctx, {
-                type: "bar",
+            this.lineChart = new Chart(this.$refs.lineReport.getContext("2d"), {
+                type: "line",
                 data: {
                     labels: labels,
                     datasets: [
                         {
-                            label: "Borrowed Equipment",
+                            label: "Borrow Status",
                             data: values,
-                            backgroundColor: "#007bff",
-                        }
-                    ],
+                            fill: true,
+                            borderColor: "#367096", // Line color
+                            backgroundColor: "rgba(2, 61, 84, 0.2)", // Area fill color
+                            tension: 0.4, // Smooth curve
+                            pointRadius: 3, // Remove point markers
+                        },
+                    ]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
                     plugins: {
-                        legend: { position: "bottom" },
+                        legend: {
+                            position: "bottom",
+                        }
                     },
                     scales: {
                         y: {
                             title: {
                                 display: true,
-                                text: "Number of Requests",
+                                text: "Number of Borrows"
                             },
                             beginAtZero: true,
-                        },
+                        }
                     },
-                },
+                }
             });
-        },
+        }
     },
 
     mounted() {
-        this.fetchData(); // Fetch data when component loads
+        this.fetchBorrowStatistics(); // Fetch the data when component is mounted
     },
+
+    watch: {
+        timeFrame() {
+            this.fetchBorrowStatistics(); // Refetch data if timeFrame changes
+        },
+    }
 };
 </script>
+
+<style scoped>
+.metric-chart {
+    height: 300px;
+    padding: 20px;
+}
+</style>

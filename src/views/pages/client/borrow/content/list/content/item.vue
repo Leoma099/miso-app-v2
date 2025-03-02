@@ -1,12 +1,6 @@
 <template>
     <tr>
         <td class="table-data">
-            <router-link :to="'/administration/borrow/view'">
-                <div v-if="isLoading" class="shimmer-loader"></div>
-                <span v-else>{{ item.full_name }}</span>
-            </router-link>
-        </td>
-        <td class="table-data">
             <div v-if="isLoading" class="shimmer-loader"></div>
             <span v-else>{{ item.type }}</span>
         </td>
@@ -36,6 +30,22 @@ export default
 
         methods:
         {
+            formatCondition(condition) {
+                console.log("Item condition:", condition); // Debugging
+                const numStatus = parseInt(condition, 10);
+                if (numStatus === 1) {
+                    return "Good";
+                }
+                else if (numStatus === 2) {
+                    return "Damage";
+                }
+                else if (numStatus === 3) {
+                    return "Lost";
+                }
+                else {
+                    return "n/a";
+                }
+            },
             formatStatus(status) {
                 console.log("Item status:", status); // Debugging
                 const numStatus = parseInt(status, 10);
@@ -47,12 +57,6 @@ export default
                 }
                 else if (numStatus === 3) {
                     return "Rejected";
-                }
-                else if (numStatus === 4) {
-                    return "Returned";
-                }
-                else if (numStatus === 5) {
-                    return "Overdue";
                 }
                 else {
                     return "n/a";

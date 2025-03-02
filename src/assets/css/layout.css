@@ -121,6 +121,11 @@ body {
     z-index: 500;
 }
 
+.main-wrapper header .right {
+    display: flex;
+    align-items: center;
+}
+
 .main-wrapper header .right a {
     text-decoration: none;
     color: #000000;

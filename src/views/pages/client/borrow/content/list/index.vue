@@ -1,16 +1,12 @@
 <template>
 
-    <h1 class="page-title mb-0">BORRWER LIST</h1>
+    <h1 class="page-title mb-0">MY BORRWER LIST</h1>
 
     <div class="mt-4">
 
         <div class="card card-body shadow-sm border-0 rounded-0">
 
             <div class="d-flex justify-content-between align-items-center mb-3">
-                <div>
-                    <router-link :to="'/administration/borrow/create'" class="btn rounded-0 button-color">Create New
-                        Borrower</router-link>
-                </div>
                 <div class="col-md-3 ">
                     <input type="text" v-model="searchQuery" @input="fetchEquipment" placeholder="Search equipment..."
                         class="form-control rounded-0">
@@ -21,7 +17,6 @@
                 <table class="table table-bordered mb-0">
                     <thead>
                         <tr>
-                            <th class="table-header">BORROWER NAME</th>
                             <th class="table-header">EQUIPMENT TYPE</th>
                             <th class="table-header">STATUS</th>
                             <th class="table-header">DATE BORROWED</th>
@@ -66,114 +61,93 @@
 </template>
 
 <script>
-import apiClient from "@/services/index";
-import ItemComponent from "./content/item"
-export default
-    {
+import apiClient from "@/services/index"; // Import your API client
+import ItemComponent from "./content/item";
 
-        components:
-        {
-            ItemComponent,
+export default {
+    components: {
+        ItemComponent,
+    },
+
+    data() {
+        return {
+            items: [],
+            searchQuery: "",
+            isLoading: false,
+            perPage: 6,
+            currentPage: 1,
+            totalEntries: 0,
+            isEmpty: false,
+        };
+    },
+
+    computed: {
+        totalPages() {
+            return Math.ceil(this.totalEntries / this.perPage);
         },
+        startEntry() {
+            return (this.currentPage - 1) * this.perPage + 1;
+        },
+        endEntry() {
+            return Math.min(this.currentPage * this.perPage, this.totalEntries);
+        },
+        visiblePages() {
+            const pages = [];
+            const maxPages = 6;
+            let start = Math.max(1, this.currentPage - Math.floor(maxPages / 2));
+            let end = Math.min(this.totalPages, start + maxPages - 1);
 
-        data() {
-            return {
-
-                items: [], // Your actual data
-                searchQuery: "",
-                isLoading: false,
-                perPage: 6, // Number of items per page
-                currentPage: 1,
-                totalEntries: 25, // Example total count (update dynamically)
-                isEmpty: false,
-
+            for (let i = start; i <= end; i++) {
+                pages.push(i);
             }
-        },
-
-        computed:
-        {
-
-            totalPages() {
-                return Math.ceil(this.totalEntries / this.perPage);
-            },
-
-            startEntry() {
-                return (this.currentPage - 1) * this.perPage + 1;
-            },
-
-            endEntry() {
-                return Math.min(this.currentPage * this.perPage, this.totalEntries);
-            },
-
-            visiblePages() {
-                const pages = [];
-                const maxPages = 6;
-                let start = Math.max(1, this.currentPage - Math.floor(maxPages / 2));
-                let end = Math.min(this.totalPages, start + maxPages - 1);
-
-                for (let i = start; i <= end; i++) {
-                    pages.push(i);
-                }
-                return pages;
-            }
-
-        },
-
-        mounted() {
-            this.fetchBorrower();
-        },
-
-        methods:
-        {
-            async fetchBorrower() {
-                try {
-                    this.isLoading = true;
-                    setTimeout(async () => {
-                        const response = await apiClient.get(`/borrow`, {
-                            params: {
-                                search: this.searchQuery,
-                                page: this.currentPage,
-                                limit: this.perPage
-                            }
-                        });
-
-                        console.log("Fetched Borrow Data:", response.data); // Debugging
-
-                        this.items = response.data;
-                        this.totalEntries = response.data.total; // Make sure to update this
-                        this.isEmpty = this.items.length === 0; // Check if items array is empty
-                        this.isLoading = false;
-                    }, 1000);
-                } catch (error) {
-                    console.error("Error fetching borrow:", error);
-                }
-            },
-
-            goToPage(page) {
-                if (page >= 1 && page <= this.totalPages) {
-                    this.currentPage = page;
-                    this.fetchEquipment(); // Fetch new data
-                }
-            },
-
-            prevPage() {
-                if (this.currentPage > 1) {
-                    this.currentPage--;
-                    this.fetchEquipment();
-                }
-            },
-
-            nextPage() {
-                if (this.currentPage < this.totalPages) {
-                    this.currentPage++;
-                    this.fetchEquipment();
-                }
-            }
-
+            return pages;
         }
+    },
 
-    };
+    mounted() {
+        this.fetchBorrower();
+    },
+
+    methods: {
+        async fetchBorrower()
+        {
+            try {
+                this.isLoading = true;
+                const response = await apiClient.get("/borrow");
+                console.log("Fetched Borrow Data:", response.data); // Debugging
+                this.items = response.data;
+                this.isEmpty = this.items.length === 0;
+                this.isLoading = false;
+            } catch (error) {
+                console.error("Error fetching borrow:", error.response?.data || error);
+                this.isLoading = false;
+            }
+        },
+
+        goToPage(page) {
+            if (page >= 1 && page <= this.totalPages) {
+                this.currentPage = page;
+                this.fetchBorrower();
+            }
+        },
+
+        prevPage() {
+            if (this.currentPage > 1) {
+                this.currentPage--;
+                this.fetchBorrower();
+            }
+        },
+
+        nextPage() {
+            if (this.currentPage < this.totalPages) {
+                this.currentPage++;
+                this.fetchBorrower();
+            }
+        }
+    }
+};
 </script>
+
 
 <style scoped>
 .page-title {

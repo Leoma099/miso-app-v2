@@ -1,11 +1,15 @@
 <template>
 
     <li>
-        <router-link to="/client/my-account" exact-active-class="active"><i class="bx bxs-dashboard me-2"></i>My Account</router-link>
+        <router-link to="/my-account" exact-active-class="active"><i class="bx bxs-dashboard me-2"></i>My Account</router-link>
     </li>
 
     <li>
-        <router-link to="/client/equipment" exact-active-class="active"><i class="bx bx-file me-2"></i>Equipment</router-link>
+        <router-link to="/client/equipment" exact-active-class="active"><i class="bx bx-file me-2"></i>List of Equipment</router-link>
+    </li>
+
+    <li>
+        <router-link to="/client/borrow" exact-active-class="active"><i class="bx bx-file me-2"></i>Borrow Equipment</router-link>
     </li>
 
 </template>

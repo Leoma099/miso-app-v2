@@ -8,7 +8,7 @@
 
         <div class="right">
 
-        <router-link to="/client/my-account">
+        <router-link to="/my-account">
             <p class="mb-0">JOHN DOE</p>
         </router-link>
 

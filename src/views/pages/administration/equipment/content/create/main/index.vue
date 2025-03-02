@@ -8,7 +8,7 @@
                 <div class="form-group mb-3">
                     <label for="" class="form-label">Equipment Type:</label>
                     <input type="text" class="form-control rounded-0" placeholder="ex. PROJECTOR"
-                        v-model="form.equipment_type">
+                        v-model="form.type">
                 </div>
 
                 <div class="form-group mb-3">
@@ -39,14 +39,6 @@
                 </div>
 
                 <div class="form-group mb-3">
-                    <label for="" class="form-label">Status:</label>
-                    <select class="form-select rounded-0" v-model="form.status">
-                        <option value="1">Active</option>
-                        <option value="2">Inactive</option>
-                    </select>
-                </div>
-
-                <div class="form-group mb-3">
                     <label for="" class="form-label">Registered Date:</label>
                     <input type="date" class="form-control rounded-0" placeholder="ex. Juan Dela Cruz"
                         v-model="form.registered_date">
@@ -65,19 +57,18 @@
 </template>
 
 <script>
-import axios from "axios";
+import apiClient from "@/services/index";
 export default
     {
         data() {
             return {
                 form:
                 {
-                    equipment_type: "",
+                    type: "",
                     brand: "",
                     model: "",
                     condition: "1",
                     availability: "1",
-                    status: "1",
                     registered_date: this.getCurrentDate(),
 
                 }
@@ -95,7 +86,7 @@ export default
             },
 
             async submit() {
-                axios.post('http://127.0.0.1:8000/api/equipment', this.form)
+                apiClient.post('/equipment', this.form)
                     .then(response => {
                         console.log(response.data);
                         this.$router.push('/administration/equipment');
