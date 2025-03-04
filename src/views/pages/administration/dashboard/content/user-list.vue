@@ -1,6 +1,6 @@
 <template>
 
-    <div class="card card-body shadow-sm border-0">
+    <div class="card card-body shadow-sm border-0 rounded-0">
 
         <p class="mb-0">USER LIST</p>
 

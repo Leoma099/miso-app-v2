@@ -1,10 +1,8 @@
 <template>
     <tr>
         <td class="table-data">
-            <router-link :to="`/administration/equipment/view?id=${item?.id}`">
-                <div v-if="isLoading" class="shimmer-loader"></div>
-                <span v-else>{{ item.type }}</span>
-            </router-link>
+            <div v-if="isLoading" class="shimmer-loader"></div>
+            <span v-else>{{ item.type }}</span>
         </td>
         <td class="table-data">
             <div v-if="isLoading" class="shimmer-loader"></div>
@@ -24,16 +22,20 @@
         </td>
         <td class="table-data">
             <div v-if="isLoading" class="shimmer-loader"></div>
-            <span v-else>{{ formatStatus(item.status) }}</span>
+            <span v-else>{{ item.registered_date }}</span>
         </td>
         <td class="table-data">
             <div v-if="isLoading" class="shimmer-loader"></div>
-            <span v-else>{{ item.registered_date }}</span>
+            <div v-else>
+                <router-link :to="`/administration/equipment/${item.id}`" class="btn btn-sm btn-info rounded-0 me-3">View</router-link>
+                <button class="btn btn-sm btn-danger rounded-0" @click="deleteEquipment()">Delete</button>
+            </div>
         </td>
     </tr>
 </template>
 
 <script>
+import apiClient from "@/services/index"
 export default
     {
 
@@ -45,7 +47,8 @@ export default
 
         methods:
         {
-            formatCondition(condition) {
+            formatCondition(condition)
+            {
                 console.log("Item condition:", condition); // Debugging
                 const numStatus = parseInt(condition, 10);
                 if (numStatus === 1) {
@@ -61,7 +64,9 @@ export default
                     return "n/a";
                 }
             },
-            formatAvailability(availability) {
+
+            formatAvailability(availability)
+            {
                 console.log("Item availability:", availability); // Debugging
                 const numStatus = parseInt(availability, 10);
                 if (numStatus === 1) {
@@ -74,19 +79,40 @@ export default
                     return "n/a";
                 }
             },
-            formatStatus(status) {
-                console.log("Item status:", status); // Debugging
-                const numStatus = parseInt(status, 10);
-                if (numStatus === 1) {
-                    return "Active";
+
+            async deleteEquipment()
+            {
+                if(!confirm("Are you sure you want to delete?")) return;
+
+                try
+                {
+                    const response = await apiClient.delete(`/equipment/${this.item.id}`);
+                    console.log("delete sucess:", response.data);
+                    alert("Deleted successfully!")
+                    window.location.reload();
                 }
-                else if (numStatus === 2) {
-                    return "Not Active";
+                catch(error)
+                {
+                    console.error("Error deleteing:", error);
+                    alert("Failed to delete")
                 }
-                else {
-                    return "n/a";
+            },
+
+            
+            getPhotoUrl(photoPath)
+            {
+                if (!photoPath) {
+                    return "/default-avatar.png"; // Fallback image
                 }
-            }
+
+                // If the photo is already a full URL, return as is
+                if (photoPath.startsWith("http")) {
+                    return photoPath;
+                }
+
+                // Correct storage URL (Laravel serves files via public/storage)
+                return `http://127.0.0.1:8000/storage/${photoPath}`;
+            },
         }
     };
 </script>
@@ -126,5 +152,18 @@ export default
     font-weight: 500;
     padding: 10px;
     color: #ffffff;
+}
+
+.equipment-image {
+    width: 40px;
+    height: 40px;
+    overflow: hidden;
+    background: #e0e0e0;
+}
+
+.equipment-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 </style>

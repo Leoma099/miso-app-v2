@@ -5,7 +5,7 @@ export default [
         component: () => import('@/views/pages/administration/borrow'),
         meta:
         {
-            name: 'User Accounts',
+            name: 'Borrow',
             page: 'list',
         },
         children:
@@ -22,7 +22,7 @@ export default [
                     },
                 },
                 {
-                    path: ':code',
+                    path: ':id',
                     name: 'View Administration / Borrow',
                     component: () => import('@/views/pages/administration/borrow'),
                     meta:
@@ -40,7 +40,6 @@ export default [
                                 meta:
                                 {
                                     name: 'Edit Borrow',
-
                                     page: 'edit',
                                     subPage: 'main',
                                 },

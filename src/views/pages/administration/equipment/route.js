@@ -22,7 +22,7 @@ export default [
                     },
                 },
                 {
-                    path: 'view',
+                    path: ':id',
                     name: 'View Administration / Equipment',
                     component: () => import('@/views/pages/administration/equipment'),
                     meta:

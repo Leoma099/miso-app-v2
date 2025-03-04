@@ -97,6 +97,6 @@ export default
 p {
     font-weight: 600;
     font-size: 2rem;
-    color: #793A91;
+    color: #6b157c;
 }
 </style>

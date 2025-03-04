@@ -6,11 +6,11 @@
 
         <div class="card card-body shadow-sm border-0 rounded-0">
 
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <div>
+            <div class="d-flex justify-content-end align-items-center mb-3">
+                <!-- <div>
                     <router-link :to="'/administration/borrow/create'" class="btn rounded-0 button-color">Create New
                         Borrower</router-link>
-                </div>
+                </div> -->
                 <div class="col-md-3 ">
                     <input type="text" v-model="searchQuery" @input="fetchEquipment" placeholder="Search equipment..."
                         class="form-control rounded-0">
@@ -26,6 +26,7 @@
                             <th class="table-header">STATUS</th>
                             <th class="table-header">DATE BORROWED</th>
                             <th class="table-header">DATE RETURNED</th>
+                            <th class="table-header">ACTION</th>
                         </tr>
                     </thead>
                     <tbody v-if="!isEmpty">

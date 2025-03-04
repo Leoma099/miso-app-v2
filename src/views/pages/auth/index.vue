@@ -39,7 +39,8 @@
                                                 :type="showPassword ? 'text' : 'password'" 
                                                 class="form-control box-input" 
                                                 placeholder="Password" 
-                                                v-model="form.password" 
+                                                v-model="form.password"
+                                                autocomplete="on"
                                                 required>
                                             <button 
                                                 type="button" 

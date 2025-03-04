@@ -9,7 +9,7 @@
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <div>
                     <router-link :to="'/administration/equipment/create'" class="btn rounded-0 button-color">Create New
-                        Ticket</router-link>
+                        Equipment</router-link>
                 </div>
                 <div class="col-md-3 ">
                     <input type="text" v-model="searchQuery" @input="fetchEquipment" placeholder="Search equipment..."
@@ -26,8 +26,8 @@
                             <th class="table-header">MODEL</th>
                             <th class="table-header">CONDITION</th>
                             <th class="table-header">AVAILABILITY</th>
-                            <th class="table-header">STATUS</th>
                             <th class="table-header">REGISTERED DATE</th>
+                            <th class="table-header">ACTION</th>
                         </tr>
                     </thead>
 

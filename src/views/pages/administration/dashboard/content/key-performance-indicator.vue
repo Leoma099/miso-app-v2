@@ -1,6 +1,6 @@
 <template>
     <div class="row mb-3">
-        <div class="col-md-3">
+        <div class="col-md-2">
             <div class="card card-body shadow-sm border-0 rounded-0">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
@@ -11,18 +11,18 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
             <div class="card card-body shadow-sm border-0 rounded-0">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
-                        <span class="total-number mb-0">{{ totalBorrow }}</span>
+                        <span class="total-number mb-0">{{ totalEquipmentAvailability }}</span>
                         <p class="indicator-title mb-0">EQUIPMENT AVAILABILITY</p>
                     </div>
                     <i class="bx bx-select-multiple dashboard-icon"></i>
                 </div>
             </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
             <div class="card card-body shadow-sm border-0 rounded-0">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
@@ -33,7 +33,29 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
+            <div class="card card-body shadow-sm border-0 rounded-0">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <span class="total-number mb-0">{{ totalPending }}</span>
+                        <p class="indicator-title mb-0">BORROWED PENDING</p>
+                    </div>
+                    <i class="bx bx-collection dashboard-icon"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="card card-body shadow-sm border-0 rounded-0">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <span class="total-number mb-0">{{ totalReturned }}</span>
+                        <p class="indicator-title mb-0">BORROWED RETURNED</p>
+                    </div>
+                    <i class="bx bx-collection dashboard-icon"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
             <div class="card card-body shadow-sm border-0 rounded-0">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
@@ -63,12 +85,22 @@ export default {
         totalEquipment() {
             return (this.equipment || []).length;
         },
+        totalEquipmentAvailability()
+        {
+            return this.equipment.filter(item => item.availability == 1).length; // Available
+        },
         totalBorrow() {
             return (this.borrow || []).length;
         },
         totalUser() {
             return (this.account || []).length;
-        }
+        },
+        totalPending() {
+        return this.borrow.filter(item => item.status == 1).length; // Count pending
+        },
+        totalReturned() {
+            return this.borrow.filter(item => item.status == 3).length; // Count returned
+        },
     },
 
     methods: {
@@ -100,7 +132,7 @@ export default {
 
 <style scoped>
 .indicator-title {
-    font-size: 1rem;
+    font-size: .80rem;
     font-weight: 600;
 }
 .total-number {

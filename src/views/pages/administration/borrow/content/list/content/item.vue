@@ -1,10 +1,8 @@
 <template>
     <tr>
         <td class="table-data">
-            <router-link :to="'/administration/borrow/view'">
-                <div v-if="isLoading" class="shimmer-loader"></div>
-                <span v-else>{{ item.full_name }}</span>
-            </router-link>
+            <div v-if="isLoading" class="shimmer-loader"></div>
+            <span v-else>{{ item.full_name }}</span>
         </td>
         <td class="table-data">
             <div v-if="isLoading" class="shimmer-loader"></div>
@@ -22,10 +20,19 @@
             <div v-if="isLoading" class="shimmer-loader"></div>
             <span v-else>{{ item.date_return }}</span>
         </td>
+        <td>
+            <div v-if="isLoading" class="shimmer-loader"></div>
+            <div v-else>
+                <router-link :to="`/administration/borrow/${item.id}`" class="btn btn-sm btn-info rounded-0 me-3">View</router-link>
+                <button type="button" class="btn btn-sm btn-danger rounded-0" @click="deleteBorrow()">Delete</button>
+            </div>
+        </td>
     </tr>
 </template>
 
 <script>
+import apiClient from '@/services';
+
 export default
     {
         props:
@@ -36,26 +43,40 @@ export default
 
         methods:
         {
-            formatStatus(status) {
+            formatStatus(status)
+            {
                 console.log("Item status:", status); // Debugging
                 const numStatus = parseInt(status, 10);
-                if (numStatus === 1) {
+                if (numStatus === 1)
+                {
                     return "Pending";
                 }
                 else if (numStatus === 2) {
                     return "Approved";
                 }
                 else if (numStatus === 3) {
-                    return "Rejected";
-                }
-                else if (numStatus === 4) {
                     return "Returned";
-                }
-                else if (numStatus === 5) {
-                    return "Overdue";
                 }
                 else {
                     return "n/a";
+                }
+            },
+
+            async deleteBorrow()
+            {
+                if(!confirm("Are you sure you want to delete?")) return;
+
+                try
+                {
+                    const response = await apiClient.delete(`/borrow/${this.item.id}`);
+                    console.log("delete sucess:", response.data);
+                    alert("Deleted successfully!")
+                    window.location.reload();
+                }
+                catch(error)
+                {
+                    console.error("Error deleteing:", error);
+                    alert("Failed to delete")
                 }
             }
         }

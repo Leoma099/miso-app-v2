@@ -26,7 +26,7 @@
 
                 <div class="col-md-7">
                     <div class="form-group mb-3">
-                        <label for="" class="form-label">* Office Name:</label>
+                        <label for="" class="form-label">* Department Name / Office Name:</label>
                         <input type="text" class="form-control rounded-0" placeholder="ex. LAKERS" v-model="form.office_name">
                     </div>
                 </div>
@@ -41,7 +41,7 @@
             </div>
 
             <div class="form-group mb-3">
-                <label for="" class="form-label">* Office Address:</label>
+                <label for="" class="form-label">* Department Address / Office Address:</label>
                 <input type="text" class="form-control rounded-0" placeholder="ex. Los Angeles" v-model="form.office_address">
             </div>
 
@@ -78,6 +78,7 @@
                     <div class="form-group mb-3">
                         <label for="" class="form-label">Default Password:</label>
                         <input type="text" class="form-control rounded-0" v-model="form.password" readonly>
+                        <small><i>password should be atleast 6 characters</i></small>
                     </div>
                 </div>
                 <div class="col-md-4">

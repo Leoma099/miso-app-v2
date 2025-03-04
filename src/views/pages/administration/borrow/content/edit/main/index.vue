@@ -1,10 +1,10 @@
 <template>
 
-    <h1 class="page-title mb-0">View Borrow Equipment</h1>
-
     <div class="col-5 mx-auto">
 
         <div class="card card-body shadow-sm border-0 rounded-0">
+
+            <h3>Fill-out the form appropriately.</h3>
 
             <form @submit.prevent="submit()">
 
@@ -13,12 +13,11 @@
                 <div class="row mb-3">
                     
                     <div class="col-md-4">
-                        <label class="form-label"><strong>* Id Number:</strong></label>
+                        <label class="form-label">* Id Number:</label>
                         <input
                             type="text"
                             class="form-control form-control-sm rounded-0"
-                            v-model="form.id_number"
-                            disabled>
+                            v-model="form.id_number">
                     </div>
 
                     <div class="col-md-8">
@@ -26,8 +25,7 @@
                         <input
                             type="text"
                             class="form-control form-control-sm rounded-0"
-                            v-model="form.full_name"
-                            disabled>
+                            v-model="form.full_name">
                     </div>
 
                 </div>
@@ -39,8 +37,7 @@
                         <input
                             type="text"
                             class="form-control form-control-sm rounded-0"
-                            v-model="form.office_name"
-                            disabled>
+                            v-model="form.office_name">
                     </div>
                     
                     <div class="col-md-4">
@@ -48,8 +45,7 @@
                         <input
                             type="text"
                             class="form-control form-control-sm rounded-0"
-                            v-model="form.position"
-                            disabled>
+                            v-model="form.position">
                     </div>
 
                 </div>
@@ -62,8 +58,7 @@
                             <input
                                 type="text"
                                 class="form-control form-control-sm rounded-0"
-                                v-model="form.office_address"
-                                disabled>
+                                v-model="form.office_address">
                         </div>
                     </div>
 
@@ -73,8 +68,7 @@
                             <input
                                 type="text"
                                 class="form-control form-control-sm rounded-0"
-                                v-model="form.mobile_number"
-                                disabled>
+                                v-model="form.mobile_number">
                         </div>
                     </div>
 
@@ -91,8 +85,7 @@
                             <input
                                 type="text"
                                 class="form-control form-control-sm rounded-0"
-                                v-model="form.type"
-                                disabled>
+                                v-model="form.type">
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -100,8 +93,7 @@
                             <label class="form-label">* Status:</label>
                             <select
                                 class="form-control form-control-sm rounded-0"
-                                v-model="form.status"
-                                disabled>
+                                v-model="form.status">
                                 <option value="1">Pending</option>
                                 <option value="2">Approved</option>
                                 <option value="3">Returned</option>
@@ -117,8 +109,7 @@
                         <input
                             type="text"
                             class="form-control form-control-sm rounded-0"
-                            v-model="form.brand"
-                            disabled>
+                            v-model="form.brand">
                     </div>
 
                     <div class="col-md-6">
@@ -126,8 +117,7 @@
                         <input
                             type="text"
                             class="form-control form-control-sm rounded-0"
-                            v-model="form.model"
-                            disabled>
+                            v-model="form.model">
                     </div>
 
                 </div>
@@ -143,8 +133,7 @@
                         <input
                             type="date"
                             class="form-control form-control-sm rounded-0"
-                            v-model="form.date_borrow"
-                            disabled>
+                            v-model="form.date_borrow">
                     </div>
 
                     <div class="col-md-6">
@@ -152,8 +141,7 @@
                         <input
                             type="date"
                             class="form-control form-control-sm rounded-0"
-                            v-model="form.date_return"
-                            disabled>
+                            v-model="form.date_return">
                     </div>
 
                 </div>
@@ -164,13 +152,12 @@
                         class="form-control form-control-sm rounded-0"
                         rows="5"
                         placeholder="Type your reason here..."
-                        v-model="form.purpose"
-                        disabled></textarea>
+                        v-model="form.purpose"></textarea>
                 </div>
 
                 <div class="text-end">
                     <router-link :to="'/administration/borrow'" class="btn btn-secondary btn-sm rounded-0 me-3">Cancel</router-link>
-                    <router-link :to="`/administration/borrow/${this.$route.params.id}/edit`" class="btn btn-primary btn-sm rounded-0 me-3">Update</router-link>
+                    <button type="submit"  class="btn button-color btn-sm rounded-0">Submit</button>
                 </div>
 
             </form>
@@ -213,7 +200,7 @@ export default
 
     mounted()
     {
-        console.log("Route ID:", this.$route.params.id);
+        console.log("Route ID:", this.$route.query.id);
         this.fetchBorrowData();
     },
 
@@ -266,8 +253,5 @@ export default
 .button-color:hover {
     background-color: #3798ff;
     color: #ffffff;
-}
-.page-title {
-    color: #007bff;
 }
 </style>

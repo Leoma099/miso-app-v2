@@ -1,70 +1,51 @@
 <template>
 
     <h1 class="page-title mb-0">VIEW EQUIPMENT</h1>
+    <router-link :to="'/administration/equipment'">Go back to page</router-link>
 
     <div class="mt-3">
 
-        <div class="row">
+        <div class="col-3 mx-auto">
 
-            <div class="col-md-4">
-                <div class="card card-body shadow-sm border-0 rounded-0">
-                    <div class="equipment-image mb-3">
-                        <img src="" class="img-fluid">
-                    </div>
-                    <div class="equipment-details">
-                        <h2 class="mb-0 text-center">{{ item.equipment_type }}</h2>
-                        <div class="mt-3">
-                            <router-link
-                                :to="'/administration/equipment/edit'"
-                                class="btn btn-outline-primary w-100">
-                                UPDATE
-                            </router-link>
-                            <router-link
-                                class="btn btn-outline-danger w-100 mt-2">
-                                DELETE
-                            </router-link>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <div class="card card-body shadow-sm border-0 rounded-0">
 
-            <div class="col-md-8">
-                <div class="card card-body shadow-sm border-0 rounded-0">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <p class="mb-0">BRAND:</p>
-                                <p class="mb-0"><strong>{{ item.brand }}</strong></p>
-                            </div>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <p class="mb-0">MODEL:</p>
-                                <p class="mb-0"><strong>{{ item.model }}</strong></p>
-                            </div>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <p class="mb-0">SERIAL NUMBER:</p>
-                                <p class="mb-0"><strong>{{ item.serial_number }}</strong></p>
-                            </div>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <p class="mb-0">REGISTERED DATE:</p>
-                                <p class="mb-0"><strong>{{ item.registered_date }}</strong></p>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <p class="mb-0">CONDITION:</p>
-                                <p class="mb-0"><strong>{{ formatCondition(item.condition) }}</strong></p>
-                            </div>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <p class="mb-0">AVAILABILITY:</p>
-                                <p class="mb-0"><strong>{{ formatAvailability(item.availability) }}</strong></p>
-                            </div>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <p class="mb-0">STATUS:</p>
-                                <p class="mb-0"><strong>{{ formatStatus(item.status) }}</strong></p>
-                            </div>
-                        </div>
-                    </div>
+                <div class="equipment-image mb-3">
+                    <img :src="getPhotoUrl(item.photo)" alt="User Photo" v-if="item.photo">
                 </div>
+
+                <div class="d-flex align-items-center">
+                    <p class="mb-0 me-3"><strong>BRAND:</strong></p>
+                    <p class="mb-0">{{ item.brand }}</p>
+                </div>
+
+                <div class="d-flex align-items-center">
+                    <p class="mb-0 me-3"><strong>MODEL:</strong></p>
+                    <p class="mb-0">{{ item.model }}</p>
+                </div>
+
+                <div class="d-flex align-items-center">
+                    <p class="mb-0 me-3"><strong>REGISTERED DATE:</strong></p>
+                    <p class="mb-0">{{ item.registered_date }}</p>
+                </div>
+
+                <div class="d-flex align-items-center">
+                    <p class="mb-0 me-3"><strong>CONDITION:</strong></p>
+                    <p class="mb-0">{{ formatCondition(item.condition) }}</p>
+                </div>
+
+                <div class="d-flex align-items-center">
+                    <p class="mb-0 me-3"><strong>AVAILABILITY:</strong></p>
+                    <p class="mb-0">{{ formatAvailability(item.availability) }}</p>
+                </div>
+
+                <div class="text-end mt-3">
+                    <router-link
+                        :to="`/administration/equipment/${this.$route.params.id}/edit`"
+                        class="btn btn-outline-primary w-100 rounded-0">
+                        UPDATE
+                    </router-link>
+                </div>
+
             </div>
 
         </div>
@@ -74,7 +55,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import apiClient from "@/services/index";
 export default
 {
 
@@ -96,7 +77,7 @@ export default
         {
             try
             {
-                const response = await axios.get(`http://127.0.0.1:8000/api/equipment/${this.$route.query.id}`);
+                const response = await apiClient.get(`/equipment/${this.$route.params.id}`);
                 this.item = response.data; // Assign fetched data
             }
             catch (error)
@@ -104,6 +85,7 @@ export default
                 console.error("Error fetching equipment details:", error);
             }
         },
+
         formatCondition(condition)
         {
             console.log("Item condition:", condition); // Debugging
@@ -125,6 +107,7 @@ export default
                 return "n/a";
             }
         },
+
         formatAvailability(availability)
         {
             console.log("Item availability:", availability); // Debugging
@@ -142,23 +125,21 @@ export default
                 return "n/a";
             }
         },
-        formatStatus(status)
+
+        getPhotoUrl(photoPath)
         {
-            console.log("Item status:", status); // Debugging
-            const numStatus = parseInt(status, 10);
-            if (numStatus === 1)
-            {
-                return "Active";
+            if (!photoPath) {
+                return "/default-avatar.png"; // Fallback image
             }
-            else if (numStatus === 2)
-            {
-                return "Not Active";
+
+            // If the photo is already a full URL, return as is
+            if (photoPath.startsWith("http")) {
+                return photoPath;
             }
-            else
-            {
-                return "n/a";
-            }
-        }
+
+            // Correct storage URL (Laravel serves files via public/storage)
+            return `http://127.0.0.1:8000/storage/${photoPath}`;
+        },
     }
 };
 </script>
@@ -184,5 +165,18 @@ export default
 }
 .page-title {
     color: #007bff;
+}
+.equipment-image {
+    width: 380px;
+    height: 380px;
+    overflow: hidden;
+    background: #e0e0e0;
+    border: 5px solid #007bff;
+}
+
+.equipment-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 </style>
