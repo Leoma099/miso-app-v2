@@ -13,13 +13,13 @@ module.exports = defineConfig({
   },
   transpileDependencies: true,
 
-  // devServer: {
-  //   host: 'miso-app.loc', 
-  //   port: 8080,           
-  //   https: false,          
-  //   allowedHosts: [
-  //     'miso-app.loc', 
-  //     'localhost'    
-  //   ],
-  // },
+  devServer: {
+    host: 'miso-app.loc', 
+    port: 8080,           
+    https: false,          
+    allowedHosts: [
+      'miso-app.loc', 
+      'localhost'    
+    ],
+  },
 });
