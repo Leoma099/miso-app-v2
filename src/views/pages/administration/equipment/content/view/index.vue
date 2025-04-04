@@ -130,7 +130,7 @@ export default
             }
 
             // Correct storage URL (Laravel serves files via public/storage)
-            return `http://127.0.0.1:8000/storage/${photoPath}`;
+            return `http://api.miso-backend.loc/storage/${photoPath}`;
         },
     }
 };

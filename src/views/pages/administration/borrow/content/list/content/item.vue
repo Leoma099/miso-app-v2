@@ -122,4 +122,10 @@ export default
     width: 225px;
     text-align: center;
 }
+
+span
+{
+    font-size: 1rem;
+    font-weight: 600;
+}
 </style>

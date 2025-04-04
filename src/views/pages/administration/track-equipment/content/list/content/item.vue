@@ -2,7 +2,7 @@
     <tr>
         <td class="table-data">
             <div v-if="isLoading" class="shimmer-loader"></div>
-            <span v-else></span>
+            <span v-else>{{ item.full_name }}</span>
         </td>
         <td class="table-data">
             <div v-if="isLoading" class="shimmer-loader"></div>
@@ -10,7 +10,11 @@
         </td>
         <td class="table-data">
             <div v-if="isLoading" class="shimmer-loader"></div>
-            <span v-else></span>
+            <span v-else>{{ item.brand }}</span>
+        </td>
+        <td class="table-data">
+            <div v-if="isLoading" class="shimmer-loader"></div>
+            <span v-else>{{ item.model }}</span>
         </td>
         <td class="table-data">
             <div v-if="isLoading" class="shimmer-loader"></div>
@@ -18,7 +22,7 @@
         </td>
         <td class="table-data">
             <div v-if="isLoading" class="shimmer-loader"></div>
-            <span v-else></span>
+            <span v-else>{{ item.office_name }}</span>
         </td>
     </tr>
 </template>
@@ -153,5 +157,11 @@ export default
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+
+span
+{
+    font-size: 1rem;
+    font-weight: 600;
 }
 </style>

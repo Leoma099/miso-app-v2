@@ -3,7 +3,7 @@
     <header>
 
         <div class="left">
-            <p class="mb-0">Welcome back, {{ userName }}</p>
+            <p class="mb-0">Welcome back, <strong>{{ userName }}</strong></p>
         </div>
 
         <div class="right">
@@ -13,15 +13,25 @@
                 <i class="bx bxs-bell icon-size"></i>
                 <span class="badge">{{ unreadNotificationsCount }}</span>
 
-                <ul v-show="dropdownOpen" class="dropdown" :class="{ 'scrollable': notifications.length >= 20 }">
+                <div
+                  v-show="dropdownOpen"
+                  class="dropdown"
+                  :class="{ 'scrollable': items.length >= 10 }">
 
-                    <li v-if="notifications.length === 0" class="empty">No Notifications</li>
-                    
-                    <li v-for="(notification, index) in notifications" :key="index" @click="markAsRead(notification)">
-                        <span :class="{ 'read': notification.is_read }">{{ notification.message }}</span>
-                    </li>
+                    <h4 class="mb-0" style="padding-inline: 10px;">Notification</h4>
 
-                </ul>
+                    <item-component
+                      class="notification mt-2"
+                      v-for="(item, index) in items"
+                      :key="index"
+                      :item="item"
+                      :selectItem="selectItem"
+                      :updateItem="updateItem"/>
+
+                    <!-- <div v-for="(notification, index) in notifications" :key="index">
+                        <p class="mb-0">{{ notification.id_number }} has requested a borrow equipment</p>
+                    </div> -->
+                </div>
 
             </div>
 
@@ -38,24 +48,38 @@
 
 <script>
 import apiClient from "@/services/index";
+import ItemComponent from './content/item';
 export default
 {
+    components:
+    {
+        ItemComponent,
+    },
 
     data()
     {
+
         return {
-        dropdownOpen: false,
-        notifications: [],
-        userName: 'Guest',
-        page: 1,
+            dropdownOpen: false,
+            items: [],
+            userName: "Guest",
+            isEmpty: false,
+            interval: null, // Store interval reference
+            selectedItem: {},
+            count: 0,
+
+            notificationCount: 0,
+            notificationCountLoading: false,
+            showNotificationCount: true,
         };
+
     },
 
     computed:
     {
         unreadNotificationsCount()
         {
-            return this.notifications.filter(notification => !notification.is_read).length;
+            return this.items.filter(item => !item.is_read).length;
         }
     },
 
@@ -64,11 +88,14 @@ export default
         this.fetchUserName();
         this.fetchNotifications();
         document.addEventListener("click", this.closeDropdown);
+        this.startRealTimeUpdates(); // Start real-time updates
+        this.fetchNotificationCount();
     },
 
     beforeUnmount()
     {
         document.removeEventListener("click", this.closeDropdown);
+        clearInterval(this.interval); // Clear interval on component unmount
     },
 
     methods:
@@ -82,42 +109,72 @@ export default
             }
         },
 
+        async fetchNotificationCount()
+        {
+            try
+            {
+                this.notificationCountLoading = true;
+
+                const response = await apiClient.get('/borrow-notifications/unread/read');
+                this.notificationCount = response.data.data;
+                this.notificationCountLoading = false;
+                console.log(response.data.data);
+            }
+            catch(error)
+            {
+                console.error(error);
+            }
+        },
+
+        refreshNotificationCount()
+        {
+          this.notificationCount = 0;
+        },
+
         async fetchNotifications()
         {
             try
             {
-                const response = await apiClient.get(`/notification?page=${this.page}`);
-                this.notifications = response.data;
+                const response = await apiClient.get('/borrow-notifications');
+
+                // Ensure response data is an array
+                if (Array.isArray(response.data.data))
+                {
+                    this.items = response.data.data;
+                    console.log("Notification fetched successfully:", response.data.data);
+                }
+                else
+                {
+                    this.items = [];  // Set to an empty array if the response isn't an array
+                    console.error("Fetched data is not an array:", response.data.data);
+                }
             }
             catch(error)
             {
-                console.error(error)
+                console.error("Error occured:", error)
             }
         },
 
-        async markAsRead(notification)
+        selectItem(item)
         {
-            if (!notification.is_read)
-            {
-                try
-                {
-                    const response = await apiClient.post(`/notification/${notification.id}/read`);
-                    this.notifications = response.data.is_read;
-                }
-                catch(error)
-                {
-                    console.error(error);
-                }
-            }
+            this.selectedItem = item;
+        },
+
+        updateItem(updatedData)
+        {
+            let checkingItem = this.items.find(row => row.id == updatedData.id);
+
+            checkingItem.is_read = updatedData.is_read;
+        },
+
+        reduceCount()
+        {
+            this.$parent.reduceCount();
         },
 
         toggleDropdown()
         {
             this.dropdownOpen = !this.dropdownOpen;
-            if (this.dropdownOpen && !this.notifications.length)
-            {
-                this.fetchNotifications();
-            }
         },
 
         closeDropdown(event)
@@ -128,13 +185,16 @@ export default
             }
         },
 
-        loadMore()
+        startRealTimeUpdates()
         {
-            this.fetchNotifications();
+            this.interval = setInterval(() =>{
+                this.fetchNotifications();
+            }, 5000); // Fetch every 5 seconds
         }
     }
 };
 </script>
+
 
 <style scoped>
 .icon-badge {
@@ -171,6 +231,7 @@ border-radius: 5px;
 overflow: hidden;
 z-index: 1000;
 max-height: auto;
+padding: 10px;
 }
 
 .dropdown li {
@@ -216,5 +277,35 @@ background: #555;
 
 .icon-size {
 font-size: 1.5rem;
+}
+
+.notification
+{
+    transition: 0.1s ease-in-out;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.notification:hover
+{
+    background-color: #f0f0f0;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.notification-box
+{
+    background-color: #e0e0e0;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.notify-button
+{
+    transition: 0.1s ease-in-out;
+}
+.notify-button:hover
+{
+    background: #e0e0e0;
 }
 </style>

@@ -8,7 +8,11 @@
 
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <div class="col-md-3 ">
-                    <input type="text" v-model="searchQuery" @input="fetchEquipment" placeholder="Search equipment..."
+                    <input
+                        type="text"
+                        v-model="searchQuery"
+                        @input="fetchBorrower"
+                        placeholder="Search equipment..."
                         class="form-control rounded-0">
                 </div>
             </div>
@@ -21,6 +25,8 @@
                             <th class="table-header">STATUS</th>
                             <th class="table-header">DATE BORROWED</th>
                             <th class="table-header">DATE RETURNED</th>
+                            <!-- <th class="table-header">DELIVERED BY</th> -->
+                            <th class="table-header">ACTION</th>
                         </tr>
                     </thead>
                     <tbody v-if="!isEmpty">
@@ -74,7 +80,7 @@ export default {
             items: [],
             searchQuery: "",
             isLoading: false,
-            perPage: 6,
+            perPage: 10,
             currentPage: 1,
             totalEntries: 0,
             isEmpty: false,
@@ -113,7 +119,11 @@ export default {
         {
             try {
                 this.isLoading = true;
-                const response = await apiClient.get("/borrow");
+                const response = await apiClient.get(`/borrow`, {
+                    params:{
+                        search: this.searchQuery
+                    }
+                });
                 console.log("Fetched Borrow Data:", response.data); // Debugging
                 this.items = response.data;
                 this.isEmpty = this.items.length === 0;

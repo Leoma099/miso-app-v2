@@ -1,8 +1,35 @@
 <template>
 
-    <div class="col-md-2 mb-3">
+    <div class="col-md-2 mb-3" v-if="!ifAvailable">
 
         <div>
+            <router-link
+                style="text-decoration: none; color: #000;"
+                :to="`/client/borrow/create?id=${item?.id}`">
+
+                <div class="miso-card">
+
+                    <div class="d-flex align-items-center">
+                        <div class="miso-circle-available"></div>
+                        <div class="ms-2">
+                            <p class="mb-0 fw-bold">Available</p>
+                        </div>
+                    </div>
+
+                    <div class="miso-img">
+                        <img :src="getPhotoUrl(item.photo)" alt="User Photo" v-if="item.photo">
+                    </div>
+                    <div class="miso-title">
+                        <p>{{ item.type }}</p>
+                    </div>
+                </div>
+
+            </router-link>
+        </div>
+
+
+
+        <!-- <div>
             <div class="item">
                 <img :src="getPhotoUrl(item.photo)" alt="User Photo" v-if="item.photo">
                 <div class="overlay">
@@ -13,6 +40,29 @@
                 </div>
             </div>
             <p class="item-title"><strong>{{ item.type }}</strong></p>
+        </div> -->
+
+    </div>
+
+    <div class="col-md-2 mb-3" v-else>
+
+        <div class="miso-card">
+
+            <div class="d-flex align-items-center">
+                <div class="miso-circle-not-available"></div>
+                <div class="ms-2">
+                    <p class="mb-0 fw-bold">Not Available</p>
+                </div>
+            </div>
+
+            <div style="opacity: 0.5;">
+                <div class="miso-img">
+                <img :src="getPhotoUrl(item.photo)" alt="User Photo" v-if="item.photo">
+                </div>
+                <div class="miso-title">
+                    <p>{{ item.type }}</p>
+                </div>
+            </div>
         </div>
 
     </div>
@@ -25,6 +75,13 @@ export default
     props:
     {
         item: Object,
+    },
+
+    data()
+    {
+        return{
+            ifAvailable: this.item.availability === 2 // 2 means Not Available
+        }
     },
 
     methods:
@@ -41,7 +98,7 @@ export default
             }
 
             // Correct storage URL (Laravel serves files via public/storage)
-            return `http://127.0.0.1:8000/storage/${photoPath}`;
+            return `http://api.miso-backend.loc/storage/${photoPath}`;
         },
     }
 };
@@ -128,5 +185,56 @@ export default
 .item-title
 {
     font-size: 1.3rem;
+}
+.miso-card
+{
+    width: 250px;
+    height: auto;
+    padding: 10px;
+    background: #ffffff;
+    cursor: pointer;
+}
+
+.miso-card .miso-img
+{
+    position: relative;
+    margin: 4px;
+    width: 200px;
+    height: 200px;
+    overflow: hidden;
+    cursor: pointer;
+}
+.miso-card .miso-img img
+{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.miso-title
+{
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+.miso-title p
+{
+    margin: 0;
+}
+
+.miso-circle-available
+{
+    display: block;
+    background: green;
+    width: 15px;
+    height: 15px;
+    border-radius: 100%;
+}
+.miso-circle-not-available
+{
+    display: block;
+    background: red;
+    width: 15px;
+    height: 15px;
+    border-radius: 100%;
 }
 </style>

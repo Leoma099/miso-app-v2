@@ -95,7 +95,7 @@
 
                 <div class="row mb-3">
 
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <label class="form-label">* Brand:</label>
                         <input
                             type="text"
@@ -104,12 +104,21 @@
                             disabled>
                     </div>
 
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <label class="form-label">* Model:</label>
                         <input
                             type="text"
                             class="form-control form-control-sm rounded-0"
                             v-model="form.model"
+                            disabled>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="form-label">* Property Number:</label>
+                        <input
+                            type="text"
+                            class="form-control form-control-sm rounded-0"
+                            v-model="form.property_number"
                             disabled>
                     </div>
 
@@ -184,6 +193,7 @@ export default
                 brand: "",
                 model: "",
                 equipment_id: this.$route.query.id, // Get from URL
+                property_number: "",
 
                 // OTHER INFO
                 date_borrow: this.getCurrentDate(),
@@ -231,6 +241,7 @@ export default
                 this.form.type = equipment.type;
                 this.form.brand = equipment.brand;
                 this.form.model = equipment.model;
+                this.form.property_number = equipment.property_number;
             }
             catch (error)
             {

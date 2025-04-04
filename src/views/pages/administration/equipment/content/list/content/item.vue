@@ -167,4 +167,10 @@ export default
     height: 100%;
     object-fit: cover;
 }
+
+span
+{
+    font-size: 1rem;
+    font-weight: 600;
+}
 </style>

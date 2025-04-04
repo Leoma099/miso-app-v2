@@ -1,90 +1,209 @@
 <template>
-
-    <div class="d-flex justify-content-between align-items-center">
-        <p class="page-title mb-0">REPORT AND ANALYTIC</p>
-        <button type="button" class="btn rounded-0 button-color" data-bs-toggle="modal" data-bs-target="#searchBorrowerHistory">FILTER SEARCH</button>
+    <div class="d-flex justify-content-between">
+        <h1 class="page-title mb-0">REPORT AND ANALYTICS</h1>
+        <div class="col-4">
+            <div class="card card-body shadow-sm rounded-0 border-0">
+                <form @submit.prevent="searchRecord()">
+                    <div class="mb-3">
+                        <h5 class="mb-0 me-3">Date:</h5>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <input type="date" class="form-control form-control-sm rounded-0" v-model="filters.date_borrow">
+                            </div>
+                            <div class="col-md-6">
+                                <input type="date" class="form-control form-control-sm rounded-0" v-model="filters.date_return">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <h5 class="mb-0 me-3">Department:</h5>
+                        <div class="col-md-12">
+                            <select class="form-select form-select-sm rounded-0" v-model="filters.office_name">
+                                <option value="" selected>All Department</option>
+                                <option v-for="(department, index) in departments" :key="index" :value="department.office_name">
+                                    {{ department.office_name }}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <h5 class="mb-0 me-3">Accountable Person:</h5>
+                        <div class="col-md-12">
+                            <select class="form-select form-select-sm rounded-0" v-model="filters.full_name">
+                                <option value="" selected>All User</option>
+                                <option v-for="(client, index) in clients" :key="index" :value="client.full_name">
+                                    {{ client.full_name }}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <h5 class="mb-0 me-3">Property Number:</h5>
+                        <div class="col-md-12">
+                            <input
+                                type="text"
+                                class="form-control form-control-sm rounded-0"
+                                placeholder="Enter property number"
+                                v-model="filters.property_number">
+                        </div>
+                    </div>
+                    <div class="text-end">
+                        <button type="submit" class="btn btn-sm button-color rounded-0 me-3">Search</button>
+                        <button type="button" class="btn btn-sm button-color rounded-0" @click="exportFile()">Excel Export</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
-
-    <filter-modal />
 
     <div class="mt-4">
 
-        <div class="card card-body shadow-sm border-0 rounded-0" v-if="!isRecordShow">
-            <p class="table-header mb-0">NO RECORD FOUND</p>
-        </div>
-
-        <div class="table-responsive" v-else>
-            <table class="table table-bordered mb-0">
-                <thead>
-                    <tr>
-                        <th class="table-header">BORROWER NAME</th>
-                        <th class="table-header">EQUIPMENT TYPE</th>
-                        <th class="table-header">BRAND</th>
-                        <th class="table-header">MODEL</th>
-                        <!-- CONDITION: GODD, DAMAGE -->
-                        <th class="table-header">CONDITION</th>
-                        <!-- STATUS: RETURNED, LATE, LOST -->
-                        <th class="table-header">STATUS</th>
-                        <th class="table-header">DATE BORROWED</th>
-                        <th class="table-header">DATE RETURNED</th>
-                        <!-- ONLT VIEW BUTTON -->
-                        <th class="table-header">ACTION</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    <item-component
-                        v-for="(item, index) in items"
-                        :key="index"
-                        :item="item"
-                        />
-                </tbody>
-
-            </table>
-        </div>
+        <statistic-department />
 
     </div>
 
+    <div class="mt-4">
+        <div class="card card-body shadow-sm border-0 rounded-0" v-if="!isRecordShow"></div>
+        <div class="card card-body shadow-sm border-0" v-else>
+            <div class="table-responsive">
+                <table class="table table-bordered mb-0">
+                    <thead>
+                        <tr>
+                            <th class="table-header">BORROWER NAME</th>
+                            <th class="table-header">EQUIPMENT TYPE</th>
+                            <th class="table-header">BRAND</th>
+                            <th class="table-header">MODEL</th>
+                            <th class="table-header">CONDITION</th>
+                            <th class="table-header">STATUS</th>
+                            <th class="table-header">DATE BORROWED</th>
+                            <th class="table-header">DATE RETURNED</th>
+                            <th class="table-header">OFFICE NAME</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <item-component v-for="(item, index) in items" :key="index.id" :item="item" />
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </template>
 
 <script>
-import FilterModal from "./components/modals/filter.vue";
+import apiClient from "@/services/index";
+import ItemComponent from "./content/item.vue"
+import StatisticDepartment from "./content/statistic-department.vue";
 export default
 {
     components:
     {
-        FilterModal
+        ItemComponent,
+        StatisticDepartment
     },
 
-    data()
-    {
-        return{
+    data() {
+        return {
             isRecordShow: false,
-        }
-    }
+            clients: [],
+            departments: [],
+            items: [],
+            filters: {
+                date_borrow: "",
+                date_return: "",
+                office_name: "",
+                full_name: "",
+                property_number: "",
+            },
+        };
+    },
+    mounted()
+    {
+        this.fetchClient();
+        this.fetchDepartment();
+    },
+
+    methods:
+    {
+        async fetchDepartment()
+        {
+            try
+            {
+                const response = await apiClient.get("/department");
+                this.departments = response.data;
+                console.log("Department fetched successfully:", response.data);
+            }
+            catch(error)
+            {
+                console.error("Error occured:", error);
+            }
+        },
+
+        async fetchClient()
+        {
+            try
+            {
+                const response = await apiClient.get("/accountClient");
+                this.clients = response.data;
+            }
+            catch (error)
+            {
+                console.error("Error fetching clients:", error);
+            }
+        },
+
+        async searchRecord() {
+            try {
+                const response = await apiClient.get(`/borrowRecord?date_borrow=${this.filters.date_borrow}&date_return=${this.filters.date_return}&office_name=${this.filters.office_name}&full_name=${this.filters.full_name}&property_number=${this.filters.property_number}`);
+                console.log("API Response:", response.data); // Debugging
+                this.items = response.data.data; // Adjust based on API response
+                this.isRecordShow = this.items.length > 0;
+            } catch (error) {
+                console.error("Error fetching records:", error);
+            }
+        },
+
+        async exportFile()
+        {
+            try
+            {
+                const response = await apiClient.get("/borrowExport", {
+                    responseType: 'blob'
+                });
+                const url = window.URL.createObjectURL(new Blob([response.data]));
+                const link = document.createElement('a');
+                link.href = url;
+                link.setAttribute('download', 'equipment-list.csv');
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+            catch(error)
+            {
+                console.error("Error occured:", error);
+            }
+        },
+
+    },
 };
 </script>
 
 <style scoped>
-p {
-    font-weight: 600;
-    font-size: 2rem;
-    color: #793A91;
+.page-title {
+    color: #007bff;
 }
 .button-color {
-    background-color: #734F79;
+    background-color: #007bff;
     color: #ffffff;
 }
 .button-color:hover {
-    background-color: #793A91;
+    background-color: #3798ff;
     color: #ffffff;
 }
 .table-header {
     font-size: 0.85rem;
     font-weight: 600;
     padding: 10px;
-    border-left: 5px solid #ff0000;
-    background-color: #ff6242;
+    background-color: #007bff;
     color: #ffffff;
 }
 </style>

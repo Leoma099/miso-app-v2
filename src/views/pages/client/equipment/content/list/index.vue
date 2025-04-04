@@ -1,6 +1,16 @@
 <template>
 
-    <h1 class="page-title mb-0">EQUIPMENT LIST</h1>
+    <div class="d-flex justify-content-between align-items-centrer">
+        <h1 class="page-title mb-0">EQUIPMENT LIST</h1>
+        <div class="col-4">
+            <input
+                type="input"
+                class="form-control form-control-sm rounded-0"
+                placeholder="Search equipment"
+                v-model="searchQuery"
+                @input="fetchEquipment"/>
+        </div>
+    </div>
 
     <div class="mt-3">
         <div class="row">
@@ -45,7 +55,11 @@ export default
         {
             try
             {
-                const response = await apiClient.get(`/equipment`);
+                const response = await apiClient.get(`/equipment`, {
+                    params: {
+                        search: this.searchQuery
+                    }
+                });
 
                 console.log("Fetched Equipment Data:", response.data);
 

@@ -22,7 +22,7 @@ export default {
             if (this.role === 1) {  // Now correctly compares numbers
                 window.location.href = "/administration/dashboard";
             } else if (this.role === 2) {
-                window.location.href = "/my-account";
+                window.location.href = "/client/dashboard";
             }
         }
     }

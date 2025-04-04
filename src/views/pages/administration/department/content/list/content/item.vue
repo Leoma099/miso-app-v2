@@ -2,37 +2,40 @@
     <tr>
         <td class="table-data">
             <div v-if="isLoading" class="shimmer-loader"></div>
-            <span v-else>{{ item.full_name }}</span>
+            <span v-else>{{ item.office_name }}</span>
         </td>
         <td class="table-data">
             <div v-if="isLoading" class="shimmer-loader"></div>
-            <span v-else>{{ item.email }}</span>
+            <span v-else>{{ item.office_address }}</span>
         </td>
         <td class="table-data">
             <div v-if="isLoading" class="shimmer-loader"></div>
-            <span v-else>{{ item.mobile_number }}</span>
+            <span v-else>{{ item.tell_number || "n/a" }}</span>
         </td>
         <td class="table-data">
+            <div v-if="isLoading" class="shimmer-loader"></div>
+            <span v-else>{{ item.fax_number || "n/a" }}</span>
+        </td>
+        <!-- <td class="table-data">
             <div v-if="isLoading" class="shimmer-loader"></div>
             <div v-else>
-                <router-link :to="`/administration/account/${item.id}`" class="btn btn-sm btn-info rounded-0 me-3">Views</router-link>
-                <router-link :to="`/administration/account/${item.id}/edit`" class="btn btn-sm btn-warning rounded-0 me-3">Edit</router-link>
-                <button type="button" class="btn btn-sm btn-danger rounded-0" @click="deleteBorrow()">Delete</button>
+                <router-link :to="`/administration/department/${item.id}`" class="btn btn-sm btn-info rounded-0 me-3">View</router-link>
+                <router-link :to="`/administration/department/${item.id}/edit`" class="btn btn-sm btn-warning rounded-0 me-3">Edit</router-link>
+                <button class="btn btn-sm btn-danger rounded-0" @click="deleteEquipment()">Delete</button>
             </div>
-        </td>
+        </td> -->
     </tr>
 </template>
 
 <script>
 export default
+{
+    props:
     {
-
-        props:
-        {
-            item: Object,
-            isLoading: Boolean, // Receive isLoading prop from parent
-        },
-    };
+        item: Object,
+        isLoading: Boolean
+    }
+}
 </script>
 
 <style scoped>
@@ -64,15 +67,7 @@ export default
     }
 }
 
-.button-manage {
-    background-color: #007bff;
-    font-size: 0.80rem;
-    font-weight: 500;
-    padding: 10px;
-    color: #ffffff;
-}
-
-span {
+span{
     font-size: 1rem;
     font-weight: 600;
 }

@@ -9,14 +9,22 @@
                 <div class="col-md-4">
                     <div class="form-group mb-3">
                         <label for="" class="form-label">* ID Number:</label>
-                        <input type="text" name="" id="" class="form-control form-control-sm rounded-0" placeholder="ex. 123456789">
+                        <input
+                            type="text"
+                            class="form-control form-control-sm rounded-0"
+                            placeholder="ex. 123456789"
+                            v-model="form.id_number">
                     </div>
                 </div>
 
                 <div class="col-md-8">
                     <div class="form-group mb-3">
                         <label for="" class="form-label">* Full Name:</label>
-                        <input type="text" name="" id="" class="form-control form-control-sm rounded-0" placeholder="ex. Juan Dela Cruz">
+                        <input
+                            type="text"
+                            class="form-control form-control-sm rounded-0"
+                            placeholder="ex. Juan Dela Cruz"
+                            v-model="form.full_name">
                     </div>
                 </div>
 
@@ -27,8 +35,19 @@
                 <div class="col-md-7">
                     <div class="form-group mb-3">
                         <label for="" class="form-label">* Department / Office Name:</label>
-                        <select name="" id="" class="form-control form-control-sm roundeo-0">
-                            <option value="0" disabled selected>-- Select Department --</option>
+                        <select
+                            v-model="form.office_name"
+                            class="form-control form-control-sm roundeo-0">
+                            <option
+                                value=""
+                                disabled selected>-- Select Department --
+                            </option>
+                            <option
+                                :value="department.office_name"
+                                v-for="(department, index) in departments"
+                                :key="index">
+                                {{ department.office_name }}
+                            </option>
                         </select>
                     </div>
                 </div>
@@ -36,7 +55,11 @@
                 <div class="col-md-5">
                     <div class="form-group mb-3">
                         <label for="" class="form-label">* Postion:</label>
-                        <input type="text" name="" id="" class="form-control form-control-sm rounded-0" placeholder="ex. HR Manager">
+                        <input
+                            v-model="form.position"
+                            type="text"
+                            class="form-control form-control-sm rounded-0"
+                            placeholder="ex. HR Manager">
                     </div>
                 </div>
 
@@ -44,12 +67,30 @@
 
             <div class="form-group mb-3">
                 <label for="" class="form-label">* Office Address:</label>
-                <input type="text" name="" id="" class="form-control form-control-sm rounded-0" placeholder="ex. Subic Bay Freeport Zone">
+                <select
+                    v-model="form.office_address"
+                    class="form-control form-control-sm rounded-0">
+                    <option
+                        value=""
+                        disabled
+                        selected>-- Select Department Address --
+                    </option>
+                    <option
+                        :value="department.office_address"
+                        v-for="(department, index) in departments"
+                        :key="index">
+                        {{ department.office_address }}
+                    </option>
+                </select>
             </div>
 
             <div class="form-group mb-3">
                 <label for="" class="form-label">* Your Address:</label>
-                <input type="text" name="" id="" class="form-control form-control-sm rounded-0" placeholder="ex. #123 Apartment Stree">
+                <input
+                    v-model="form.address"
+                    type="text"
+                    class="form-control form-control-sm rounded-0"
+                    placeholder="ex. #123 Apartment Stree">
             </div>
 
             <div class="row">
@@ -57,14 +98,22 @@
                 <div class="col-md-7">
                     <div class="form-group mb-3">
                         <label for="" class="form-label">* Email:</label>
-                        <input type="text" name="" id="" class="form-control form-control-sm rounded-0" placeholder="ex. example123@gmail.com">
+                        <input
+                            v-model="form.email"
+                            type="text"
+                            class="form-control form-control-sm rounded-0"
+                            placeholder="ex. example123@gmail.com">
                     </div>
                 </div>
 
                 <div class="col-md-5">
                     <div class="form-group mb-3">
                         <label for="" class="form-label">* Mobile Number:</label>
-                        <input type="text" name="" id="" class="form-control form-control-sm rounded-0" placeholder="ex. +123456789">
+                        <input
+                            v-model="form.mobile_number"
+                            type="text"
+                            class="form-control form-control-sm rounded-0"
+                            placeholder="ex. +123456789">
                     </div>
                 </div>
 
@@ -82,8 +131,84 @@
 </template>
 
 <script>
-export default {
+import apiClient from '@/services';
 
+export default
+{
+    name: "Edit User Account",
+
+    data()
+    {
+        return{
+            form:
+            {
+                id_number: "",
+                full_name: "",
+                office_name: "",
+                position: "",
+                office_address: "",
+                address: "",
+                email: "",
+                mobile_number: "",
+                username: "",
+                password: "",
+                role: "",
+            },
+            departments: [],
+        }
+    },
+
+    mounted()
+    {
+        this.fetchAccountData();
+        this.fetchDepartmentData();
+    },
+
+    methods:
+    {
+        async fetchAccountData()
+        {
+            try
+            {
+                const response = await apiClient.get(`/account/${this.$route.params.id}`);
+                this.form = response.data;
+                console.log("Fetch account:", response.data);
+            }
+            catch(error)
+            {
+                console.error("Error occured:", error);
+            }
+        },
+
+        async fetchDepartmentData()
+        {
+            try
+            {
+                const response = await apiClient.get(`/department`)
+                this.departments = response.data;
+                console.log("Fetched department:", response.data);
+            }
+            catch(error)
+            {
+                console.error(error);
+            }
+        },
+
+        async submit()
+        {
+            try
+            {
+                const response = await apiClient.put(`/account/${this.$route.params.id}`, this.form);
+                console.log("Account update successfully:", response.data);
+                this.$router.push("/administration/account");
+                alert("Account update successfully");
+            }
+            catch(error)
+            {
+                console.error("Error occured:", error);
+            }
+        }
+    }
 }
 </script>
 

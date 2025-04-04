@@ -16,6 +16,27 @@
             <div v-if="isLoading" class="shimmer-loader"></div>
             <span v-else>{{ item.date_return }}</span>
         </td>
+        <!-- <td class="table-data">
+            <div v-if="isLoading" class="shimmer-loader"></div>
+            <span v-else>{{ item.delivered_by }}</span>
+        </td> -->
+        <td class="table-data">
+            <div v-if="isLoading" class="shimmer-loader"></div>
+            <div v-else>
+                <button
+                    type="button"
+                    class="btn btn-info btn-sm rounded-0 me-3"
+                    @click="isReturned">
+                    VIEW
+                </button>
+                <button
+                    type="button"
+                    class="btn btn-primary btn-sm rounded-0"
+                    @click="isReturned">
+                    RETURNED
+                </button>
+            </div>
+        </td>
     </tr>
 </template>
 
@@ -102,6 +123,10 @@ export default
 
 .table-data:last-child {
     width: 225px;
-    text-align: center;
+}
+span
+{
+    font-size: 1rem;
+    font-weight: 600;
 }
 </style>

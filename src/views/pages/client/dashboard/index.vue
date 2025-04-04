@@ -3,15 +3,14 @@
     <div class="animation animation-fade-in">
 
         <div class="d-flex justify-content-between align-items-center">
-            <p class="page-title mb-0">DASHBOARD</p>
-            <router-link :to="'/administration/equipment/create'" class="btn rounded-0 button-color">CREATE NEW EVENT</router-link>
+            <h1 class="page-title mb-0">DASHBOARD</h1>
         </div>
 
         <div class="mt-3">
 
             <key-perfomance-indicator />
 
-            <div class="row mb-3">
+            <!-- <div class="row mb-3">
 
                 <div class="col-md-6">
                     <borrower-statistic />
@@ -45,7 +44,7 @@
                     <overdue-equipment />
                 </div>
 
-            </div>
+            </div> -->
             
         </div>
 
@@ -55,25 +54,25 @@
 
 <script>
 import KeyPerfomanceIndicator from "./content/key-performance-indicator.vue";
-import UserList from "./content/user-list.vue";
-import KeyPerformanceEquipment from "./content/key-performance-equipment.vue";
-import OverdueEquipment from "./content/overdue-equipment.vue";
-import EquipmentList from './content/equipment-list.vue';
+// import UserList from "./content/user-list.vue";
+// import KeyPerformanceEquipment from "./content/key-performance-equipment.vue";
+// import OverdueEquipment from "./content/overdue-equipment.vue";
+// import EquipmentList from './content/equipment-list.vue';
 
-import BorrowerStatistic from "./content/borrower_statistic.vue";
-import EquipmentStatistic from "./content/equipment_statistic.vue";
+// import BorrowerStatistic from "./content/borrower_statistic.vue";
+// import EquipmentStatistic from "./content/equipment_statistic.vue";
 export default
 {
     components:
     {
         KeyPerfomanceIndicator,
-        UserList,
-        KeyPerformanceEquipment,
-        OverdueEquipment,
-        EquipmentList,
+        // UserList,
+        // KeyPerformanceEquipment,
+        // OverdueEquipment,
+        // EquipmentList,
 
-        BorrowerStatistic,
-        EquipmentStatistic,
+        // BorrowerStatistic,
+        // EquipmentStatistic,
     }
 }
 </script>
@@ -97,9 +96,7 @@ export default
         opacity: 1;
     }
 }
-p {
-    font-weight: 600;
-    font-size: 2rem;
-    color: #793A91;
+.page-title{
+    color: #007bff;
 }
 </style>

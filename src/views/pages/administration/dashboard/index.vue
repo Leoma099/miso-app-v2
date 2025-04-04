@@ -2,7 +2,7 @@
 
     <div class="animation animation-fade-in">
 
-        <p class="page-title mb-0">DASHBOARD</p>
+        <h1 class="page-title mb-0">DASHBOARD</h1>
 
         <div class="mt-3">
 
@@ -94,9 +94,7 @@ export default
         opacity: 1;
     }
 }
-p {
-    font-weight: 600;
-    font-size: 2rem;
-    color: #6b157c;
+.page-title{
+    color: #007bff;
 }
 </style>

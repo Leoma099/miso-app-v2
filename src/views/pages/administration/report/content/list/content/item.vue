@@ -3,7 +3,7 @@
         <td class="table-data">
             <router-link :to="`/administration/equipment/view?id=${item?.id}`">
                 <div v-if="isLoading" class="shimmer-loader"></div>
-                <span v-else>{{ item.equipment_type }}</span>
+                <span v-else>{{ item.full_name }}</span>
             </router-link>
         </td>
         <td class="table-data">
@@ -28,7 +28,15 @@
         </td>
         <td class="table-data">
             <div v-if="isLoading" class="shimmer-loader"></div>
-            <span v-else>{{ item.registered_date }}</span>
+            <span v-else>{{ item.date_borrow }}</span>
+        </td>
+        <td class="table-data">
+            <div v-if="isLoading" class="shimmer-loader"></div>
+            <span v-else>{{ item.date_return }}</span>
+        </td>
+        <td class="table-data">
+            <div v-if="isLoading" class="shimmer-loader"></div>
+            <span v-else>{{ item.office_name }}</span>
         </td>
     </tr>
 </template>
@@ -127,5 +135,11 @@ export default
     font-weight: 500;
     padding: 10px;
     color: #ffffff;
+}
+
+span
+{
+    font-size: 1rem;
+    font-weight: 600;
 }
 </style>

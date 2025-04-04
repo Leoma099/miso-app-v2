@@ -12,7 +12,7 @@
             <user-account v-if="role === 2" />
 
             <li>
-                <a @click="logout"><i class="bx bxs-log-out me-2"></i>Logout</a>
+                <a @click="logout"><i class="bx bx-log-out me-2"></i>Logout</a>
             </li>
         </ul>
     </div>
