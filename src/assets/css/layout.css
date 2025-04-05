@@ -53,13 +53,15 @@ body {
 }
 
 .sidebar .sidebar-nav li {
-    transition: all 0.2s ease-in-out;
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 4px;
-    box-sizing: border-box;
-    /* Ensures consistent box model */
+    ul
+    {
+        list-style: none;
+
+        li
+        {
+            margin-left: -20px;
+        }
+    }
 }
 
 .sidebar .sidebar-nav li a {
@@ -69,10 +71,12 @@ body {
     display: block;
     cursor: pointer;
     color: #000000;
-}
-
-.sidebar .sidebar-nav li a i {
-    margin-right: 5px;
+    transition: all 0.2s ease-in-out;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    box-sizing: border-box;
 }
 
 .sidebar .sidebar-nav li .active {
@@ -81,20 +85,20 @@ body {
     font-weight: 500;
     border-radius: 4px;
     display: block;
-    margin: -10px;
     /* Offsets the removed padding */
     padding: 10px;
     /* Remove side padding */
 }
 
 
-.sidebar .sidebar-nav li:hover {
+.sidebar .sidebar-nav li a:hover {
     background-color: #007bff;
-}
-
-.sidebar .sidebar-nav li:hover a {
     color: #ffffff;
 }
+
+/* .sidebar .sidebar-nav li:hover a {
+    color: #ffffff;
+} */
 
 .sidebar .sidebar-nav li:last-child {
 
@@ -119,6 +123,11 @@ body {
     padding: 20px;
     border-bottom: 1px solid var(--primary);
     z-index: 500;
+}
+
+.main-wrapper header .left .time {
+    font-size: 1.8rem;
+    font-weight: 600;
 }
 
 .main-wrapper header .right {

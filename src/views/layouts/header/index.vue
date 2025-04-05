@@ -3,7 +3,8 @@
     <header>
 
         <div class="left">
-            <p class="mb-0">Welcome back, <strong>{{ userName }}</strong></p>
+            <div class="date">{{ date }} ( {{ day }} )</div>
+            <div class="time">{{ time }}</div>
         </div>
 
         <div class="right">
@@ -11,26 +12,30 @@
             <div class="icon-badge notification-container" @click="toggleDropdown">
 
                 <i class="bx bxs-bell icon-size"></i>
-                <span class="badge">{{ unreadNotificationsCount }}</span>
+                <span class="badge">{{ notificationCount }}</span>
 
                 <div
                   v-show="dropdownOpen"
-                  class="dropdown"
-                  :class="{ 'scrollable': items.length >= 10 }">
+                  class="dropdown">
 
                     <h4 class="mb-0" style="padding-inline: 10px;">Notification</h4>
 
-                    <item-component
-                      class="notification mt-2"
-                      v-for="(item, index) in items"
-                      :key="index"
-                      :item="item"
-                      :selectItem="selectItem"
-                      :updateItem="updateItem"/>
+                    <div v-if="items.length > 0">
+                        <item-component
+                            class="notification mt-2"
+                            v-for="(item, index) in items"
+                            :key="index"
+                            :item="item"
+                            :selectItem="selectItem"
+                            :updateItem="updateItem"/>
+                    </div>
 
-                    <!-- <div v-for="(notification, index) in notifications" :key="index">
-                        <p class="mb-0">{{ notification.id_number }} has requested a borrow equipment</p>
-                    </div> -->
+                    <div class="notification-box mt-3"
+                        v-else>
+                        <p class="mb-0 text-center">No notifications</p>
+                    </div>
+
+
                 </div>
 
             </div>
@@ -71,16 +76,12 @@ export default
             notificationCount: 0,
             notificationCountLoading: false,
             showNotificationCount: true,
+
+            day: "",
+            date: "",
+            time: "",
         };
 
-    },
-
-    computed:
-    {
-        unreadNotificationsCount()
-        {
-            return this.items.filter(item => !item.is_read).length;
-        }
     },
 
     mounted()
@@ -90,6 +91,8 @@ export default
         document.addEventListener("click", this.closeDropdown);
         this.startRealTimeUpdates(); // Start real-time updates
         this.fetchNotificationCount();
+        this.updateDateTime();
+        this.timer = setInterval(this.updateDateTime, 1000);
     },
 
     beforeUnmount()
@@ -190,6 +193,19 @@ export default
             this.interval = setInterval(() =>{
                 this.fetchNotifications();
             }, 5000); // Fetch every 5 seconds
+        },
+
+        updateDateTime()
+        {
+            const now = new Date();
+
+            const days = ['Sunday', 'Monday', 'Tueday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+            this.day = days[now.getDay()];
+
+            const options = { month: 'short', day: '2-digit', year: 'numeric' };
+            this.date = now.toLocaleDateString('en-US', options);
+
+            this.time = now.toLocaleTimeString('en-US', { hour24: false });
         }
     }
 };

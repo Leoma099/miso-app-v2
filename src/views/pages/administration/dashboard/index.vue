@@ -11,11 +11,21 @@
             <div class="row mb-3">
 
                 <div class="col-md-8">
-                    <borrower-statistic />
+                    <div class="row">
+
+                        <div class="col-md-8">
+                            <borrower-statistic />
+                        </div>
+
+                        <div class="col-md-4">
+                            <equipment-statistic />
+                        </div>
+
+                    </div>
                 </div>
 
                 <div class="col-md-4">
-                    <equipment-statistic />
+                    <show-calendar />
                 </div>
 
             </div>
@@ -59,6 +69,7 @@ import KeyPerfomanceIndicator from "./content/key-performance-indicator.vue";
 
 import BorrowerStatistic from "./content/borrower_statistic.vue";
 import EquipmentStatistic from "./content/equipment_statistic.vue";
+import ShowCalendar from "./content/show-calendar.vue";
 export default
 {
     components:
@@ -71,6 +82,7 @@ export default
 
         BorrowerStatistic,
         EquipmentStatistic,
+        ShowCalendar
     }
 }
 </script>
