@@ -12,7 +12,7 @@
             <div class="icon-badge notification-container" @click="toggleDropdown">
 
                 <i class="bx bxs-bell icon-size"></i>
-                <span class="badge">{{ notificationCount }}</span>
+                <span class="badge" v-if="notificationCount > 0">{{ notificationCount }}</span>
 
                 <div
                   v-show="dropdownOpen"
@@ -71,7 +71,6 @@ export default
             isEmpty: false,
             interval: null, // Store interval reference
             selectedItem: {},
-            count: 0,
 
             notificationCount: 0,
             notificationCountLoading: false,
@@ -86,11 +85,18 @@ export default
 
     mounted()
     {
+        // Check localStorage if the notifications have been marked as read (bell clicked)
+        const notificationsRead = localStorage.getItem('notifications_read');
+        if (notificationsRead)
+        {
+            // Reset notification count when page loads
+            this.notificationCount = 0;
+        }
+
         this.fetchUserName();
         this.fetchNotifications();
         document.addEventListener("click", this.closeDropdown);
-        this.startRealTimeUpdates(); // Start real-time updates
-        this.fetchNotificationCount();
+        this.startRealTimeUpdates();
         this.updateDateTime();
         this.timer = setInterval(this.updateDateTime, 1000);
     },
@@ -112,28 +118,6 @@ export default
             }
         },
 
-        async fetchNotificationCount()
-        {
-            try
-            {
-                this.notificationCountLoading = true;
-
-                const response = await apiClient.get('/borrow-notifications/unread/read');
-                this.notificationCount = response.data.data;
-                this.notificationCountLoading = false;
-                console.log(response.data.data);
-            }
-            catch(error)
-            {
-                console.error(error);
-            }
-        },
-
-        refreshNotificationCount()
-        {
-          this.notificationCount = 0;
-        },
-
         async fetchNotifications()
         {
             try
@@ -144,6 +128,8 @@ export default
                 if (Array.isArray(response.data.data))
                 {
                     this.items = response.data.data;
+                    this.notificationCount = this.items.filter(item => !item.is_read).length;
+
                     console.log("Notification fetched successfully:", response.data.data);
                 }
                 else
@@ -170,14 +156,16 @@ export default
             checkingItem.is_read = updatedData.is_read;
         },
 
-        reduceCount()
-        {
-            this.$parent.reduceCount();
-        },
-
         toggleDropdown()
         {
+            // Toggle the dropdown state
             this.dropdownOpen = !this.dropdownOpen;
+
+            // When the bell icon is clicked, reset the notification count to 0
+            this.notificationCount = 0;
+
+            // Update localStorage to remember that the bell was clicked and reset count
+            localStorage.setItem('notifications_read', 'true');
         },
 
         closeDropdown(event)
