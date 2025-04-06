@@ -77,7 +77,7 @@ export default
                     return "Approved";
                 }
                 else if (numStatus === 3) {
-                    return "Rejected";
+                    return "Returned";
                 }
                 else {
                     return "n/a";

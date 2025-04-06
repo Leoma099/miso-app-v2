@@ -164,7 +164,7 @@ export default
                 }
                 const response = await apiClient.post('/account', this.form);
                 console.log(response.data);
-                this.$router.push('/administration/account');
+                this.$router.push('/management/account');
             }
             catch (error)
             {

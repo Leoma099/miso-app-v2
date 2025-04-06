@@ -200,7 +200,7 @@ export default
             {
                 const response = await apiClient.put(`/account/${this.$route.params.id}`, this.form);
                 console.log("Account update successfully:", response.data);
-                this.$router.push("/administration/account");
+                this.$router.push("/management/account");
                 alert("Account update successfully");
             }
             catch(error)

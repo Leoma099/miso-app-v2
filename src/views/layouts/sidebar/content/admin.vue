@@ -5,7 +5,7 @@
         <li>
             <router-link
                 exact-active-class="active"
-                :to="'/dashboard'">
+                :to="'/administration/dashboard'">
                 <i class="bx bx-category me-2"></i>Dashboard
             </router-link>
         </li>

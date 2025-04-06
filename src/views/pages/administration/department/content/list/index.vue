@@ -23,7 +23,7 @@
                 </div>
             </div>
 
-            <div class="table-responsive">
+            <div class="table-responsive table-scrollable">
                 <table class="table table-bordered mb-0">
                     <thead>
                         <tr>
@@ -50,6 +50,16 @@
                 </table>
             </div>
 
+            <!-- Pagination is here -->
+            <div class="pagination-container">
+                <div class="entries-info">
+                    Showing {{ (currentPage - 1) * perPage + 1 }} to {{ currentPage * perPage }} of {{ items.length }} records
+                </div>
+                <div class="pagination-buttons">
+                    <!-- Pagination buttons here -->
+                </div>
+            </div>
+
         </div>
 
     </div>
@@ -71,6 +81,8 @@ export default
             searchQuery: "",
             isLoading: false,
             isEmpty: false,
+            perPage: 10,
+            currentPage: 1
 
         }
     },
@@ -93,7 +105,11 @@ export default
             {
                 this.isLoading = true,
                 setTimeout(async () => {
-                    const response = await apiClient.get('/department');
+                    const response = await apiClient.get('/department', {
+                        search: this.searchQuery,
+                        page: this.currentPage,
+                        perPage: this.perPage
+                    });
                     console.log("Fetch department successfully:", response.data);
                     this.items = response.data; // Ensure correct data structure
                     this.isEmpty = this.items.length === 0;
@@ -112,9 +128,10 @@ export default
 </script>
 
 <style scoped>
-.page-title{
+.page-title {
     color: #007bff;
 }
+
 .button-color {
     background-color: #007bff;
     color: #ffffff;
@@ -131,5 +148,54 @@ export default
     padding: 10px;
     background-color: #007bff;
     color: #ffffff;
+}
+
+.pagination-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 16px;
+    font-size: 14px;
+}
+
+.entries-info {
+    color: #666;
+}
+
+.pagination-buttons {
+    display: flex;
+    gap: 5px;
+}
+
+.pagination-buttons button {
+    background: white;
+    border: 1px solid #ddd;
+    padding: 6px 10px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.pagination-buttons button:hover {
+    background: #f0f0f0;
+}
+
+.pagination-buttons button.active {
+    background: #007bff;
+    color: white;
+    border-color: #007bff;
+}
+
+.pagination-buttons button:disabled {
+    background: #eee;
+    cursor: not-allowed;
+}
+.table-scrollable
+{
+    max-height: 500px;
+    overflow: hidden; /* Hidden by default */
+}
+.table-scrollable:hover
+{
+    overflow-y: auto; /* Show scrollbar when hovering */
 }
 </style>

@@ -235,7 +235,7 @@ export default
             {
                 const response = apiClient.put(`/borrow/${this.$route.params.id}`, this.form)
                 console.log("Borrow update successfully:", response.data);
-                this.$router.push("/administration/borrow");
+                this.$router.push("/management/borrow");
             }
             catch(error)
             {

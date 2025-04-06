@@ -87,7 +87,7 @@ export default
             axios.post('http://127.0.0.1:8000/api/borrow', this.form)
             .then(response => {
                 console.log(response.data);
-                this.$router.push('/administration/borrow');
+                this.$router.push('/management/borrow');
             })
             .catch(error => {
                 console.error("Error:", error.response?.data || error.message);

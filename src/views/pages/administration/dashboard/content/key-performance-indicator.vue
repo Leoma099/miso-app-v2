@@ -1,7 +1,7 @@
 <template>
     <div class="row mb-3">
         <div class="col-md-4">
-            <router-link :to="'/administration/equipment'">
+            <router-link :to="'/equipment/list'">
                 <div class="card card-body shadow-sm border-0 rounded-0">
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
@@ -25,7 +25,7 @@
             </div>
         </div> -->
         <div class="col-md-4">
-            <router-link :to="'/administration/borrow'">
+            <router-link :to="'/borrow/list'">
                 <div class="card card-body shadow-sm border-0 rounded-0">
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
@@ -60,7 +60,7 @@
             </div>
         </div> -->
         <div class="col-md-4">
-            <router-link :to="'/administration/account'">
+            <router-link :to="'/account/list'">
                 <div class="card card-body shadow-sm border-0 rounded-0">
                     <div class="d-flex justify-content-between align-items-center">
                         <div>

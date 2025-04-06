@@ -16,7 +16,7 @@
             <div class="card card-body shadow-sm rounded-0 border-0 ">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
-                        <span class="total-number mb-0">{{ totalBorrowedEquipment }}</span>
+                        <span class="total-number mb-0">{{ totalBorrowEquipment }}</span>
                         <p class="mb-0">BORROWED EQUIPMENT</p>
                     </div>
                     <i class="bx bx-laptop dashboard-icon"></i>
@@ -28,14 +28,51 @@
 </template>
 
 <script>
+import apiClient from "@/services/index";
 export default
 {
     data()
     {
         return{
+            borrow: [],
             totalReturnedEquipment: 0,
-            totalBorrowedEquipment: 0,
         }
+    },
+
+    computed:
+    {
+        totalBorrowEquipment()
+        {
+            return this.borrow.length;
+        }
+    },
+
+    created()
+    {
+        this.loadData();
+    },
+
+    methods:
+    {
+
+        async loadData()
+        {
+
+            try
+            {
+                const ticketResponse = await apiClient.get('/borrow');
+                this.borrow = ticketResponse.data;
+
+                const statusResponse = await apiClient.get('/status');
+                this.totalReturnedEquipment = statusResponse.data.returned;
+            }
+            catch(error)
+            {
+                console.error("Error loading data:", error);
+            }
+
+        }
+
     }
 }
 </script>

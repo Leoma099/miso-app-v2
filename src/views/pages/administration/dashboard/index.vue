@@ -6,26 +6,34 @@
 
         <div class="mt-3">
 
-            <key-perfomance-indicator />
+            <key-perfomance-indicator class="mb-4" />
 
-            <div class="row mb-3">
+            <div class="row">
 
                 <div class="col-md-8">
-                    <div class="row mb-3">
+                    <div class="mb-4">
+                        <equipment-count/>
+                    </div>
 
-                        <div class="col-md-6">
-                            <borrower-statistic />
-                        </div>
-
-                        <div class="col-md-6">
-                            <equipment-statistic />
-                        </div>
-
+                    <div>
+                        <department-count />
                     </div>
                 </div>
 
                 <div class="col-md-4">
-                    <show-calendar />
+
+                    <div class="mb-4">
+                        <show-calendar />
+                    </div>
+
+                    <div class="mb-4">
+                        <borrower-statistic />
+                    </div>
+
+                    <div>
+                        <equipment-statistic />
+                    </div>
+
                 </div>
 
             </div>
@@ -41,6 +49,8 @@ import KeyPerfomanceIndicator from "./content/key-performance-indicator.vue";
 import BorrowerStatistic from "./content/borrower_statistic.vue";
 import EquipmentStatistic from "./content/equipment_statistic.vue";
 import ShowCalendar from "./content/show-calendar.vue";
+import EquipmentCount from "./content/equipment_count.vue";
+import DepartmentCount from "./content/department_count.vue";
 export default
 {
     components:
@@ -48,7 +58,9 @@ export default
         KeyPerfomanceIndicator,
         BorrowerStatistic,
         EquipmentStatistic,
-        ShowCalendar
+        ShowCalendar,
+        EquipmentCount,
+        DepartmentCount
     }
 }
 </script>
