@@ -103,7 +103,7 @@
             </div>
 
             <div class="text-end">
-                <router-link :to="'/administration/account'" class="btn rounded-0 button-color me-3">Cancel</router-link>
+                <router-link :to="'/management/account'" class="btn rounded-0 button-color me-3">Cancel</router-link>
                 <button type="submit" class="btn rounded-0 button-color">Submit</button>
             </div>
         </div>

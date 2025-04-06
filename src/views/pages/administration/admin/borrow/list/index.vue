@@ -15,11 +15,13 @@
                 <table class="table table-bordered mb-0">
                     <thead>
                         <tr>
-                            <th class="table-header">BORROWER NAME</th>
                             <th class="table-header">EQUIPMENT TYPE</th>
-                            <th class="table-header">STATUS</th>
+                            <th class="table-header">BORROWER NAME</th>
+                            <th class="table-header">DEPARTMENT</th>
+                            <th class="table-header">CONTACT #</th>
                             <th class="table-header">DATE BORROWED</th>
                             <th class="table-header">DATE RETURNED</th>
+                            <th class="table-header">STATUS</th>
                         </tr>
                     </thead>
                     <tbody v-if="!isEmpty">

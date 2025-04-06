@@ -2,15 +2,19 @@
     <tr>
         <td class="table-data">
             <div v-if="isLoading" class="shimmer-loader"></div>
-            <span v-else>{{ item.full_name }}</span>
-        </td>
-        <td class="table-data">
-            <div v-if="isLoading" class="shimmer-loader"></div>
             <span v-else>{{ item.type }}</span>
         </td>
         <td class="table-data">
             <div v-if="isLoading" class="shimmer-loader"></div>
-            <span v-else>{{ formatStatus(item.status) }}</span>
+            <span v-else>{{ item.full_name }}</span>
+        </td>
+        <td class="table-data">
+            <div v-if="isLoading" class="shimmer-loader"></div>
+            <span v-else>{{ item.office_name }}</span>
+        </td>
+        <td class="table-data">
+            <div v-if="isLoading" class="shimmer-loader"></div>
+            <span v-else>{{ item.mobile_number }}</span>
         </td>
         <td class="table-data">
             <div v-if="isLoading" class="shimmer-loader"></div>
@@ -19,6 +23,10 @@
         <td class="table-data">
             <div v-if="isLoading" class="shimmer-loader"></div>
             <span v-else>{{ item.date_return }}</span>
+        </td>
+        <td class="table-data">
+            <div v-if="isLoading" class="shimmer-loader"></div>
+            <span v-else>{{ formatStatus(item.status) }}</span>
         </td>
     </tr>
 </template>
@@ -108,11 +116,6 @@ export default
     font-weight: 500;
     padding: 10px;
     color: #ffffff;
-}
-
-.table-data:last-child {
-    width: 225px;
-    text-align: center;
 }
 
 span

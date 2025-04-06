@@ -156,7 +156,7 @@
                 </div>
 
                 <div class="text-end">
-                    <router-link :to="'/administration/borrow'" class="btn btn-secondary btn-sm rounded-0 me-3">Cancel</router-link>
+                    <router-link :to="'/management/borrow'" class="btn btn-secondary btn-sm rounded-0 me-3">Cancel</router-link>
                     <button type="submit"  class="btn button-color btn-sm rounded-0">Submit</button>
                 </div>
 

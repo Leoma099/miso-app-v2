@@ -2,7 +2,7 @@
 
     <h1 class="page-title mb-0">View Borrow Equipment</h1>
     <router-link
-        :to="'/administration/borrow'">
+        :to="'/management/borrow'">
         Go back to page
     </router-link>
 

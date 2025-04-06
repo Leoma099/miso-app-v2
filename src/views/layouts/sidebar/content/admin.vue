@@ -5,7 +5,7 @@
         <li>
             <router-link
                 exact-active-class="active"
-                :to="'/administration/dashboard'">
+                :to="'/dashboard'">
                 <i class="bx bx-category me-2"></i>Dashboard
             </router-link>
         </li>
@@ -18,22 +18,22 @@
             <ul :class="['dropdown', {'open': isDropdownOpen1}]">
                 <li>
                     <router-link
-                        :to="'/list/equipment'"
-                        :class="{ 'active': $route.path.includes('/list/equipment')}">
+                        :to="'/equipment/list'"
+                        :class="{ 'active': $route.path.includes('/equipment/list')}">
                         <i class="bx bx-box me-2"></i>Equipment
                     </router-link>
                 </li>
                 <li>
                     <router-link
-                        :to="'/list/borrow'"
-                        :class="{ 'active': $route.path.includes('/list/borrow')}">
+                        :to="'/borrow/list'"
+                        :class="{ 'active': $route.path.includes('/borrow/list')}">
                         <i class="bx bx-archive me-2"></i>Borrow
                     </router-link>
                 </li>
                 <li>
                     <router-link
-                    :to="'/list/account'"
-                    :class="{ 'active': $route.path.includes('/list/account')}">
+                    :to="'/account/list'"
+                    :class="{ 'active': $route.path.includes('/account/list')}">
                         <i class="bx bx-group me-2"></i>Account
                     </router-link>
                 </li>

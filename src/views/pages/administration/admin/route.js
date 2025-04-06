@@ -1,6 +1,6 @@
 export default [
     {
-        path: '/list/equipment',
+        path: '/equipment/list',
         name: 'List / Equipment',
         component: () => import('@/views/pages/administration/admin/equipment'),
         meta:
@@ -10,7 +10,7 @@ export default [
         },
     },
     {
-        path: '/list/borrow',
+        path: '/borrow/list',
         name: 'List / Borrow',
         component: () => import('@/views/pages/administration/admin/borrow'),
         meta:
@@ -20,7 +20,7 @@ export default [
         },
     },
     {
-        path: '/list/account',
+        path: '/account/list',
         name: 'List / Account',
         component: () => import('@/views/pages/administration/admin/account'),
         meta:

@@ -8,8 +8,17 @@
 
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <div>
-                    <router-link :to="'/management/equipment/create'" class="btn rounded-0 button-color">Create New
-                        Equipment</router-link>
+                    <router-link :to="'/management/equipment/create'" class="btn rounded-0 button-color me-3">Create New
+                        Equipment
+                    </router-link>
+                    <button
+                        class="btn button-color rounded-0 me-3">
+                        Export
+                    </button>
+                    <button
+                        class="btn button-color rounded-0">
+                        Import
+                    </button>
                 </div>
                 <div class="col-md-3 ">
                     <input type="text" v-model="searchQuery" @input="fetchEquipment" placeholder="Search equipment..."

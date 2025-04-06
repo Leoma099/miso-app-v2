@@ -27,8 +27,8 @@
         <td class="table-data">
             <div v-if="isLoading" class="shimmer-loader"></div>
             <div v-else>
-                <router-link :to="`/administration/equipment/${item.id}`" class="btn btn-sm btn-info rounded-0 me-3">View</router-link>
-                <router-link :to="`/administration/equipment/${item.id}/edit`" class="btn btn-sm btn-warning rounded-0 me-3">Edit</router-link>
+                <router-link :to="`/management/equipment/${item.id}`" class="btn btn-sm btn-info rounded-0 me-3">View</router-link>
+                <router-link :to="`/management/equipment/${item.id}/edit`" class="btn btn-sm btn-warning rounded-0 me-3">Edit</router-link>
                 <button class="btn btn-sm btn-danger rounded-0" @click="deleteEquipment()">Delete</button>
             </div>
         </td>

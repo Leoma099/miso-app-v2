@@ -8,19 +8,19 @@
 
             <div class="card card-body shadow-sm border-0 rounded-0">
 
-                <div class="d-flex justify-content-between align-items-center mb-3">
+                <div class="d-flex justify-content-end align-items-center mb-3">
                     <div>
                         <!-- <router-link
                             :to="'/administration/track-equipment/create'"
                             class="btn rounded-0 button-color me-3">
                             Add Track Equipment
                         </router-link> -->
-                        <button
+                        <!-- <button
                             type="button"
                             class="btn rounded-0 button-color me-3"
                             @click="exportFile()">
                             Export
-                        </button>
+                        </button> -->
                     </div>
                     <div class="col-md-3 ">
                         <input type="text" v-model="searchQuery" @input="fetchBorrower" placeholder="Search equipment..."

@@ -1,7 +1,7 @@
 <template>
 
     <h1 class="page-title mb-0">VIEW EQUIPMENT</h1>
-    <router-link :to="'/administration/equipment'">Go back to page</router-link>
+    <router-link :to="'/management/equipment'">Go back to page</router-link>
 
     <div class="mt-3">
 

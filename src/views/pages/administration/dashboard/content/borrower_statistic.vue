@@ -13,16 +13,21 @@ import apiClient from "@/services/index"; // Your API client (axios)
 
 Chart.register(...registerables);
 
-export default {
-    data() {
+export default
+{
+    data()
+    {
         return {
             lineChart: null,
         };
     },
 
-    methods: {
-        async fetchBorrowStatistics() {
-            try {
+    methods:
+    {
+        async fetchBorrowStatistics()
+        {
+            try
+            {
                 const response = await apiClient.get('/borrow-statistics');
                 const borrowStats = response.data;
                 
@@ -36,30 +41,50 @@ export default {
 
                 // Create the chart with real data
                 this.createLineChart(labels, data);
-            } catch (error) {
+            }
+            catch (error)
+            {
                 console.error("Error fetching borrow statistics:", error);
             }
         },
 
-        createLineChart(labels, values) {
-            if (this.lineChart) {
+        createLineChart(labels, values)
+        {
+            if (this.lineChart)
+            {
                 this.lineChart.destroy();
             }
 
-            this.lineChart = new Chart(this.$refs.lineReport.getContext("2d"), {
-                type: "line",
+            this.lineChart = new Chart(this.$refs.lineReport.getContext("2d"),
+            {
+                type: "bar",
                 data: {
                     labels: labels,
                     datasets: [
+                        // {
+                        //     label: "Borrow Status",
+                        //     data: values,
+                        //     fill: true,
+                        //     borderColor: "#367096",
+                        //     backgroundColor: "rgba(2, 61, 84, 0.2)",
+                        //     tension: 0.4,
+                        //     pointRadius: 3,
+                        // },
                         {
-                            label: "Borrow Status",
-                            data: values,
-                            fill: true,
-                            borderColor: "#367096", // Line color
-                            backgroundColor: "rgba(2, 61, 84, 0.2)", // Area fill color
-                            tension: 0.4, // Smooth curve
-                            pointRadius: 3, // Remove point markers
+                            label: "Pending",
+                            data: [values[0], 0, 0],
+                            backgroundColor: "#f0f0f0",
                         },
+                        {
+                            label: "Approved",
+                            data: [0, values[1], 0],
+                            backgroundColor: "green",
+                        },
+                        {
+                            label: "Returned",
+                            data: [0, 0, values[2]],
+                            backgroundColor: "blue",
+                        }
                     ]
                 },
                 options: {
@@ -84,12 +109,14 @@ export default {
         }
     },
 
-    mounted() {
+    mounted()
+    {
         this.fetchBorrowStatistics(); // Fetch the data when component is mounted
     },
 
     watch: {
-        timeFrame() {
+        timeFrame()
+        {
             this.fetchBorrowStatistics(); // Refetch data if timeFrame changes
         },
     }

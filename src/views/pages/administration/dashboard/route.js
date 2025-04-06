@@ -1,6 +1,6 @@
 export default [
     {
-        path: '/administration/dashboard',
+        path: '/dashboard',
 
         name: 'Administration / Dashboard',
 

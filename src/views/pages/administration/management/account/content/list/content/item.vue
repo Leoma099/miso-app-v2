@@ -15,8 +15,8 @@
         <td class="table-data">
             <div v-if="isLoading" class="shimmer-loader"></div>
             <div v-else>
-                <router-link :to="`/administration/account/${item.id}`" class="btn btn-sm btn-info rounded-0 me-3">Views</router-link>
-                <router-link :to="`/administration/account/${item.id}/edit`" class="btn btn-sm btn-warning rounded-0 me-3">Edit</router-link>
+                <router-link :to="`/management/account/${item.id}`" class="btn btn-sm btn-info rounded-0 me-3">Views</router-link>
+                <router-link :to="`/management/account/${item.id}/edit`" class="btn btn-sm btn-warning rounded-0 me-3">Edit</router-link>
                 <button type="button" class="btn btn-sm btn-danger rounded-0" @click="deleteBorrow()">Delete</button>
             </div>
         </td>

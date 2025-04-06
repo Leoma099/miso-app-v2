@@ -1,7 +1,7 @@
 <template>
 
     <h1 class="page-title mb-0">View User Account</h1>
-    <router-link :to="'/administration/account'">Go back to page</router-link>
+    <router-link :to="'/management/account'">Go back to page</router-link>
 
     <form @submit.prevent="submit()" class="mt-4">
 
