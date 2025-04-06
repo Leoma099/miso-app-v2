@@ -8,11 +8,12 @@
 
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <div>
-                    <router-link :to="'/management/account/create'" class="btn rounded-0 button-color">Create New
-                        User</router-link>
+                    <router-link :to="'/management/equipment/create'" class="btn rounded-0 button-color me-3">
+                        <i class="bx bx-plus me-2"></i> Add User
+                    </router-link>
                 </div>
-                <div class="col-md-3 ">
-                    <input type="text" v-model="searchQuery" @input="fetchAccount" placeholder="Search account..."
+                <div class="col-md-4">
+                    <input type="text" v-model="searchQuery" @input="fetchAccount" placeholder="Type your search here"
                         class="form-control rounded-0">
                 </div>
             </div>

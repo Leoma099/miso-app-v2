@@ -12,11 +12,12 @@
 
         <div class="card card-body shadow-sm border-0 rounded-0">
 
-            <div class="table-responsive">
+            <div class="table-responsive table-scrollable">
                 <table class="table table-bordered mb-0">
                     <thead>
                         <tr>
                             <th class="table-header">PROPERTY NUMBER</th>
+                            <th class="table-header">SERIAL NUMBER</th>
                             <th class="table-header">EQUIPMENT TYPE</th>
                             <th class="table-header">BRAND</th>
                             <th class="table-header">MODEL</th>
@@ -41,26 +42,16 @@
                 </table>
             </div>
 
+            <!-- Pagination is here -->
             <div class="pagination-container">
-
-                <span class="entries-info">
-                    Showing {{ startEntry }} to {{ endEntry }} of {{ totalEntries }} entries
-                </span>
-
-                <div class="pagination-buttons">
-                    <button @click="goToPage(1)" :disabled="currentPage === 1">«</button>
-                    <button @click="prevPage" :disabled="currentPage === 1">‹</button>
-
-                    <button v-for="page in visiblePages" :key="page" @click="goToPage(page)"
-                        :class="{ active: page === currentPage }">
-                        {{ page }}
-                    </button>
-
-                    <button @click="nextPage" :disabled="currentPage === totalPages">›</button>
-                    <button @click="goToPage(totalPages)" :disabled="currentPage === totalPages">»</button>
+                <div class="entries-info">
+                    Showing {{ (currentPage - 1) * perPage + 1 }} to {{ currentPage * perPage }} of {{ items.length }} records
                 </div>
-
+                <div class="pagination-buttons">
+                    <!-- Pagination buttons here -->
+                </div>
             </div>
+
         </div>
     </div>
 
@@ -70,118 +61,60 @@
 import apiClient from "@/services/index"
 import ItemComponent from "./content/item"
 export default
+{
+
+    components:
     {
+        ItemComponent,
+    },
 
-        components:
-        {
-            ItemComponent,
-        },
+    data() {
+        return {
+            items: [], // Your actual data
+            searchQuery: "",
+            isLoading: false,
+            isEmpty: false,
+            perPage: 10,
+            currentPage: 1
+        };
+    },
 
-        data() {
-            return {
-                items: [], // Your actual data
-                searchQuery: "",
-                isLoading: false,
-                perPage: 6, // Number of items per page
-                currentPage: 1,
-                totalEntries: 57, // Example total count (update dynamically)
-                isEmpty: false,
-            };
-        },
+    mounted() {
+        this.fetchEquipment();
+    },
 
-        computed:
-        {
+    methods:
+    {
+        async fetchEquipment() {
+            try {
+                this.isLoading = true;
+                setTimeout(async () => {
+                    const response = await apiClient.get(`/equipment`, {
+                        params: {
+                            search: this.searchQuery,
+                            page: this.currentPage,
+                            perPage: this.perPage
+                        }
+                    });
 
-            totalPages() {
-                return Math.ceil(this.totalEntries / this.perPage);
-            },
+                    console.log("Fetched Equipment Data:", response.data); // Debugging
 
-            startEntry() {
-                return (this.currentPage - 1) * this.perPage + 1;
-            },
-
-            endEntry() {
-                return Math.min(this.currentPage * this.perPage, this.totalEntries);
-            },
-
-            visiblePages() {
-                const pages = [];
-                const maxPages = 6;
-                let start = Math.max(1, this.currentPage - Math.floor(maxPages / 2));
-                let end = Math.min(this.totalPages, start + maxPages - 1);
-
-                for (let i = start; i <= end; i++) {
-                    pages.push(i);
-                }
-                return pages;
-            }
-
-        },
-
-        mounted() {
-            this.fetchEquipment();
-        },
-
-        methods:
-        {
-            async fetchEquipment() {
-                try {
-                    this.isLoading = true;
-                    setTimeout(async () => {
-                        const response = await apiClient.get(`/equipment`, {
-                            params: {
-                                search: this.searchQuery,
-                                page: this.currentPage,
-                                limit: this.perPage
-                            }
-                        });
-
-                        console.log("Fetched Equipment Data:", response.data); // Debugging
-
-                        this.items = response.data.data;
-                        this.totalEntries = response.data.total; // Make sure to update this
-                        this.isEmpty = this.items.length === 0; // Check if items array is empty
-                        this.isLoading = false;
-                    }, 1000);
-                } catch (error) {
-                    console.error("Error fetching equipment:", error);
+                    this.items = response.data.data;
+                    this.isEmpty = this.items.length === 0; // Check if items array is empty
                     this.isLoading = false;
-                    this.isEmpty = true; // Assume empty on error
-                }
-            },
-
-            goToPage(page) {
-                if (page >= 1 && page <= this.totalPages) {
-                    this.currentPage = page;
-                    this.fetchEquipment(); // Fetch new data
-                }
-            },
-
-            prevPage() {
-                if (this.currentPage > 1) {
-                    this.currentPage--;
-                    this.fetchEquipment();
-                }
-            },
-
-            nextPage() {
-                if (this.currentPage < this.totalPages) {
-                    this.currentPage++;
-                    this.fetchEquipment();
-                }
+                }, 1000);
+            } catch (error) {
+                console.error("Error fetching equipment:", error);
+                this.isLoading = false;
+                this.isEmpty = true; // Assume empty on error
             }
         },
 
-        watch:
-        {
-            currentPage() {
-                this.fetchEquipment();
-            }
-        }
+    },
 
 
 
-    };
+};
 </script>
 
 <style scoped>
@@ -206,6 +139,7 @@ export default
     background-color: #007bff;
     color: #ffffff;
 }
+
 .pagination-container {
     display: flex;
     justify-content: space-between;
@@ -244,5 +178,14 @@ export default
 .pagination-buttons button:disabled {
     background: #eee;
     cursor: not-allowed;
+}
+.table-scrollable
+{
+    max-height: 500px;
+    overflow: hidden; /* Hidden by default */
+}
+.table-scrollable:hover
+{
+    overflow-y: auto; /* Show scrollbar when hovering */
 }
 </style>

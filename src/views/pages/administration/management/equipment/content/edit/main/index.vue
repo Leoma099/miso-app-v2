@@ -11,7 +11,7 @@
                     <div class="col-md-8">
                         <div class="form-group mb-3">
                             <label for="" class="form-label">* Type:</label>
-                            <input type="text" class="form-control rounded-0" placeholder="ex. Laptop"
+                            <input type="text" class="form-control rounded-0"
                                 v-model="form.type">
                         </div>
                     </div>
@@ -19,7 +19,7 @@
                     <div class="col-md-4">
                         <div class="form-group mb-3">
                             <label for="" class="form-label">* Photo:</label>
-                            <input type="file" class="form-control rounded-0" placeholder="ex. PROJECTOR" @change="handleFilePhoto">
+                            <input type="file" class="form-control rounded-0" @change="handleFilePhoto">
                         </div>
                     </div>
 
@@ -29,15 +29,15 @@
 
                     <div class="col-md-6">
                         <div class="form-group mb-3">
-                            <label for="" class="form-label">* Property Number:</label>
-                            <input type="text" class="form-control rounded-0" placeholder="ex. QP812AA#ABA" v-model="form.property_number">
+                            <label for="" class="form-label">* Quantity:</label>
+                            <input type="0" class="form-control rounded-0" v-model="form.quantity">
                         </div>
                     </div>
 
                     <div class="col-md-6">
                         <div class="form-group mb-3">
                             <label for="" class="form-label">* Serial Number:</label>
-                            <input type="text" class="form-control rounded-0" placeholder="ex. MYL12345678" v-model="form.serial_number">
+                            <input type="text" class="form-control rounded-0" v-model="form.serial_number">
                         </div>
                     </div>
 
@@ -47,15 +47,15 @@
 
                     <div class="col-md-6">
                         <div class="form-group mb-3">
-                            <label for="" class="form-label">Brand:</label>
-                            <input type="text" class="form-control rounded-0" placeholder="ex. HP" v-model="form.brand">
+                            <label for="" class="form-label">* Brand:</label>
+                            <input type="text" class="form-control rounded-0" v-model="form.brand">
                         </div>
                     </div>
 
                     <div class="col-md-6">
                         <div class="form-group mb-3">
-                            <label for="" class="form-label">Model:</label>
-                            <input type="text" class="form-control rounded-0" placeholder="ex. Pavillion p2 Series" v-model="form.model">
+                            <label for="" class="form-label">* Model:</label>
+                            <input type="text" class="form-control rounded-0" v-model="form.model">
                         </div>
                     </div>
 
@@ -65,7 +65,7 @@
 
                     <div class="col-md-6">
                         <div class="form-group mb-3">
-                            <label for="" class="form-label">Condition:</label>
+                            <label for="" class="form-label">* Condition:</label>
                             <select class="form-control form-control-sm rounded-0" v-model="form.condition">
                                 <option value="1">Good</option>
                                 <option value="2">Damage</option>
@@ -76,7 +76,7 @@
 
                     <div class="col-md-6">
                         <div class="form-group mb-3">
-                            <label for="" class="form-label">Availability:</label>
+                            <label for="" class="form-label">* Availability:</label>
                             <select class="form-control form-control-sm rounded-0" v-model="form.availability">
                                 <option value="1">Available</option>
                                 <option value="2">Not Available</option>
@@ -87,9 +87,9 @@
                 </div>
 
                 <div class="form-group mb-3">
-                    <label for="" class="form-label">Registered Date:</label>
-                    <input type="date" class="form-control rounded-0" placeholder="ex. Juan Dela Cruz"
-                        v-model="form.registered_date">
+                    <label for="" class="form-label">* Property Number:</label>
+                    <input type="text" class="form-control rounded-0"
+                        v-model="form.property_number">
                 </div>
 
                 <div class="text-end">
@@ -118,7 +118,7 @@ export default
                     model: "",
                     condition: "1",
                     availability: "1",
-                    registered_date: this.getCurrentDate(),
+                    quantity: "",
                     photo: null,
                     property_number: "",
                     serial_number: "",
@@ -161,12 +161,13 @@ export default
                     formData.append("model", this.form.model);
                     formData.append("condition", this.form.condition);
                     formData.append("availability", this.form.availability);
-                    formData.append("registered_date", this.form.registered_date);
+                    formData.append("quantity", this.form.quantity);
                     formData.append("property_number", this.form.property_number);
                     formData.append("serial_number", this.form.serial_number);
 
                     const response = await apiClient.put(`/equipment/${this.$route.params.id}`, formData);
-                    this.$router.push("/administration/equipment");
+                    this.$router.push("/management/equipment");
+                    alert("Equipment update successfullY.")
                     console.log("Equipment created successfully", response.data);
                 }
                 catch(error)

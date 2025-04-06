@@ -29,8 +29,8 @@
 
                     <div class="col-md-6">
                         <div class="form-group mb-3">
-                            <label for="" class="form-label">* Property Number:</label>
-                            <input type="text" class="form-control rounded-0" placeholder="ex. QP812AA#ABA" v-model="form.property_number">
+                            <label for="" class="form-label">* Quantity:</label>
+                            <input type="number" class="form-control rounded-0" v-model="form.quantity">
                         </div>
                     </div>
 
@@ -62,9 +62,8 @@
                 </div>
 
                 <div class="form-group mb-3">
-                    <label for="" class="form-label">Registered Date:</label>
-                    <input type="date" class="form-control rounded-0" placeholder="ex. Juan Dela Cruz"
-                        v-model="form.registered_date">
+                    <label for="" class="form-label">* Property Number:</label>
+                    <input type="text" class="form-control rounded-0" placeholder="ex. QP812AA#ABA" v-model="form.property_number">
                 </div>
 
                 <div class="text-end">
@@ -94,7 +93,7 @@ export default
                 model: "",
                 condition: "1",
                 availability: "1",
-                registered_date: this.getCurrentDate(),
+                quantity: 0,
                 photo: null,
                 property_number: "",
                 serial_number: "",
@@ -130,7 +129,7 @@ export default
                 formData.append("model", this.form.model);
                 formData.append("condition", this.form.condition);
                 formData.append("availability", this.form.availability);
-                formData.append("registered_date", this.form.registered_date);
+                formData.append("quantity", this.form.quantity);
                 formData.append("property_number", this.form.property_number);
                 formData.append("serial_number", this.form.serial_number);
 

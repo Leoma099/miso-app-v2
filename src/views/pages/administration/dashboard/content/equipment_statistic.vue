@@ -2,12 +2,7 @@
 
     <div class="card card-body shadow-sm border-0 rounded-0">
 
-        <div class="d-flex justify-content-between align-items-center">
-            <p class="mb-0">Equipment Availability</p>
-            <div>
-                <h4 class="mb-0" v-if="percent !== null">{{ percent }}%</h4>
-            </div>
-        </div>
+        <p class="mb-0">Equipment Availability</p>
 
         <div class="metric-chart">
             <canvas ref="doughnutChart" height="300"></canvas>
@@ -27,9 +22,6 @@ export default
     {
         return {
             doughnutChart: null,
-            // available: 0,
-            // notAvailable: 0,
-            percent: null,
         };
     },
 
@@ -60,9 +52,9 @@ export default
                 this.doughnutChart.destroy();
             }
 
-            const total = available + notAvailable;
-            const percentValue = total === 0 ? 0 : Math.round((available / total) * 100);
-            this.percent = percentValue;
+            // const total = available + notAvailable;
+            // const percentValue = total === 0 ? 0 : Math.round((available / total) * 100);
+            // this.percent = percentValue;
 
             // const centerTextPlugin =
             // {

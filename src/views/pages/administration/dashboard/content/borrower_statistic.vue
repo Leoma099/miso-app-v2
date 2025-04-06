@@ -1,16 +1,19 @@
 <template>
+
     <div class="card card-body shadow-sm border-0 rounded-0">
-        <p class="mb-0">Borrow Statistics</p>
+
+        <p class="mb-0">Borrower Status</p>
+
         <div class="metric-chart">
-            <canvas ref="lineReport" height="300"></canvas>
+            <canvas ref="doughnutChart" height="300"></canvas>
         </div>
     </div>
+    
 </template>
 
 <script>
 import { Chart, registerables } from "chart.js";
 import apiClient from "@/services/index"; // Your API client (axios)
-
 Chart.register(...registerables);
 
 export default
@@ -18,114 +21,95 @@ export default
     data()
     {
         return {
-            lineChart: null,
+            doughnutChart: null,
         };
     },
 
     methods:
     {
-        async fetchBorrowStatistics()
+        async fetchAvailabilityData()
         {
             try
             {
-                const response = await apiClient.get('/borrow-statistics');
-                const borrowStats = response.data;
-                
-                // Mapping numeric status to labels
-                const labels = ["Pending", "Approved", "Returned"];
-                const data = [
-                    borrowStats.pending,  // Corresponds to status 1 (Pending)
-                    borrowStats.approved, // Corresponds to status 2 (Approved)
-                    borrowStats.returned  // Corresponds to status 3 (Returned)
-                ];
+                const response = await apiClient.get("/borrow-statistics");
+                const borrowStatus = response.data;
 
-                // Create the chart with real data
-                this.createLineChart(labels, data);
+                this.createDoughnutChart(borrowStatus.pending, borrowStatus.approved, borrowStatus.returned);
             }
             catch (error)
             {
-                console.error("Error fetching borrow statistics:", error);
+                console.error("Error fetching equipment availability data:", error);
             }
         },
 
-        createLineChart(labels, values)
+        createDoughnutChart(pending, approved, returned)
         {
-            if (this.lineChart)
+            if (this.doughnutChart)
             {
-                this.lineChart.destroy();
+                this.doughnutChart.destroy();
             }
 
-            this.lineChart = new Chart(this.$refs.lineReport.getContext("2d"),
+            const data =
             {
-                type: "bar",
-                data: {
-                    labels: labels,
-                    datasets: [
-                        // {
-                        //     label: "Borrow Status",
-                        //     data: values,
-                        //     fill: true,
-                        //     borderColor: "#367096",
-                        //     backgroundColor: "rgba(2, 61, 84, 0.2)",
-                        //     tension: 0.4,
-                        //     pointRadius: 3,
-                        // },
-                        {
-                            label: "Pending",
-                            data: [values[0], 0, 0],
-                            backgroundColor: "#f0f0f0",
-                        },
-                        {
-                            label: "Approved",
-                            data: [0, values[1], 0],
-                            backgroundColor: "green",
-                        },
-                        {
-                            label: "Returned",
-                            data: [0, 0, values[2]],
-                            backgroundColor: "blue",
-                        }
-                    ]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            position: "bottom",
-                        }
+                labels: ["Pending", "Approved", "Returned"],
+                datasets:
+                [
+                    {
+                        data: [pending, approved, returned], // Real data values
+                        backgroundColor: ["#f0f0f0", "#367096", "#64adc4"],
+                        hoverOffset: 10, // Adds hover effect
                     },
-                    scales: {
-                        y: {
-                            title: {
-                                display: true,
-                                text: "Number of Borrows"
+                ],
+            };
+
+            const options =
+            {
+                responsive: true,
+                maintainAspectRatio: false,
+                cutout: "70%",
+                borderRadius: "5",
+                plugins:
+                {
+                    legend:
+                    {
+                        position: "bottom", // Legend positioned on the right
+                    },
+                    tooltip:
+                    {
+                        callbacks:
+                        {
+                            label: function (tooltipItem)
+                            {
+                                let dataset = tooltipItem.dataset;
+                                let dataIndex = tooltipItem.dataIndex;
+                                let label = data.labels[dataIndex];
+                                let value = dataset.data[dataIndex];
+                                return `${label}: ${value}`;
                             },
-                            beginAtZero: true,
-                        }
+                        },
                     },
-                }
+                },
+            };
+
+            this.doughnutChart = new Chart(this.$refs.doughnutChart.getContext("2d"), {
+                type: "doughnut",
+                data: data,
+                options: options,
+                // plugins: [centerTextPlugin],
             });
-        }
+        },
     },
 
     mounted()
     {
-        this.fetchBorrowStatistics(); // Fetch the data when component is mounted
+        this.fetchAvailabilityData(); // Fetch the data when the component is mounted
     },
-
-    watch: {
-        timeFrame()
-        {
-            this.fetchBorrowStatistics(); // Refetch data if timeFrame changes
-        },
-    }
 };
 </script>
 
 <style scoped>
 .metric-chart {
-    height: 300px;
-    padding: 20px;
+  height: 300px;
+  padding: 20px;
 }
 </style>

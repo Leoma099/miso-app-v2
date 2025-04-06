@@ -2,6 +2,13 @@
     <tr>
         <td class="table-data">
             <div v-if="isLoading" class="shimmer-loader"></div>
+            <span v-else>{{ item.property_number }}</span>
+        </td>
+        <td class="table-data">
+            <div v-if="isLoading" class="shimmer-loader"></div>
+            <span v-else>{{ item.serial_number }}</span>
+        </td>        <td class="table-data">
+            <div v-if="isLoading" class="shimmer-loader"></div>
             <span v-else>{{ item.type }}</span>
         </td>
         <td class="table-data">
@@ -22,7 +29,7 @@
         </td>
         <td class="table-data">
             <div v-if="isLoading" class="shimmer-loader"></div>
-            <span v-else>{{ item.registered_date }}</span>
+            <span v-else>{{ item.quantity }}</span>
         </td>
         <td class="table-data">
             <div v-if="isLoading" class="shimmer-loader"></div>

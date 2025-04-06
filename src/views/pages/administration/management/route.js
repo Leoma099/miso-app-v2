@@ -13,11 +13,11 @@ export default [
         [
             {
                 path: 'create',
-                name: 'Create / Account',
+                name: 'Create / Equipment',
                 component: () => import('@/views/pages/administration/management/equipment'),
                 meta:
                 {
-                    name: 'Create Account',
+                    name: 'Create Equipment',
                     page: 'create',
                     subPage: 'main',
                 }
