@@ -10,9 +10,9 @@
             </router-link>
         </li>
 
+        <!-- LIST -->
         <li>
-            <a href="#" @click="toggleDropdown1()"
-                :class="{ 'active': $route.path.includes('/list')}">
+            <a href="#" @click="toggleDropdown1()">
                 <i class="bx bx-clipboard me-2"></i>List
             </a>
             <ul :class="['dropdown', {'open': isDropdownOpen1}]">
@@ -40,9 +40,9 @@
             </ul>
         </li>
 
+        <!-- MANAGEMENT -->
         <li>
-            <a href="#" @click="toggleDropdown2()"
-            :class="{ 'active': $route.path.includes('/management')}">
+            <a href="#" @click="toggleDropdown2()">
                 <i class="bx bx-clipboard me-2"></i>Management
             </a>
             <ul :class="['dropdown', {'open': isDropdownOpen2}]">
@@ -102,21 +102,28 @@
             </router-link>
         </li>
 
-        <li>
-            <router-link
-                :class="{ 'active': $route.path.includes('/administration/department')}"
-                :to="'/administration/department'">
-                <i class="bx bx-building me-2"></i>Department Category
-            </router-link>
-        </li>
-
-        <li>
-            <router-link
-                :class="{ 'active': $route.path.includes('/administration/delivery')}"
-                :to="'/administration/delivery'">
-                <i class="bx bx-cart me-2"></i>Delivery Category
-            </router-link>
-        </li>
+        <!-- CATEGORY -->
+         <li>
+            <a href="#" @click="toggleDropdown3()">
+                <i class="bx bx-clipboard me-3"></i> Category
+            </a>
+            <ul :class="['dropdown', {'open': isDropdownOpen3}]">
+                <li>
+                    <router-link
+                        :class="{ 'active': $route.path.includes('/administration/department')}"
+                        :to="'/administration/department'">
+                        <i class="bx bx-building me-2"></i>Department
+                    </router-link>
+                </li>
+                <li>
+                    <router-link
+                        :class="{ 'active': $route.path.includes('/administration/delivery')}"
+                        :to="'/administration/delivery'">
+                        <i class="bx bx-cart me-2"></i>Delivery
+                    </router-link>
+                </li>
+            </ul>
+         </li>
 
     </div>
 

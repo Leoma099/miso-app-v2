@@ -2,33 +2,35 @@
 
     <div class="animate animate-fade-in">
 
-        <list-component v-if="$route.meta.page === 'list'" />
-        <create-component v-if="$route.meta.page === 'create'" />
+        <h1 class="page-title mb-0">Add New Deliver Rider</h1>
+        <router-link :to="'/administration/delivery'">Go back to page</router-link>
+
+        <main-component v-if="$route.meta.subPage === 'main'" />
 
     </div>
 
 </template>
 
 <script>
-import ListComponent from "./content/list";
-import CreateComponent from "./content/create";
+import MainComponent from "./main";
 export default
 {
+    name: 'Create',
+
     components:
     {
-        ListComponent,
-        CreateComponent
+        MainComponent
     }
 }
 </script>
 
 <style scoped>
-.animation
+.animate
 {
     animation-duration: 1s;
     animation-fill-mode: none;
 }
-.animation-fade-in
+.animate-fade-in
 {
     animation-name: fadeIn;
 }
@@ -40,5 +42,8 @@ export default
     to{
         opacity: 1;
     }
+}
+.page-title {
+    color: #007bff;
 }
 </style>

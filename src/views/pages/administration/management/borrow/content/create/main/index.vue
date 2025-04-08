@@ -1,52 +1,183 @@
 <template>
 
-    <form @submit.prevent="submit()" class="mt-4">
+    <div class="col-5 mx-auto">
+
         <div class="card card-body shadow-sm border-0 rounded-0">
 
-            <div class="form-group mb-3">
-                <label for="" class="form-label">Borrower Name:</label>
-                <input type="text" class="form-control rounded-0" placeholder="ex. PROJECTOR" v-model="form.full_name">
-            </div>
+            <form @submit.prevent="submit()">
 
-            <div class="form-group mb-3">
-                <label for="" class="form-label">Department:</label>
-                <select class="form-select rounded-0" v-model="form.department">
-                    <option disabled selected>-select department-</option>
-                </select>
-            </div>
+                <h5 class="page-title">ACCOUNT INFO</h5>
 
-            <div class="form-group mb-3">
-                <label for="" class="form-label">Equipment Type:</label>
-                <select class="form-select rounded-0" v-model="form.equipment_type">
-                    <option disabled selected>-select equipment type-</option>
-                </select>
-            </div>
+                <div class="row mb-3">
+                    
+                    <div class="col-md-4">
+                        <label class="form-label">* Id Number:</label>
+                        <input
+                            type="text"
+                            class="form-control form-control-sm rounded-0"
+                            v-model="form.id_number">
+                    </div>
 
-            <div class="form-group mb-3">
-                <label for="" class="form-label">Brand:</label>
-                <select class="form-select rounded-0" v-model="form.brand">
-                    <option disabled selected>-select equipment type-</option>
-                </select>
-            </div>
+                    <div class="col-md-8">
+                        <label class="form-label">* Full Name:</label>
+                        <input
+                            type="text"
+                            class="form-control form-control-sm rounded-0"
+                            v-model="form.full_name">
+                    </div>
 
-            <div class="form-group mb-3">
-                <label for="" class="form-label">Model:</label>
-                <select class="form-select rounded-0" v-model="form.model">
-                    <option disabled selected>-select model-</option>
-                </select>
-            </div>
+                </div>
 
-            <div class="text-end">
-                <router-link :to="'/management/borrow'" class="btn rounded-0 button-color me-3">Cancel</router-link>
-                <button type="submit" class="btn rounded-0 button-color">Submit</button>
-            </div>
+                <div class="row mb-3">
+
+                    <div class="col-md-8">
+                        <label class="form-label">* Office Name:</label>
+                        <input
+                            type="text"
+                            class="form-control form-control-sm rounded-0"
+                            v-model="form.office_name">
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="form-label">* Position:</label>
+                        <input
+                            type="text"
+                            class="form-control form-control-sm rounded-0"
+                            v-model="form.position">
+                    </div>
+
+                </div>
+
+                <div class="row mb-3">
+
+                    <div class="col-md-8">
+                        <div class="form-group mb-3">
+                            <label class="form-label">* Office Address:</label>
+                            <input
+                                type="text"
+                                class="form-control form-control-sm rounded-0"
+                                v-model="form.office_address">
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group mb-3">
+                            <label class="form-label">* Mobile Number:</label>
+                            <input
+                                type="text"
+                                class="form-control form-control-sm rounded-0"
+                                v-model="form.mobile_number">
+                        </div>
+                    </div>
+
+                </div>
+
+                <hr>
+
+                <h5 class="page-title">EQUIPMENT INFO</h5>
+
+                <div class="fom-group mb-3">
+
+                    <label class="form-label">* Property Number:</label>
+                    <input
+                        type="text"
+                        class="form-control form-control-sm rounded-0"
+                        v-model="form.property_number">
+
+                </div>
+
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="form-group mb-3">
+                            <label class="form-label">* Equipment Type:</label>
+                            <input
+                                type="text"
+                                class="form-control form-control-sm rounded-0"
+                                v-model="form.type">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group mb-3">
+                            <label class="form-label">* Status:</label>
+                            <select
+                                class="form-control form-control-sm rounded-0"
+                                v-model="form.status">
+                                <option value="1">Pending</option>
+                                <option value="2">Approved</option>
+                                <option value="3">Returned</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+
+                    <div class="col-md-6">
+                        <label class="form-label">* Brand:</label>
+                        <input
+                            type="text"
+                            class="form-control form-control-sm rounded-0"
+                            v-model="form.brand">
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">* Model:</label>
+                        <input
+                            type="text"
+                            class="form-control form-control-sm rounded-0"
+                            v-model="form.model">
+                    </div>
+
+                </div>
+
+                <hr>
+
+                <h5 class="page-title">BORROW INFO</h5>
+
+                <div class="row mb-3">
+
+                    <div class="col-md-6">
+                        <label class="form-label">* Date Borrow:</label>
+                        <input
+                            type="date"
+                            class="form-control form-control-sm rounded-0"
+                            v-model="form.date_borrow">
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">* Date Return:</label>
+                        <input
+                            type="date"
+                            class="form-control form-control-sm rounded-0"
+                            v-model="form.date_return">
+                    </div>
+
+                </div>
+
+                <div class="form-group mb-3">
+                    <label class="form-label">* Purpose to borrow:</label>
+                    <textarea
+                        class="form-control form-control-sm rounded-0"
+                        rows="5"
+                        placeholder="Type your reason here..."
+                        v-model="form.purpose"></textarea>
+                </div>
+
+                <div class="text-end">
+                    <router-link :to="'/management/borrow'" class="btn btn-secondary btn-sm rounded-0 me-3">Cancel</router-link>
+                    <button type="submit"  class="btn button-color btn-sm rounded-0">Submit</button>
+                </div>
+
+            </form>
+
         </div>
-    </form>
+
+    </div>
 
 </template>
 
 <script>
-import axios from "axios";
+import apiClient from "@/services"
 export default
 {
     data()
@@ -54,19 +185,25 @@ export default
         return{
             form:
             {
-                // NON EXIST USER
-                borrower_name: "",
-                department: "",
+                // ACCOUNT INFO
+                full_name: "",
+                id_number: "",
+                office_name: "",
+                office_address: "",
                 position: "",
-                contact_no: "",
+                mobile_number: "",
 
-                // EQUIPMENT ITEM
-                equipment_type: "",
+                // EQUIPMENT INFO
+                type: "",
                 brand: "",
                 model: "",
+                property_number: "",
 
-                registered_date: this.getCurrentDate(),
-
+                // OTHER INFO
+                date_borrow: this.getCurrentDate(),
+                date_return: "",
+                purpose: "",
+                status: "1",
             }
         }
     },
@@ -84,14 +221,17 @@ export default
 
         async submit()
         {
-            axios.post('http://127.0.0.1:8000/api/borrow', this.form)
-            .then(response => {
-                console.log(response.data);
-                this.$router.push('/management/borrow');
-            })
-            .catch(error => {
-                console.error("Error:", error.response?.data || error.message);
-            });
+            try
+            {
+                const response = await apiClient.post('/borrow', this.form)
+                console.log("Borrow created successfully:", response.data);
+                alert("Added borrow successfully");
+                this.$router.push("/management/borrow");
+            }
+            catch(error)
+            {
+                console.error("Error occured:", error);
+            }
         }
     }
 }

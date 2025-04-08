@@ -9,6 +9,7 @@
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <div>
                     <router-link
+                        :to="'/administration/delivery/create'"
                         class="btn rounded-0 button-color">Add New Rider
                     </router-link>
                 </div>
@@ -29,7 +30,12 @@
                             <th class="table-header">ACTION</th>
                         </tr>
                     </thead>
-                    <tbody v-if="!isEmpty"></tbody>
+                    <tbody v-if="!isEmpty">
+                        <item-component
+                            v-for="(item, index) in items"
+                            :key="index"
+                            :item="item"/>
+                    </tbody>
                     <tbody v-else>
                         <tr>
                             <td colspan="8" class="text-center">No Data Record</td>
@@ -45,13 +51,20 @@
 </template>
 
 <script>
+import ItemComponent from "./content/item.vue"
 export default
 {
     data()
     {
         return{
+            items: [],
             isEmpty: true,
         }
+    },
+
+    components:
+    {
+        ItemComponent
     }
 }
 </script>
