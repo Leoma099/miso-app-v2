@@ -38,6 +38,7 @@
                             type="text"
                             class="form-control form-control-sm rounded-0"
                             v-model="form.office_name">
+
                     </div>
                     
                     <div class="col-md-4">
@@ -92,8 +93,10 @@
                         <div class="form-group mb-3">
                             <label class="form-label">* Status:</label>
                             <select
-                                class="form-control form-control-sm rounded-0"
-                                v-model="form.status">
+                                class="form-select form-select-sm"
+                                v-model="form.status"
+                                required>
+                                <option value="0" selected disabled>--Select Status--</option>
                                 <option value="1">Pending</option>
                                 <option value="2">Approved</option>
                                 <option value="3">Returned</option>
@@ -193,8 +196,9 @@ export default
                 date_borrow: this.getCurrentDate(),
                 date_return: "",
                 purpose: "",
-                status: "1",
+                status: "",
             },
+            department: [],
         }
     },
 
@@ -202,6 +206,7 @@ export default
     {
         console.log("Route ID:", this.$route.query.id);
         this.fetchBorrowData();
+        this.fetchDepartment();
     },
 
     methods:
@@ -222,6 +227,20 @@ export default
                 const borrowResponse = await apiClient.get(`/borrow/${this.$route.params.id}`);
                 this.form = borrowResponse.data;
                 console.log("Fetched borrow:", borrowResponse.data);
+            }
+            catch(error)
+            {
+                console.error("Error occured:", error);
+            }
+        },
+
+        async fetchDepartment()
+        {
+            try
+            {
+                const response = await apiClient.get(`/department/${this.$route.params.id}`);
+                this.form = response.data;
+                console.log("Fetched borrow:", response.data);
             }
             catch(error)
             {

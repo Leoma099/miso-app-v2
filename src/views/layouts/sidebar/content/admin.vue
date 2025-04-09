@@ -13,7 +13,10 @@
         <!-- LIST -->
         <li>
             <a href="#" @click="toggleDropdown1()">
-                <i class="bx bx-clipboard me-2"></i>List
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="mb-0"><i class="bx bx-clipboard me-2"></i>List</div>
+                    <i class="bx bx-caret-right" ref="caret1"></i>
+                </div>
             </a>
             <ul :class="['dropdown', {'open': isDropdownOpen1}]">
                 <li>
@@ -43,7 +46,10 @@
         <!-- MANAGEMENT -->
         <li>
             <a href="#" @click="toggleDropdown2()">
-                <i class="bx bx-clipboard me-2"></i>Management
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="mb-0"><i class="bx bx-clipboard me-2"></i>Manaagement</div>
+                    <i class="bx bx-caret-right" ref="caret2"></i>
+                </div>
             </a>
             <ul :class="['dropdown', {'open': isDropdownOpen2}]">
                 <li>
@@ -105,7 +111,10 @@
         <!-- CATEGORY -->
          <li>
             <a href="#" @click="toggleDropdown3()">
-                <i class="bx bx-clipboard me-3"></i> Category
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="mb-0"><i class="bx bx-clipboard me-2"></i>Category</div>
+                    <i class="bx bx-caret-right" ref="caret3"></i>
+                </div>
             </a>
             <ul :class="['dropdown', {'open': isDropdownOpen3}]">
                 <li>
@@ -146,16 +155,22 @@ export default
         toggleDropdown1()
         {
             this.isDropdownOpen1 = !this.isDropdownOpen1;
+            this.$refs.caret1.classList.toggle('bx-caret-down');
+            this.$refs.caret1.classList.toggle('bx-caret-right');
         },
 
         toggleDropdown2()
         {
             this.isDropdownOpen2 = !this.isDropdownOpen2;
+            this.$refs.caret2.classList.toggle('bx-caret-down');
+            this.$refs.caret2.classList.toggle('bx-caret-right');
         },
 
         toggleDropdown3()
         {
             this.isDropdownOpen3 = !this.isDropdownOpen3;
+            this.$refs.caret3.classList.toggle('bx-caret-down');
+            this.$refs.caret3.classList.toggle('bx-caret-right');
         }
     }
 }

@@ -2,7 +2,19 @@
     <tr>
         <td class="table-data">
             <div v-if="isLoading" class="shimmer-loader"></div>
-            <span v-else>{{ item.id_number }}</span>
+            <span v-else>{{ item.type }}</span>
+        </td>
+        <td class="table-data">
+            <div v-if="isLoading" class="shimmer-loader"></div>
+            <span v-else>{{ item.released_to }}</span>
+        </td>
+        <td class="table-data">
+            <div v-if="isLoading" class="shimmer-loader"></div>
+            <span v-else>{{ item.office_name }}</span>
+        </td>
+        <td class="table-data">
+            <div v-if="isLoading" class="shimmer-loader"></div>
+            <span v-else>{{ item.delivered_date }}</span>
         </td>
         <td class="table-data">
             <div v-if="isLoading" class="shimmer-loader"></div>
@@ -10,41 +22,29 @@
         </td>
         <td class="table-data">
             <div v-if="isLoading" class="shimmer-loader"></div>
-            <span v-else>{{ item.department }}</span>
-        </td>
-        <td class="table-data">
-            <div v-if="isLoading" class="shimmer-loader"></div>
-            <span v-else>{{ item.position }}</span>
-        </td>
-        <td class="table-data">
-            <div v-if="isLoading" class="shimmer-loader"></div>
-            <span v-else>{{ item.office_address }}</span>
-        </td>
-        <td class="table-data">
-            <div v-if="isLoading" class="shimmer-loader"></div>
-            <span v-else>{{ item.address }}</span>
-        </td>
-        <td class="table-data">
-            <div v-if="isLoading" class="shimmer-loader"></div>
-            <span v-else>{{ item.email }}</span>
-        </td>
-        <td class="table-data">
-            <div v-if="isLoading" class="shimmer-loader"></div>
-            <span v-else>{{ item.mobile_number }}</span>
+            <span v-else>
+                <button
+                    class="btn btn-sm btn-info rounded-0 me-3">
+                    Edit
+                </button>
+                <button
+                    class="btn btn-sm btn-danger rounded-0">
+                    Delete
+                </button>
+            </span>
         </td>
     </tr>
 </template>
 
 <script>
 export default
-    {
-
-        props:
+{
+    props:
         {
             item: Object,
-            isLoading: Boolean, // Receive isLoading prop from parent
+            isLoading: Boolean,
         },
-    };
+}
 </script>
 
 <style scoped>
@@ -84,7 +84,21 @@ export default
     color: #ffffff;
 }
 
-span {
+.equipment-image {
+    width: 40px;
+    height: 40px;
+    overflow: hidden;
+    background: #e0e0e0;
+}
+
+.equipment-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+span
+{
     font-size: 1rem;
     font-weight: 600;
 }

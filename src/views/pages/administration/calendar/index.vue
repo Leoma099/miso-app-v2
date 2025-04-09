@@ -3,6 +3,7 @@
     <div class="animation animation-fade-in">
 
         <list-component v-if="$route.meta.page === 'list'"/>
+        <view-component v-if="$route.meta.page === 'view'"/>
 
     </div>
 
@@ -10,11 +11,13 @@
 
 <script>
 import ListComponent from "./content/list";
+import ViewComponent from "./content/view";
 export default
 {
     components:
     {
-        ListComponent
+        ListComponent,
+        ViewComponent
     }
 }
 </script>

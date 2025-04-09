@@ -1,7 +1,7 @@
 <template>
 
-    <h1 class="page-title mb-0">VIEW EQUIPMENT</h1>
-    <router-link :to="'/management/equipment'">Go back to page</router-link>
+    <h1 class="page-title mb-0">View Equipment</h1>
+    <router-link :to="'/management/equipment'">Back to page</router-link>
 
     <div class="mt-3">
 
@@ -15,6 +15,22 @@
 
                 <div class="d-flex align-items-center">
                     <p class="mb-0 me-3"><strong>BRAND:</strong></p>
+                    <p class="mb-0">{{ item.type }}</p>
+                </div>
+
+                <div class="d-flex align-items-center">
+                    <p class="mb-0 me-3"><strong>MODEL:</strong></p>
+                    <p class="mb-0">{{ item.serial_number }}</p>
+                </div>
+
+                <div class="d-flex align-items-center">
+                    <p class="mb-0 me-3"><strong>MODEL:</strong></p>
+                    <p class="mb-0">{{ item.property_number }}</p>
+                </div>
+                
+
+                <div class="d-flex align-items-center">
+                    <p class="mb-0 me-3"><strong>BRAND:</strong></p>
                     <p class="mb-0">{{ item.brand }}</p>
                 </div>
 
@@ -24,18 +40,8 @@
                 </div>
 
                 <div class="d-flex align-items-center">
-                    <p class="mb-0 me-3"><strong>REGISTERED DATE:</strong></p>
-                    <p class="mb-0">{{ item.registered_date }}</p>
-                </div>
-
-                <div class="d-flex align-items-center">
-                    <p class="mb-0 me-3"><strong>CONDITION:</strong></p>
-                    <p class="mb-0">{{ formatCondition(item.condition) }}</p>
-                </div>
-
-                <div class="d-flex align-items-center">
-                    <p class="mb-0 me-3"><strong>AVAILABILITY:</strong></p>
-                    <p class="mb-0">{{ formatAvailability(item.availability) }}</p>
+                    <p class="mb-0 me-3"><strong>STATUS:</strong></p>
+                    <p class="mb-0">{{ item.equipmentStatus }}</p>
                 </div>
 
             </div>

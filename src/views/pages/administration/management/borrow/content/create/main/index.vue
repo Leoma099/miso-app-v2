@@ -1,6 +1,6 @@
 <template>
 
-    <div class="col-5 mx-auto">
+    <div class="col-md-6 mx-auto">
 
         <div class="card card-body shadow-sm border-0 rounded-0">
 
@@ -15,7 +15,10 @@
                         <input
                             type="text"
                             class="form-control form-control-sm rounded-0"
-                            v-model="form.id_number">
+                            maxlength="9"
+                            v-model="form.id_number"
+                            placeholder="ex. 000000001"
+                            required>
                     </div>
 
                     <div class="col-md-8">
@@ -23,7 +26,9 @@
                         <input
                             type="text"
                             class="form-control form-control-sm rounded-0"
-                            v-model="form.full_name">
+                            v-model="form.full_name"
+                            placeholder="ex. Juan Dela Cruz"
+                            required>
                     </div>
 
                 </div>
@@ -31,11 +36,19 @@
                 <div class="row mb-3">
 
                     <div class="col-md-8">
-                        <label class="form-label">* Office Name:</label>
-                        <input
-                            type="text"
-                            class="form-control form-control-sm rounded-0"
-                            v-model="form.office_name">
+                        <label class="form-label">* Department:</label>
+                        <select
+                            class="form-select form-select-sm rounded-0"
+                            v-model="form.office_name"
+                            required>
+                            <option value="" selected disabled>--Select Department--</option>
+                            <option
+                                v-for="department in departments"
+                                :key="department"
+                                :value="department.office_name">
+                                {{ department.office_name }}
+                            </option>
+                        </select>
                     </div>
 
                     <div class="col-md-4">
@@ -43,7 +56,9 @@
                         <input
                             type="text"
                             class="form-control form-control-sm rounded-0"
-                            v-model="form.position">
+                            v-model="form.position"
+                            placeholder="ex. Accounting and Tax Collector"
+                            required>
                     </div>
 
                 </div>
@@ -53,10 +68,15 @@
                     <div class="col-md-8">
                         <div class="form-group mb-3">
                             <label class="form-label">* Office Address:</label>
-                            <input
-                                type="text"
-                                class="form-control form-control-sm rounded-0"
-                                v-model="form.office_address">
+                        <select
+                            class="form-select form-select-sm rounded-0"
+                            v-model="form.office_address"
+                            required>
+                            <option value="" selected disabled>--Select Department--</option>
+                            <option v-for="(department, index) in departments" :key="index" :value="department.office_name">
+                                        {{ department.office_address }}
+                                    </option>
+                        </select>
                         </div>
                     </div>
 
@@ -66,7 +86,10 @@
                             <input
                                 type="text"
                                 class="form-control form-control-sm rounded-0"
-                                v-model="form.mobile_number">
+                                maxlength="11"
+                                v-model="form.mobile_number"
+                                placeholder="ex. 09XXXXXXXXX"
+                                required>
                         </div>
                     </div>
 
@@ -82,7 +105,9 @@
                     <input
                         type="text"
                         class="form-control form-control-sm rounded-0"
-                        v-model="form.property_number">
+                        v-model="form.property_number"
+                        placeholder="ex. AB123456789"
+                        required>
 
                 </div>
 
@@ -93,18 +118,22 @@
                             <input
                                 type="text"
                                 class="form-control form-control-sm rounded-0"
-                                v-model="form.type">
+                                v-model="form.type"
+                                placeholder="ex. Laptop"
+                                required>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group mb-3">
                             <label class="form-label">* Status:</label>
                             <select
-                                class="form-control form-control-sm rounded-0"
-                                v-model="form.status">
-                                <option value="1">Pending</option>
-                                <option value="2">Approved</option>
-                                <option value="3">Returned</option>
+                                class="form-select form-select-sm"
+                                v-model="form.status"
+                                required>
+                                <option value="0" selected disabled>--Select Status--</option>
+                                <option value="1" >Pending</option>
+                                <option value="2" >Approved</option>
+                                <option value="3" >Returned</option>
                             </select>
                         </div>
                     </div>
@@ -117,7 +146,9 @@
                         <input
                             type="text"
                             class="form-control form-control-sm rounded-0"
-                            v-model="form.brand">
+                            v-model="form.brand"
+                            placeholder="ex. SAMSUNG"
+                            required>
                     </div>
 
                     <div class="col-md-6">
@@ -125,7 +156,9 @@
                         <input
                             type="text"
                             class="form-control form-control-sm rounded-0"
-                            v-model="form.model">
+                            v-model="form.model"
+                            placeholder="ex. SAMSUNG A12"
+                            required>
                     </div>
 
                 </div>
@@ -204,8 +237,14 @@ export default
                 date_return: "",
                 purpose: "",
                 status: "1",
-            }
+            },
+            departments: [],
         }
+    },
+
+    mounted()
+    {
+        this.fetchDepartment();
     },
 
     methods:
@@ -232,7 +271,21 @@ export default
             {
                 console.error("Error occured:", error);
             }
-        }
+        },
+
+        async fetchDepartment()
+        {
+            try
+            {
+                const response = await apiClient.get("/department");
+                this.departments = response.data;
+                console.log("Department fetched successfully:", response.data);
+            }
+            catch(error)
+            {
+                console.error("Error occured:", error);
+            }
+        },
     }
 }
 </script>

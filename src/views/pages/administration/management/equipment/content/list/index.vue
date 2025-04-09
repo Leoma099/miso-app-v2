@@ -1,5 +1,5 @@
 <template>
-    <h1 class="page-title mb-0">MANAGE EQUIPMENT</h1>
+    <h1 class="page-title mb-0">LIST OF EQUIPMENT</h1>
 
     <div class="mt-3">
         <div class="card card-body shadow-sm border-0 rounded-0">
@@ -29,14 +29,12 @@
                 <table class="table table-bordered mb-0">
                     <thead>
                         <tr>
+                            <th class="table-header">EQUIPMENT TYPE</th>
                             <th class="table-header">PROPERTY NUMBER</th>
                             <th class="table-header">SERIAL NUMBER</th>
-                            <th class="table-header">EQUIPMENT TYPE</th>
                             <th class="table-header">BRAND</th>
                             <th class="table-header">MODEL</th>
-                            <th class="table-header">CONDITION</th>
-                            <th class="table-header">AVAILABILITY</th>
-                            <th class="table-header">QUANTITY</th>
+                            <th class="table-header">STATUS</th>
                             <th class="table-header">ACTION</th>
                         </tr>
                     </thead>

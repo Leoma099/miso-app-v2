@@ -16,9 +16,10 @@
                     <thead>
                         <tr>
                             <th class="table-header">EQUIPMENT TYPE</th>
+                            <th class="table-header">PROPERTY NUMBER</th>
+                            <th class="table-header">SERIAL NUMBER</th>
                             <th class="table-header">BORROWER NAME</th>
                             <th class="table-header">DEPARTMENT</th>
-                            <th class="table-header">CONTACT #</th>
                             <th class="table-header">DATE BORROWED</th>
                             <th class="table-header">DATE RETURNED</th>
                             <th class="table-header">STATUS</th>

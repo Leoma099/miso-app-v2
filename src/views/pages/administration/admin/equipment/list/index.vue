@@ -1,7 +1,7 @@
 <template>
 
     <div class="d-flex justify-content-between align-items-center mb-3">
-        <h1 class="page-title mb-0">LIST OF ITEM</h1>
+        <h1 class="page-title mb-0">LIST OF EQUIPMENTS</h1>
         <div class="col-md-3 ">
             <input type="text" v-model="searchQuery" @input="fetchEquipment" placeholder="Search equipment..."
                 class="form-control rounded-0">
@@ -16,14 +16,12 @@
                 <table class="table table-bordered mb-0">
                     <thead>
                         <tr>
+                            <th class="table-header">EQUIPMENT TYPE</th>
                             <th class="table-header">PROPERTY NUMBER</th>
                             <th class="table-header">SERIAL NUMBER</th>
-                            <th class="table-header">EQUIPMENT TYPE</th>
                             <th class="table-header">BRAND</th>
                             <th class="table-header">MODEL</th>
-                            <th class="table-header">CONDITION</th>
-                            <th class="table-header">AVAILABILITY</th>
-                            <th class="table-header">QUANTITY</th>
+                            <th class="table-header">STATUS</th>
                         </tr>
                     </thead>
 
@@ -86,7 +84,8 @@ export default
     methods:
     {
         async fetchEquipment() {
-            try {
+            try
+            {
                 this.isLoading = true;
                 setTimeout(async () => {
                     const response = await apiClient.get(`/equipment`, {
@@ -103,7 +102,9 @@ export default
                     this.isEmpty = this.items.length === 0; // Check if items array is empty
                     this.isLoading = false;
                 }, 1000);
-            } catch (error) {
+            }
+            catch (error)
+            {
                 console.error("Error fetching equipment:", error);
                 this.isLoading = false;
                 this.isEmpty = true; // Assume empty on error
@@ -155,29 +156,6 @@ export default
 .pagination-buttons {
     display: flex;
     gap: 5px;
-}
-
-.pagination-buttons button {
-    background: white;
-    border: 1px solid #ddd;
-    padding: 6px 10px;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.pagination-buttons button:hover {
-    background: #f0f0f0;
-}
-
-.pagination-buttons button.active {
-    background: #007bff;
-    color: white;
-    border-color: #007bff;
-}
-
-.pagination-buttons button:disabled {
-    background: #eee;
-    cursor: not-allowed;
 }
 .table-scrollable
 {
