@@ -12,7 +12,7 @@
                         type="text"
                         class="form-control form-control-sm rounded-0"
                         placeholder="ex. Juan Dela Cruz"
-                        v-model="form.full_name"
+                        v-model="form.agent"
                         required>
                 </div>
 
@@ -23,6 +23,16 @@
                         class="form-control form-control-sm rounded-0"
                         placeholder="ex. juandelacruz@gmail.com"
                         v-model="form.email"
+                        required>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label class="form-label">* Address:</label>
+                    <input
+                        type="text"
+                        class="form-control form-control-sm rounded-0"
+                        placeholder="ex. SBMA"
+                        v-model="form.address"
                         required>
                 </div>
 
@@ -71,10 +81,11 @@ export default
         return{
             form:
             {
-                full_name: "",
+                agent: "",
                 email: "",
                 mobile_number: "",
                 date_of_birth: "",
+                address: "",
             }
         }
     },

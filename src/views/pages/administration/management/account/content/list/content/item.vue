@@ -36,7 +36,7 @@
             <div v-if="isLoading" class="shimmer-loader"></div>
             <div v-else>
                 <router-link :to="`/management/account/${item.id}/edit`" class="btn btn-sm btn-warning rounded-0 me-3">Edit</router-link>
-                <button type="button" class="btn btn-sm btn-danger rounded-0" @click="deleteBorrow()">Delete</button>
+                <button type="button" class="btn btn-sm btn-danger rounded-0" @click="deleteAccount()">Delete</button>
             </div>
         </td>
     </tr>
@@ -55,7 +55,7 @@ export default
 
     methods:
     {
-        async deleteEquipment()
+        async deleteAccount()
             {
                 if(!confirm("Are you sure you want to delete?")) return;
 

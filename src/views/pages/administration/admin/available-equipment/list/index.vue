@@ -1,13 +1,14 @@
 <template>
+
     <div class="d-flex justify-content-between align-items-center mb-3">
-        <h1 class="page-title mb-0">LIST OF BORROWED</h1>
-        <div class="col-md-4">
-            <input type="text" v-model="searchQuery" @input="fetchBorrower" placeholder="Type your search here"
+        <h1 class="page-title mb-0">LIST OF AVAILABLE EQUIPMENTS</h1>
+        <div class="col-md-3 ">
+            <input type="text" v-model="searchQuery" @input="fetchEquipment" placeholder="Search equipment..."
                 class="form-control rounded-0">
         </div>
     </div>
 
-    <div class="mt-4">
+    <div class="mt-3">
 
         <div class="card card-body shadow-sm border-0 rounded-0">
 
@@ -17,25 +18,28 @@
                         <tr>
                             <th class="table-header">EQUIPMENT TYPE</th>
                             <th class="table-header">PROPERTY NUMBER</th>
-                            <th class="table-header">BORROWER NAME</th>
-                            <th class="table-header">DEPARTMENT</th>
-                            <th class="table-header">DATE BORROWED</th>
-                            <th class="table-header">DATE RETURNED</th>
+                            <th class="table-header">SERIAL NUMBER</th>
+                            <th class="table-header">BRAND</th>
+                            <th class="table-header">MODEL</th>
                             <th class="table-header">STATUS</th>
                         </tr>
                     </thead>
+
                     <tbody v-if="!isEmpty">
                         <item-component
                             v-for="(item, index) in isLoading ? new Array(items.length || perPage).fill(null) : items"
                             :key="item?.id || index" :item="item" :isLoading="isLoading" />
                     </tbody>
+
                     <tbody v-else>
                         <tr>
                             <td colspan="8" class="text-center">No Data Record</td>
                         </tr>
                     </tbody>
+
                 </table>
             </div>
+
             <!-- Pagination is here -->
             <div class="pagination-container">
                 <div class="entries-info">
@@ -45,68 +49,73 @@
                     <!-- Pagination buttons here -->
                 </div>
             </div>
+
         </div>
     </div>
 
 </template>
 
 <script>
-import apiClient from "@/services/index";
+import apiClient from "@/services/index"
 import ItemComponent from "./content/item"
 export default
+{
+
+    components:
     {
+        ItemComponent,
+    },
 
-        components:
-        {
-            ItemComponent,
-        },
+    data() {
+        return {
+            items: [], // Your actual data
+            searchQuery: "",
+            isLoading: false,
+            isEmpty: false,
+            perPage: 10,
+            currentPage: 1
+        };
+    },
 
-        data() {
-            return {
+    mounted() {
+        this.fetchEquipment();
+    },
 
-                items: [], // Your actual data
-                searchQuery: "",
-                isLoading: false,
-                isEmpty: false,
-                perPage: 10,
-                currentPage: 1
+    methods:
+    {
+        async fetchEquipment() {
+            try
+            {
+                this.isLoading = true;
+                setTimeout(async () => {
+                    const response = await apiClient.get(`/equipment`, {
+                        params: {
+                            search: this.searchQuery,
+                            page: this.currentPage,
+                            perPage: this.perPage
+                        }
+                    });
 
+                    console.log("Fetched Equipment Data:", response.data); // Debugging
+
+                    this.items = response.data.data;
+                    this.isEmpty = this.items.length === 0; // Check if items array is empty
+                    this.isLoading = false;
+                }, 1000);
+            }
+            catch (error)
+            {
+                console.error("Error fetching equipment:", error);
+                this.isLoading = false;
+                this.isEmpty = true; // Assume empty on error
             }
         },
 
-        mounted() {
-            this.fetchBorrower();
-        },
+    },
 
-        methods:
-        {
-            async fetchBorrower() {
-                try {
-                    this.isLoading = true;
-                    setTimeout(async () => {
-                        const response = await apiClient.get(`/borrow`, {
-                            params: {
-                                search: this.searchQuery,
-                                page: this.currentPage,
-                                perPage: this.perPage
-                            }
-                        });
 
-                        console.log("Fetched Borrow Data:", response.data); // Debugging
 
-                        this.items = response.data;
-                        this.totalEntries = response.data.total; // Make sure to update this
-                        this.isEmpty = this.items.length === 0; // Check if items array is empty
-                        this.isLoading = false;
-                    }, 1000);
-                } catch (error) {
-                    console.error("Error fetching borrow:", error);
-                }
-            },
-
-        }
-
-    };
+};
 </script>
 
 <style scoped>
@@ -147,29 +156,6 @@ export default
 .pagination-buttons {
     display: flex;
     gap: 5px;
-}
-
-.pagination-buttons button {
-    background: white;
-    border: 1px solid #ddd;
-    padding: 6px 10px;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.pagination-buttons button:hover {
-    background: #f0f0f0;
-}
-
-.pagination-buttons button.active {
-    background: #007bff;
-    color: white;
-    border-color: #007bff;
-}
-
-.pagination-buttons button:disabled {
-    background: #eee;
-    cursor: not-allowed;
 }
 .table-scrollable
 {

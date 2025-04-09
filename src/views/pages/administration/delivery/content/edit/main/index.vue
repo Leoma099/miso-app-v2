@@ -12,7 +12,7 @@
                         type="text"
                         class="form-control form-control-sm rounded-0"
                         placeholder="ex. Juan Dela Cruz"
-                        v-model="form.full_name"
+                        v-model="form.agent"
                         required>
                 </div>
 
@@ -88,7 +88,7 @@ export default
         return{
             form:
             {
-                full_name: "",
+                agent: "",
                 email: "",
                 address: "",
                 mobile_number: "",
@@ -99,6 +99,7 @@ export default
 
     mounted()
     {
+        
         this.fetchDeliver();
     },
 

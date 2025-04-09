@@ -262,7 +262,7 @@ export default
         {
             try
             {
-                const response = await apiClient.post('/borrow', this.form)
+                const response = await apiClient.post('/borrowWalkin', this.form)
                 console.log("Borrow created successfully:", response.data);
                 alert("Added borrow successfully");
                 this.$router.push("/management/borrow");

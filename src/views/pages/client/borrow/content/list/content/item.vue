@@ -2,89 +2,77 @@
     <tr>
         <td class="table-data">
             <div v-if="isLoading" class="shimmer-loader"></div>
-            <span v-else>{{ item.type }}</span>
+            <span v-else>{{ item?.type || 'N/A' }}</span>
         </td>
         <td class="table-data">
             <div v-if="isLoading" class="shimmer-loader"></div>
-            <span v-else>{{ formatStatus(item.status) }}</span>
+            <span v-else>{{ formatStatus(item?.status) }}</span>
         </td>
         <td class="table-data">
             <div v-if="isLoading" class="shimmer-loader"></div>
-            <span v-else>{{ item.date_borrow }}</span>
+            <span v-else>{{ item?.date_borrow || 'N/A' }}</span>
         </td>
         <td class="table-data">
             <div v-if="isLoading" class="shimmer-loader"></div>
-            <span v-else>{{ item.date_return }}</span>
+            <span v-else>{{ item?.date_return || 'N/A' }}</span>
         </td>
-        <!-- <td class="table-data">
+        <td class="table-data">
             <div v-if="isLoading" class="shimmer-loader"></div>
-            <span v-else>{{ item.delivered_by }}</span>
-        </td> -->
+            <span v-else>{{ item?.agent || 'N/A' }}</span>
+        </td>
         <td class="table-data">
             <div v-if="isLoading" class="shimmer-loader"></div>
             <div v-else>
-                <button
-                    type="button"
-                    class="btn btn-info btn-sm rounded-0 me-3"
-                    @click="isReturned">
-                    VIEW
-                </button>
-                <button
-                    type="button"
-                    class="btn btn-primary btn-sm rounded-0"
-                    @click="isReturned">
-                    RETURNED
-                </button>
+                <div v-if="!isReturned">
+                    <button
+                        type="button"
+                        class="btn btn-primary btn-sm rounded-0"
+                        @click="markAsReturned">
+                        RETURNED
+                    </button>
+                </div>
+                <div v-else>
+                    <p>Marked as Returned</p>
+                </div>
             </div>
         </td>
     </tr>
 </template>
 
 <script>
-export default
-    {
-        props:
-        {
-            item: Object,
-            isLoading: Boolean
-        },
+import apiClient from "@/services/index";
 
-        methods:
-        {
-            formatCondition(condition) {
-                console.log("Item condition:", condition); // Debugging
-                const numStatus = parseInt(condition, 10);
-                if (numStatus === 1) {
-                    return "Good";
+export default {
+    props: {
+        item: Object,
+        isLoading: Boolean
+    },
+    data() {
+        return {
+            isReturned: this.item?.status === 3 // Check if already returned
+        };
+    },
+    methods: {
+        formatStatus(status) {
+            if (status === null || status === undefined) return "N/A"; // Prevent null/undefined errors
+            const numStatus = parseInt(status, 10);
+            if (numStatus === 1) return "Pending";
+            else if (numStatus === 2) return "Approved";
+            else if (numStatus === 3) return "Returned";
+            else return "n/a";
+        },
+        async markAsReturned() {
+            try {
+                const response = await apiClient.put(`/borrow/${this.item.id}/return`);
+                if (response.data.message === 'Marked as returned') {
+                    this.isReturned = true;
                 }
-                else if (numStatus === 2) {
-                    return "Damage";
-                }
-                else if (numStatus === 3) {
-                    return "Lost";
-                }
-                else {
-                    return "n/a";
-                }
-            },
-            formatStatus(status) {
-                console.log("Item status:", status); // Debugging
-                const numStatus = parseInt(status, 10);
-                if (numStatus === 1) {
-                    return "Pending";
-                }
-                else if (numStatus === 2) {
-                    return "Approved";
-                }
-                else if (numStatus === 3) {
-                    return "Returned";
-                }
-                else {
-                    return "n/a";
-                }
+            } catch (error) {
+                console.error("Error marking item as returned:", error);
             }
         }
     }
+};
 </script>
 
 <style scoped>
@@ -107,7 +95,6 @@ export default
     0% {
         background-position: -200% 0;
     }
-
     100% {
         background-position: 200% 0;
     }
@@ -124,8 +111,7 @@ export default
 .table-data:last-child {
     width: 225px;
 }
-span
-{
+span {
     font-size: 1rem;
     font-weight: 600;
 }

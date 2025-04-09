@@ -29,4 +29,14 @@ export default [
             page: 'list',
         },
     },
+    {
+        path: '/available-equipment/list',
+        name: 'List / Available Equipment',
+        component: () => import('@/views/pages/administration/admin/available-equipment'),
+        meta:
+        {
+            name: 'Available Equipment',
+            page: 'list',
+        },
+    },
 ];

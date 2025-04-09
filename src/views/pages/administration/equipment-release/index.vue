@@ -3,6 +3,7 @@
     <div class="animate animate-fade-in">
 
         <list-component v-if="$route.meta.page === 'list'" />
+        <edit-component v-if="$route.meta.page === 'edit'" />
 
     </div>
 
@@ -10,11 +11,13 @@
 
 <script>
 import ListComponent from "./content/list";
+import EditComponent from "./content/edit";
 export default
 {
     components:
     {
         ListComponent,
+        EditComponent
     }
 }
 </script>

@@ -28,6 +28,13 @@
                 </li>
                 <li>
                     <router-link
+                        :to="'/available-equipment/list'"
+                        :class="{ 'active': $route.path.includes('/available-equipment/list')}">
+                        <i class="bx bx-box me-2"></i>Available Equipment
+                    </router-link>
+                </li>
+                <li>
+                    <router-link
                         :to="'/borrow/list'"
                         :class="{ 'active': $route.path.includes('/borrow/list')}">
                         <i class="bx bx-archive me-2"></i>Borrow

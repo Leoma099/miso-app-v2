@@ -6,7 +6,7 @@
         </td>
         <td class="table-data">
             <div v-if="isLoading" class="shimmer-loader"></div>
-            <span v-else>{{ item.released_to }}</span>
+            <span v-else>{{ item.agent }}</span>
         </td>
         <td class="table-data">
             <div v-if="isLoading" class="shimmer-loader"></div>
@@ -14,7 +14,7 @@
         </td>
         <td class="table-data">
             <div v-if="isLoading" class="shimmer-loader"></div>
-            <span v-else>{{ item.delivered_date }}</span>
+            <span v-else>{{ item.date }}</span>
         </td>
         <td class="table-data">
             <div v-if="isLoading" class="shimmer-loader"></div>
@@ -23,27 +23,54 @@
         <td class="table-data">
             <div v-if="isLoading" class="shimmer-loader"></div>
             <span v-else>
-                <button
+                <router-link
+                    :to="`/administration/equipment-release/${this.item.id}/edit`"
                     class="btn btn-sm btn-info rounded-0 me-3">
                     Edit
-                </button>
-                <button
-                    class="btn btn-sm btn-danger rounded-0">
+                </router-link>
+                <!-- <button
+                    class="btn btn-sm btn-danger rounded-0"
+                    @click="deleteAgent()">
                     Delete
-                </button>
+                </button> -->
             </span>
         </td>
     </tr>
 </template>
 
 <script>
+import apiClient from "@/services/index";
 export default
 {
     props:
+    {
+        item: Object,
+        isLoading: Boolean,
+    },
+
+    methods:
+    {
+        async deleteAgent()
         {
-            item: Object,
-            isLoading: Boolean,
-        },
+            if (!this.item.id) {
+                alert("Invalid item ID");
+                return;
+            }
+
+            if (!confirm("Are you sure you want to delete?")) return;
+
+            try {
+                const response = await apiClient.delete(`/deliver-rider/${this.item.id}`);
+                console.log("Delete success:", response.data);
+                alert("Deleted successfully!");
+                window.location.reload();
+            } catch (error) {
+                console.error("Error deleting:", error);
+                alert("Failed to delete");
+            }
+        }
+
+    }
 }
 </script>
 
