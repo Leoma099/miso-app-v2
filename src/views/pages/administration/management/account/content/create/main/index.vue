@@ -39,7 +39,7 @@
                 <div class="col-md-5">
                     <div class="form-group mb-3">
                         <label for="" class="form-label">* Position:</label>
-                        <input type="text" class="form-control rounded-0" placeholder="ex. Shooting Guard" v-model="form.position" required>
+                        <input type="text" class="form-control rounded-0" placeholder="ex. Accounting and Tax Collector" v-model="form.position" required>
                     </div>
                 </div>
 
@@ -87,7 +87,7 @@
                 <div class="col-md-4">
                     <div class="form-group mb-3">
                         <label for="" class="form-label">Default Password:</label>
-                        <input type="text" class="form-control rounded-0" v-model="form.password" readonly>
+                        <input type="text" class="form-control rounded-0" v-model="form.password" placeholder="ex. @juandelacruz" disabled>
                     </div>
                 </div>
                 <div class="col-md-4">

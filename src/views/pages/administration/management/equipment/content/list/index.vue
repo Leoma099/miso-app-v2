@@ -30,13 +30,20 @@
                     <thead>
                         <tr>
                             <th class="table-header">EQUIPMENT TYPE</th>
+<<<<<<< HEAD
                             <th class="table-header">USERNAME</th>
                             <th class="table-header">DEPARTMENT</th>
+=======
+>>>>>>> development
                             <th class="table-header">PROPERTY NUMBER</th>
                             <th class="table-header">SERIAL NUMBER</th>
                             <th class="table-header">BRAND</th>
                             <th class="table-header">MODEL</th>
                             <th class="table-header">STATUS</th>
+<<<<<<< HEAD
+=======
+                            <th class="table-header">ACTION</th>
+>>>>>>> development
                         </tr>
                     </thead>
 

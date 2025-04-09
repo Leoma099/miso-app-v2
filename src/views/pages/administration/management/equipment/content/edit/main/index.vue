@@ -11,7 +11,9 @@
                     <div class="col-md-8">
                         <div class="form-group mb-3">
                             <label for="" class="form-label">* Type:</label>
-                            <input type="text" class="form-control rounded-0"
+                            <input
+                                type="text"
+                                class="form-control rounded-0"
                                 v-model="form.type">
                         </div>
                     </div>
@@ -19,7 +21,10 @@
                     <div class="col-md-4">
                         <div class="form-group mb-3">
                             <label for="" class="form-label">* Photo:</label>
-                            <input type="file" class="form-control rounded-0" @change="handleFilePhoto">
+                            <input
+                                type="file"
+                                class="form-control rounded-0"
+                                @change="handleFilePhoto">
                         </div>
                     </div>
 
@@ -29,15 +34,21 @@
 
                     <div class="col-md-6">
                         <div class="form-group mb-3">
-                            <label for="" class="form-label">* Quantity:</label>
-                            <input type="0" class="form-control rounded-0" v-model="form.quantity">
+                            <label for="" class="form-label">* Status:</label>
+                            <input
+                                type="text"
+                                class="form-control rounded-0"
+                                v-model="form.equipmentStatus">
                         </div>
                     </div>
 
                     <div class="col-md-6">
                         <div class="form-group mb-3">
                             <label for="" class="form-label">* Serial Number:</label>
-                            <input type="text" class="form-control rounded-0" v-model="form.serial_number">
+                            <input
+                                type="text"    
+                                class="form-control rounded-0"
+                                v-model="form.serial_number">
                         </div>
                     </div>
 
@@ -56,31 +67,6 @@
                         <div class="form-group mb-3">
                             <label for="" class="form-label">* Model:</label>
                             <input type="text" class="form-control rounded-0" v-model="form.model">
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="row">
-
-                    <div class="col-md-6">
-                        <div class="form-group mb-3">
-                            <label for="" class="form-label">* Condition:</label>
-                            <select class="form-control form-control-sm rounded-0" v-model="form.condition">
-                                <option value="1">Good</option>
-                                <option value="2">Damage</option>
-                                <option value="3">Lost</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <div class="form-group mb-3">
-                            <label for="" class="form-label">* Availability:</label>
-                            <select class="form-control form-control-sm rounded-0" v-model="form.availability">
-                                <option value="1">Available</option>
-                                <option value="2">Not Available</option>
-                            </select>
                         </div>
                     </div>
 
@@ -116,9 +102,7 @@ export default
                     type: "",
                     brand: "",
                     model: "",
-                    condition: "1",
-                    availability: "1",
-                    quantity: "",
+                    equipmentStatus: "",
                     photo: null,
                     property_number: "",
                     serial_number: "",
@@ -159,9 +143,7 @@ export default
                     formData.append("type", this.form.type);
                     formData.append("brand", this.form.brand);
                     formData.append("model", this.form.model);
-                    formData.append("condition", this.form.condition);
-                    formData.append("availability", this.form.availability);
-                    formData.append("quantity", this.form.quantity);
+                    formData.append("equipmentStatus", this.form.equipmentStatus);
                     formData.append("property_number", this.form.property_number);
                     formData.append("serial_number", this.form.serial_number);
 

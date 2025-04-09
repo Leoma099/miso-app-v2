@@ -3,7 +3,7 @@
     <div class="animate animate-fade-in">
 
         <h1 class="page-title mb-0">Edit User Account</h1>
-        <router-link :to="'/administration/account'">Go back to page</router-link>
+        <router-link :to="'/management/account'">Go back to page</router-link>
 
         <main-component v-if="$route.meta.subPage === 'main'" />
 

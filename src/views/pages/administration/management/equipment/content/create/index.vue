@@ -2,7 +2,15 @@
 
     <div class="animate animate-fade-in">
 
+<<<<<<< HEAD
         <h1 class="page-title mb-0">ADD EQUIPMENT</h1>
+=======
+        <h1 class="page-title mb-0">Add New Equipment</h1>
+        <router-link
+            :to="'/management/equipment'">
+            Back to page
+        </router-link>
+>>>>>>> development
 
         <main-component v-if="$route.meta.subPage === 'main'" />
 

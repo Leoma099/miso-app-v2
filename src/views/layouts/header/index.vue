@@ -158,14 +158,28 @@ export default
 
         toggleDropdown()
         {
-            // Toggle the dropdown state
             this.dropdownOpen = !this.dropdownOpen;
 
-            // When the bell icon is clicked, reset the notification count to 0
-            this.notificationCount = 0;
+            if (this.dropdownOpen)
+            {
+                this.markNotificationsAsRead();
+            }
 
-            // Update localStorage to remember that the bell was clicked and reset count
             localStorage.setItem('notifications_read', 'true');
+        },
+
+        async markNotificationsAsRead()
+        {
+            try
+            {
+                await apiClient.post('/mark-notifications-read');
+                this.items.forEach(item => item.is_read = 1);
+                this.notificationCount = 0; // Reset notification count to 0 when the bell icon is clicked
+            }
+            catch (error)
+            {
+                console.error("Failed to mark notifications as read:", error);
+            }
         },
 
         closeDropdown(event)
@@ -178,8 +192,11 @@ export default
 
         startRealTimeUpdates()
         {
-            this.interval = setInterval(() =>{
-                this.fetchNotifications();
+            this.interval = setInterval(() => {
+                if (!this.dropdownOpen)
+                {
+                    this.fetchNotifications(); // Fetch notifications only when the dropdown is closed
+                }
             }, 5000); // Fetch every 5 seconds
         },
 

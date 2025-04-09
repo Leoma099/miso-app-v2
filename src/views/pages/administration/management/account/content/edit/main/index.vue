@@ -37,7 +37,7 @@
                         <label for="" class="form-label">* Department / Office Name:</label>
                         <select
                             v-model="form.office_name"
-                            class="form-control form-control-sm roundeo-0">
+                            class="form-select form-select-sm roundeo-0">
                             <option
                                 value=""
                                 disabled selected>-- Select Department --
@@ -69,7 +69,7 @@
                 <label for="" class="form-label">* Office Address:</label>
                 <select
                     v-model="form.office_address"
-                    class="form-control form-control-sm rounded-0">
+                    class="form-select form-select-sm rounded-0">
                     <option
                         value=""
                         disabled

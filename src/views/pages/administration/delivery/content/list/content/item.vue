@@ -1,28 +1,9 @@
 <template>
+
     <tr>
         <td class="table-data">
             <div v-if="isLoading" class="shimmer-loader"></div>
-            <span v-else>{{ item.id_number }}</span>
-        </td>
-        <td class="table-data">
-            <div v-if="isLoading" class="shimmer-loader"></div>
             <span v-else>{{ item.full_name }}</span>
-        </td>
-        <td class="table-data">
-            <div v-if="isLoading" class="shimmer-loader"></div>
-            <span v-else>{{ item.office_name }}</span>
-        </td>
-        <td class="table-data">
-            <div v-if="isLoading" class="shimmer-loader"></div>
-            <span v-else>{{ item.position }}</span>
-        </td>
-        <td class="table-data">
-            <div v-if="isLoading" class="shimmer-loader"></div>
-            <span v-else>{{ item.office_address }}</span>
-        </td>
-        <td class="table-data">
-            <div v-if="isLoading" class="shimmer-loader"></div>
-            <span v-else>{{ item.address }}</span>
         </td>
         <td class="table-data">
             <div v-if="isLoading" class="shimmer-loader"></div>
@@ -30,50 +11,43 @@
         </td>
         <td class="table-data">
             <div v-if="isLoading" class="shimmer-loader"></div>
+            <span v-else>{{ item.address }}</span>
+        </td>
+        <td class="table-data">
+            <div v-if="isLoading" class="shimmer-loader"></div>
             <span v-else>{{ item.mobile_number }}</span>
         </td>
         <td class="table-data">
             <div v-if="isLoading" class="shimmer-loader"></div>
-            <div v-else>
-                <router-link :to="`/management/account/${item.id}/edit`" class="btn btn-sm btn-warning rounded-0 me-3">Edit</router-link>
-                <button type="button" class="btn btn-sm btn-danger rounded-0" @click="deleteBorrow()">Delete</button>
-            </div>
+            <span v-else>{{ item.date_of_birth }}</span>
+        </td>
+        <td class="table-data">
+            <div v-if="isLoading" class="shimmer-loader"></div>
+            <span v-else>
+                <router-link
+                    :to="`/administration/delivery/${this.item.id}/edit`"
+                    class="btn btn-sm btn-info rounded-0 me-3">
+                    Edit
+                </router-link>
+                <button
+                    class="btn btn-sm btn-danger rounded-0">
+                    Delete
+                </button>
+            </span>
         </td>
     </tr>
+
 </template>
 
 <script>
-import apiClient from "@/services/index"
 export default
 {
-
     props:
     {
         item: Object,
         isLoading: Boolean, // Receive isLoading prop from parent
     },
-
-    methods:
-    {
-        async deleteEquipment()
-            {
-                if(!confirm("Are you sure you want to delete?")) return;
-
-                try
-                {
-                    const response = await apiClient.delete(`/account/${this.item.id}`);
-                    console.log("delete sucess:", response.data);
-                    alert("Deleted successfully!")
-                    window.location.reload();
-                }
-                catch(error)
-                {
-                    console.error("Error deleteing:", error);
-                    alert("Failed to delete")
-                }
-            },
-    }
-};
+}
 </script>
 
 <style scoped>
@@ -113,7 +87,21 @@ export default
     color: #ffffff;
 }
 
-span {
+.equipment-image {
+    width: 40px;
+    height: 40px;
+    overflow: hidden;
+    background: #e0e0e0;
+}
+
+.equipment-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+span
+{
     font-size: 1rem;
     font-weight: 600;
 }

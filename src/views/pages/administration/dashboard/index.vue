@@ -30,10 +30,6 @@
                         <borrower-statistic />
                     </div>
 
-                    <div>
-                        <equipment-statistic />
-                    </div>
-
                 </div>
 
             </div>
@@ -47,7 +43,6 @@
 <script>
 import KeyPerfomanceIndicator from "./content/key-performance-indicator.vue";
 import BorrowerStatistic from "./content/borrower_statistic.vue";
-import EquipmentStatistic from "./content/equipment_statistic.vue";
 import ShowCalendar from "./content/show-calendar.vue";
 import EquipmentCount from "./content/equipment_count.vue";
 import DepartmentCount from "./content/department_count.vue";
@@ -57,7 +52,6 @@ export default
     {
         KeyPerfomanceIndicator,
         BorrowerStatistic,
-        EquipmentStatistic,
         ShowCalendar,
         EquipmentCount,
         DepartmentCount

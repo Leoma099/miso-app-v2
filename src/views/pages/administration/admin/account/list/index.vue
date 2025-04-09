@@ -17,7 +17,11 @@
                     <thead>
                         <tr>
                             <th class="table-header">ID NUMBER</th>
+<<<<<<< HEAD
                             <th class="table-header">NAME</th>
+=======
+                            <th class="table-header">FULL NAME</th>
+>>>>>>> development
                             <th class="table-header">DEPARTMENT</th>
                             <th class="table-header">POSITION</th>
                             <th class="table-header">OFFICE ADDRESS</th>

@@ -2,15 +2,15 @@
     <tr>
         <td class="table-data">
             <div v-if="isLoading" class="shimmer-loader"></div>
+            <span v-else>{{ item.type }}</span>
+        </td>
+        <td class="table-data">
+            <div v-if="isLoading" class="shimmer-loader"></div>
             <span v-else>{{ item.property_number }}</span>
         </td>
         <td class="table-data">
             <div v-if="isLoading" class="shimmer-loader"></div>
             <span v-else>{{ item.serial_number }}</span>
-        </td>
-        <td class="table-data">
-            <div v-if="isLoading" class="shimmer-loader"></div>
-            <span v-else>{{ item.type }}</span>
         </td>
         <td class="table-data">
             <div v-if="isLoading" class="shimmer-loader"></div>
@@ -22,15 +22,7 @@
         </td>
         <td class="table-data">
             <div v-if="isLoading" class="shimmer-loader"></div>
-            <span v-else>{{ formatCondition(item.condition) }}</span>
-        </td>
-        <td class="table-data">
-            <div v-if="isLoading" class="shimmer-loader"></div>
-            <span v-else>{{ formatAvailability(item.availability) }}</span>
-        </td>
-        <td class="table-data">
-            <div v-if="isLoading" class="shimmer-loader"></div>
-            <span v-else>{{ formatAvailability(item.quantity) }}</span>
+            <span v-else>{{ item.equipmentStatus }}</span>
         </td>
     </tr>
 </template>

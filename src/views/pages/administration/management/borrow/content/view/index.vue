@@ -3,7 +3,7 @@
     <h1 class="page-title mb-0">View Borrow Equipment</h1>
     <router-link
         :to="'/management/borrow'">
-        Go back to page
+        Back to page
     </router-link>
 
     <div class="col-5 mx-auto">
@@ -170,6 +170,14 @@
                         placeholder="Type your reason here..."
                         v-model="form.purpose"
                         disabled></textarea>
+                </div>
+
+                <div class="text-end">
+                    <router-link
+                        :to="'/management/borrow'"
+                        class="btn btn-sm button-color rounded-0">
+                        Back to page
+                    </router-link>
                 </div>
 
             </form>

@@ -1,10 +1,13 @@
 <template>
-    <p class="page-title mb-0">CALENDAR</p>
+    <h1 class="page-title mb-0">CALENDAR</h1>
 
     <div class="mt-4">
+
         <div class="row">
+
             <div class="col-md-4">
-                <div class="card card-body shadow-sm border-0 rounded-0">
+
+                <div class="card card-body shadow-sm border-0 rounded-0 mb-3">
                     <form @submit.prevent="submit()">
                         <div class="form-group mb-3">
                             <h4 class="mb-0">Title:</h4>
@@ -17,6 +20,7 @@
                         </div>
 
                         <div class="form-group mb-3">
+<<<<<<< HEAD
                             <div class="row">
                                 <div class="col-md-6">
                                     <h4>Date from:</h4>
@@ -27,6 +31,10 @@
                                     <input type="date" class="form-control form-control-sm rounded-0" v-model="form.date">
                                 </div>
                             </div>
+=======
+                            <h4 class="mb-0">Date:</h4>
+                            <input type="date" class="form-control form-control-sm rounded-0" v-model="form.date">
+>>>>>>> development
                         </div>
 
                         <div class="form-group mb-3">
@@ -39,14 +47,63 @@
                         </div>
                     </form>
                 </div>
-            </div>
 
-            <div class="col-md-8">
                 <div class="card card-body shadow-sm border-0 rounded-0">
                     <div ref="calendar" class="calendar"></div>
                 </div>
+
             </div>
+
+            <div class="col-md-8">
+
+                <div class="card card-body shadow-sm border-0 rounded-0">
+
+                    <div class="d-flex justify-content-end align-items-center mb-3">
+                        <div class="col-md-3 ">
+                            <input type="text" v-model="searchQuery" @input="fetchCalendar" placeholder="Type your seach here"
+                                class="form-control rounded-0">
+                        </div>
+                    </div>
+
+                    <div class="table-responsive table-scrollable">
+                        <table class="table table-bordered mb-0">
+                            <thead>
+                                <tr>
+                                    <th class="table-header">Title</th>
+                                    <th class="table-header">Place</th>
+                                    <th class="table-header">Date</th>
+                                    <th class="table-header">Description</th>
+                                    <th class="table-header">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody v-if="!isEmpty">
+                                <item-component
+                                    v-for="(item, index) in isLoading ? new Array(items.length || perPage).fill(null) : items"
+                                    :key="item?.id || index" :item="item" :isLoading="isLoading" />
+                            </tbody>
+
+                            <tbody v-else>
+                                <tr>
+                                    <td colspan="8" class="text-center">No Data Record</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- Pagination is here -->
+                    <div class="pagination-container">
+                        <div class="entries-info">
+                            Showing {{ (currentPage - 1) * perPage + 1 }} to {{ currentPage * perPage }} of {{ items.length }} records
+                        </div>
+                        <div class="pagination-buttons">
+                            <!-- Pagination buttons here -->
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
         </div>
+
     </div>
 
     <div v-if="showModals" class="modal fade show" tabindex="-1" style="display: block;" aria-labelledby="eventModalLabel" aria-hidden="true">
@@ -71,30 +128,6 @@
         </div>
     </div>
 
-    <div class="mt-4">
-        <div class="card card-body shadow-sm border-0 rounded-0">
-            <div class="table-responsive">
-                <table class="table table-bordered mb-0">
-                    <thead>
-                        <tr>
-                            <th class="table-header">Title</th>
-                            <th class="table-header">Place</th>
-                            <th class="table-header">Date</th>
-                            <th class="table-header">Time from</th>
-                            <th class="table-header">Time to</th>
-                            <th class="table-header">Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <item-component 
-                            v-for="(item, index) in items"
-                            :key="index"
-                            :item="item"/>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
 </template>
 
 <script>
@@ -112,12 +145,15 @@ export default {
                 event: "",
                 place: "",
                 date: this.getCurrentDate(),
-                time_from: "",
-                time_to: "",
                 description: "",
             },
             showModals: false, // Control the modal visibility
             selectedEvent: {}, // Store the event details for the modal
+            searchQuery: "",
+            isLoading: false,
+            isEmpty: false,
+            perPage: 10,
+            currentPage: 1
         };
     },
 
@@ -129,11 +165,6 @@ export default {
     mounted() {
         this.initCalendar();
 
-        this.form.time_from = this.getCurrentTime(); // ✅ Set initial time
-        setInterval(() => {
-        this.form.time_from = this.getCurrentTime(); // ✅ Update every second
-        }, 1000);
-
         this.fetchCalendar();
     },
 
@@ -141,30 +172,48 @@ export default {
     {
         async fetchCalendar()
         {
-            try {
-                const response = await apiClient.get('/calendar');
-                console.log(response.data);
-                
-                this.items = response.data; // Store events in items
-
-                // Clear old events and add new ones to FullCalendar
-                this.calendar.getEvents().forEach(event => event.remove());
-
-                response.data.forEach(event => {
-                    this.calendar.addEvent({
-                        title: event.event,
-                        start: event.date,
-                        extendedProps: {
-                            place: event.place,
-                            time_from: event.time_from,
-                            time_to: event.time_to,
-                            description: event.description
+            try
+            {
+                this.isLoading = true;
+                setTimeout(async () => {
+                    const response = await apiClient.get('/calendar', 
+                        {
+                            params:
+                            {
+                                search: this.searchQuery,
+                                page: this.currentPage,
+                                perPage: this.perPage
+                            }
                         }
-                    });
-                });
+                    );
+                    console.log(response.data);
+                    
+                    this.items = response.data; // Store events in items
+                    this.isEmpty = this.items.length === 0; // Check if items array is empty
+                    this.isLoading = false;
 
-            } catch (error) {
+                    // Clear old events and add new ones to FullCalendar
+                    this.calendar.getEvents().forEach(event => event.remove());
+
+                    response.data.forEach(event => {
+                        this.calendar.addEvent({
+                            title: event.event,
+                            start: event.date,
+                            extendedProps: {
+                                place: event.place,
+                                time_from: event.time_from,
+                                time_to: event.time_to,
+                                description: event.description
+                            }
+                        });
+                    });
+                }), 1000;
+            }
+            catch (error)
+            {
                 console.error("Error fetching calendar events:", error);
+                this.isLoading = false;
+                this.isEmpty = true; // Assume empty on error
             }
         },
 
@@ -227,9 +276,9 @@ export default {
 
         async submit() {
             try {
-                const { event, date, place, time_from, time_to, description } = this.form;
+                const { event, date, place, description } = this.form;
 
-                if (!event || !date || !place || !time_from || !time_to || !description) {
+                if (!event || !date || !place || !description) {
                     alert("Event name, date, and place are required.");
                     return;
                 }
@@ -239,8 +288,6 @@ export default {
                     event,
                     date,
                     place,
-                    time_from,
-                    time_to,
                     description
                 });
 
@@ -252,8 +299,6 @@ export default {
                         end: date,
                         extendedProps: {
                             place,
-                            time_from,
-                            time_to,
                             description
                         }
                     });
@@ -263,12 +308,11 @@ export default {
                         event: "",
                         place: "",
                         date: this.getCurrentDate(),
-                        time_from: this.getCurrentTime(),
-                        time_to: "",
                         description: "",
                     };
 
                     alert("Event added to the calendar!");
+                    this.$router.go(0);
                 } else {
                     alert("Failed to add event. Please try again.");
                 }
@@ -284,9 +328,7 @@ export default {
 </script>
 
 <style scoped>
-p {
-    font-weight: 600;
-    font-size: 2rem;
+.page-title{
     color: #007bff;
 }
 .button-color {

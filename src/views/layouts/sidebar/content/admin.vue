@@ -26,8 +26,80 @@
               :class="{ 'active': $route.path.includes('/equipment/list') }">
               <i class="bx bx-box me-2"></i>Equipment
             </router-link>
+<<<<<<< HEAD
           </li>
           <li>
+=======
+        </li>
+
+        <!-- LIST -->
+        <li>
+            <a href="#" @click="toggleDropdown1()">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="mb-0"><i class="bx bx-clipboard me-2"></i>List</div>
+                    <i class="bx bx-caret-right" ref="caret1"></i>
+                </div>
+            </a>
+            <ul :class="['dropdown', {'open': isDropdownOpen1}]">
+                <li>
+                    <router-link
+                        :to="'/equipment/list'"
+                        :class="{ 'active': $route.path.includes('/equipment/list')}">
+                        <i class="bx bx-box me-2"></i>Equipment
+                    </router-link>
+                </li>
+                <li>
+                    <router-link
+                        :to="'/borrow/list'"
+                        :class="{ 'active': $route.path.includes('/borrow/list')}">
+                        <i class="bx bx-archive me-2"></i>Borrow
+                    </router-link>
+                </li>
+                <li>
+                    <router-link
+                    :to="'/account/list'"
+                    :class="{ 'active': $route.path.includes('/account/list')}">
+                        <i class="bx bx-group me-2"></i>Account
+                    </router-link>
+                </li>
+            </ul>
+        </li>
+
+        <!-- MANAGEMENT -->
+        <li>
+            <a href="#" @click="toggleDropdown2()">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="mb-0"><i class="bx bx-clipboard me-2"></i>Manaagement</div>
+                    <i class="bx bx-caret-right" ref="caret2"></i>
+                </div>
+            </a>
+            <ul :class="['dropdown', {'open': isDropdownOpen2}]">
+                <li>
+                    <router-link
+                        :to="'/management/equipment'"
+                        :class="{ 'active': $route.path.includes('/management/equipment')}">
+                        <i class="bx bx-box me-2"></i>Equipment
+                    </router-link>
+                </li>
+                <li>
+                    <router-link
+                        :to="'/management/borrow'"
+                        :class="{ 'active': $route.path.includes('/management/borrow')}">
+                        <i class="bx bx-archive me-2"></i>Borrow
+                    </router-link>
+                </li>
+                <li>
+                    <router-link
+                        :to="'/management/account'"
+                        :class="{ 'active': $route.path.includes('/management/account')}">
+                        <i class="bx bx-group me-2"></i>Account
+                    </router-link>
+                </li>
+            </ul>
+        </li>
+
+        <li>
+>>>>>>> development
             <router-link
               :to="'/borrow/list'"
               :class="{ 'active': $route.path.includes('/borrow/list') }">
@@ -69,6 +141,7 @@
               :class="{ 'active': $route.path.includes('/management/borrow') }">
               <i class="bx bx-archive me-2"></i>Borrow
             </router-link>
+<<<<<<< HEAD
           </li>
           <li>
             <router-link
@@ -128,6 +201,36 @@
           <i class="bx bx-cart me-2"></i>Delivery Category
         </router-link>
       </li>
+=======
+        </li>
+
+        <!-- CATEGORY -->
+         <li>
+            <a href="#" @click="toggleDropdown3()">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="mb-0"><i class="bx bx-clipboard me-2"></i>Category</div>
+                    <i class="bx bx-caret-right" ref="caret3"></i>
+                </div>
+            </a>
+            <ul :class="['dropdown', {'open': isDropdownOpen3}]">
+                <li>
+                    <router-link
+                        :class="{ 'active': $route.path.includes('/administration/department')}"
+                        :to="'/administration/department'">
+                        <i class="bx bx-building me-2"></i>Department
+                    </router-link>
+                </li>
+                <li>
+                    <router-link
+                        :class="{ 'active': $route.path.includes('/administration/delivery')}"
+                        :to="'/administration/delivery'">
+                        <i class="bx bx-cart me-2"></i>Delivery
+                    </router-link>
+                </li>
+            </ul>
+         </li>
+
+>>>>>>> development
     </div>
   </template>
   
@@ -139,6 +242,7 @@
         isDropdownOpen2: false,
       };
     },
+<<<<<<< HEAD
     methods: {
       toggleDropdown1() {
         this.isDropdownOpen1 = !this.isDropdownOpen1;
@@ -146,6 +250,31 @@
       toggleDropdown2() {
         this.isDropdownOpen2 = !this.isDropdownOpen2;
       }
+=======
+
+    methods:
+    {
+        toggleDropdown1()
+        {
+            this.isDropdownOpen1 = !this.isDropdownOpen1;
+            this.$refs.caret1.classList.toggle('bx-caret-down');
+            this.$refs.caret1.classList.toggle('bx-caret-right');
+        },
+
+        toggleDropdown2()
+        {
+            this.isDropdownOpen2 = !this.isDropdownOpen2;
+            this.$refs.caret2.classList.toggle('bx-caret-down');
+            this.$refs.caret2.classList.toggle('bx-caret-right');
+        },
+
+        toggleDropdown3()
+        {
+            this.isDropdownOpen3 = !this.isDropdownOpen3;
+            this.$refs.caret3.classList.toggle('bx-caret-down');
+            this.$refs.caret3.classList.toggle('bx-caret-right');
+        }
+>>>>>>> development
     }
   }
   </script>
