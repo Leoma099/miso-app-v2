@@ -142,7 +142,7 @@ export default {
 }
 .button-signin:hover {
     background: #ffffff;
-    color: #007bff;
+    color: #0b1016;
     font-weight: 600;
 }
 .login-image {

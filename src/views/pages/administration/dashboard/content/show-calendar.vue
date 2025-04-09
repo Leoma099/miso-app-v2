@@ -45,7 +45,7 @@ export default
 
 <style scoped>
 ::v-deep(.fc-toolbar-title){
-    color: #007bff !important;
+    color: #3ac015 !important;
     font-size: 3rem;
 }
 

@@ -1,6 +1,6 @@
 <template>
 
-    <h1 class="page-title mb-0">LIST OF RIDER</h1>
+    <h1 class="page-title mb-0">LIST OF AGENTS </h1>
 
     <div class="mt-3">
 
@@ -9,7 +9,7 @@
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <div>
                     <router-link
-                        class="btn rounded-0 button-color">Add New Rider
+                        class="btn rounded-0 button-color">ADD AGENT
                     </router-link>
                 </div>
                 <div class="col-md-3 ">

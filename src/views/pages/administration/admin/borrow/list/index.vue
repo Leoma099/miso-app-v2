@@ -1,6 +1,6 @@
 <template>
     <div class="d-flex justify-content-between align-items-center mb-3">
-        <h1 class="page-title mb-0">LIST OF BORROWED</h1>
+        <h1 class="page-title mb-0">LIST OF EQUIPMENT BORROWED</h1>
         <div class="col-md-4">
             <input type="text" v-model="searchQuery" @input="fetchBorrower" placeholder="Type your search here"
                 class="form-control rounded-0">
@@ -16,9 +16,10 @@
                     <thead>
                         <tr>
                             <th class="table-header">EQUIPMENT TYPE</th>
+                            <th class="table-header">PROPERTY NUMBER</th>
+                            <th class="table-header">SERIAL NUMBER</th>
                             <th class="table-header">BORROWER NAME</th>
                             <th class="table-header">DEPARTMENT</th>
-                            <th class="table-header">CONTACT #</th>
                             <th class="table-header">DATE BORROWED</th>
                             <th class="table-header">DATE RETURNED</th>
                             <th class="table-header">STATUS</th>

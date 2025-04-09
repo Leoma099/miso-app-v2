@@ -17,19 +17,14 @@
                         </div>
 
                         <div class="form-group mb-3">
-                            <h4 class="mb-0">Date:</h4>
-                            <input type="date" class="form-control form-control-sm rounded-0" v-model="form.date">
-                        </div>
-
-                        <div class="form-group mb-3">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <h4>Time from:</h4>
-                                    <input type="time" class="form-control form-control-sm rounded-0" v-model="form.time_from">
+                                    <h4>Date from:</h4>
+                                    <input type="date" class="form-control form-control-sm rounded-0" v-model="form.date">
                                 </div>
                                 <div class="col-md-6">
-                                    <h4>Time to:</h4>
-                                    <input type="time" class="form-control form-control-sm rounded-0" v-model="form.time_to">
+                                    <h4>Date to:</h4>
+                                    <input type="date" class="form-control form-control-sm rounded-0" v-model="form.date">
                                 </div>
                             </div>
                         </div>

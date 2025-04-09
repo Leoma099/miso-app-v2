@@ -1,7 +1,7 @@
 <template>
 
     <div class="d-flex justify-content-between align-items-center mb-3">
-        <h1 class="page-title mb-0">LIST OF USER</h1>
+        <h1 class="page-title mb-0">LIST OF USERS</h1>
         <div class="col-md-3 ">
             <input type="text" v-model="searchQuery" @input="fetchAccount" placeholder="Search account..."
                 class="form-control rounded-0">
@@ -16,7 +16,12 @@
                 <table class="table table-bordered mb-0">
                     <thead>
                         <tr>
+                            <th class="table-header">ID NUMBER</th>
                             <th class="table-header">NAME</th>
+                            <th class="table-header">DEPARTMENT</th>
+                            <th class="table-header">POSITION</th>
+                            <th class="table-header">OFFICE ADDRESS</th>
+                            <th class="table-header">YOUR ADDRESS</th>
                             <th class="table-header">EMAIL</th>
                             <th class="table-header">MOBILE NUMBER</th>
                         </tr>

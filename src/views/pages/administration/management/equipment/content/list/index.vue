@@ -1,22 +1,22 @@
 <template>
-    <h1 class="page-title mb-0">MANAGE EQUIPMENT</h1>
+    <h1 class="page-title mb-0">LIST OF EQUIPMENT</h1>
 
     <div class="mt-3">
         <div class="card card-body shadow-sm border-0 rounded-0">
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <div>
                     <router-link :to="'/management/equipment/create'" class="btn rounded-0 button-color me-3">
-                        <i class="bx bx-plus me-2"></i> Add Equipment
+                        <i class="bx bx-plus me-2"></i>ADD
                     </router-link>
                     <button
                         class="btn button-color rounded-0 me-3"
                         @click="exportFile()">
-                        <i class="bx bx-upload me-2"></i> Export
+                        <i class="bx bx-upload me-2"></i> EXPORT
                     </button>
                     <button
                         class="btn button-color rounded-0 me-3"
                         @click="importFile()">
-                        <i class="bx bx-download me-2"></i> Import
+                        <i class="bx bx-download me-2"></i> IMPORT
                     </button>
                 </div>
                 <div class="col-md-4">
@@ -29,15 +29,14 @@
                 <table class="table table-bordered mb-0">
                     <thead>
                         <tr>
+                            <th class="table-header">EQUIPMENT TYPE</th>
+                            <th class="table-header">USERNAME</th>
+                            <th class="table-header">DEPARTMENT</th>
                             <th class="table-header">PROPERTY NUMBER</th>
                             <th class="table-header">SERIAL NUMBER</th>
-                            <th class="table-header">EQUIPMENT TYPE</th>
                             <th class="table-header">BRAND</th>
                             <th class="table-header">MODEL</th>
-                            <th class="table-header">CONDITION</th>
-                            <th class="table-header">AVAILABILITY</th>
-                            <th class="table-header">QUANTITY</th>
-                            <th class="table-header">ACTION</th>
+                            <th class="table-header">STATUS</th>
                         </tr>
                     </thead>
 

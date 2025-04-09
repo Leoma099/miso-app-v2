@@ -1,110 +1,113 @@
 <template>
-
-    <h1>My Account</h1>
-
-    <router-link :to="'/'">Go back to page</router-link>
-
-    <div class="mt-3">
-
-        <!-- <div class="row">
-
-            <div class="col-md-4">
-
-
-
+    <div class="container py-4">
+  
+      <h1 class="mb-3">My Account</h1>
+  
+      <!-- Back Button (unchanged as requested) -->
+      <router-link :to="'/'" class="btn btn-sm btn-secondary mb-4">
+        ← Go back to homepage
+      </router-link>
+  
+      <div class="col-12 col-md-8 mx-auto">
+        <div class="card card-body shadow-sm border-0 rounded-4 p-3">
+          <template v-if="user">
+            <!-- Compact user info boxes -->
+            <div
+              v-for="(value, key) in displayFields"
+              :key="key"
+              class="info-box mb-2"
+            >
+              <label class="info-label">{{ key }}</label>
+              <div class="info-value">{{ value || 'Not Provided' }}</div>
             </div>
-
-            <div class="col-md-8">
-
-                <div class="card card-body shadow-sm rounded-0 border-0">
-                    <h3>Activity</h3>
-
-                    <div class="mt-3">
-                        <d class="text-center">
-                            <p>No activity</p>
-                        </d>
-                    </div>
-                </div>
-
-            </div>
-
-        </div> -->
-
-        <div class="col-6 mx-auto">
-
-            <div class="card card-body shadow-sm border-0">
-                <div>
-                    <div class="d-flex align-items-center">
-                        <h5 class="mb-0 me-3">ID NUMBER:</h5>
-                        <p class="mb-0">{{ user.id_number }}</p>
-                    </div>
-                    <div class="d-flex align-items-center">
-                        <h5 class="mb-0 me-3">FULL NAME:</h5>
-                        <p class="mb-0">{{ user.full_name }}</p>
-                    </div>
-                    <div class="d-flex align-items-center">
-                        <h5 class="mb-0 me-3">MOBILE NUMBER:</h5>
-                        <p class="mb-0">{{ user.mobile_number }}</p>
-                    </div>
-                    <div class="d-flex align-items-center">
-                        <h5 class="mb-0 me-3">DEPARTMENT:</h5>
-                        <p class="mb-0">{{ user.office_name }}</p>
-                    </div>
-                    <div class="d-flex align-items-center">
-                        <h5 class="mb-0 me-3">OFFICE ADDRESS:</h5>
-                        <p class="mb-0">{{ user.office_address }}</p>
-                    </div>
-                    <div class="d-flex align-items-center">
-                        <h5 class="mb-0 me-3">POSITION:</h5>
-                        <p class="mb-0">{{ user.position }}</p>
-                    </div>
-                </div>
-
-                <button
-                    class="btn btn-outline-warning mt-3">
-                    Update Profile
-                </button>
-            </div>
-
+  
+            <button class="btn btn-outline-warning mt-3 w-100 btn-sm">
+              Update Profile
+            </button>
+          </template>
+  
+          <div v-else class="text-center text-muted py-4">
+            <div class="spinner-border text-warning mb-3" role="status"></div>
+            <p>Loading your information. Please wait...</p>
+          </div>
         </div>
-
+      </div>
+  
     </div>
-
-</template>
-<script>
-export default
-{
-    data()
-    {
-        return{
-            user: null
-        }
+  </template>
+  
+  <script>
+  export default {
+    data() {
+      return {
+        user: null
+      };
     },
-
-    created()
-    {
-        this.fetchUserData();
+    computed: {
+      displayFields() {
+        if (!this.user) return {};
+        return {
+          "ID Number": this.user.id_number,
+          "Full Name": this.user.full_name,
+          "Mobile Number": this.user.mobile_number,
+          "Department": this.user.office_name,
+          "Office Address": this.user.office_address,
+          "Position": this.user.position
+        };
+      }
     },
-
-    methods:
-    {
-        fetchUserData()
-        {
-            const user = {
-                id_number: localStorage.getItem('id_number'),
-                full_name: localStorage.getItem('full_name'),
-                mobile_number: localStorage.getItem('mobile_number'),
-                office_name: localStorage.getItem('office_name'),
-                office_address: localStorage.getItem('office_address'),
-                position: localStorage.getItem('position')
-            };
-
-            if(user.full_name)
-            {
-                this.user = user
-            }
+    created() {
+      this.fetchUserData();
+    },
+    methods: {
+      fetchUserData() {
+        const user = {
+          id_number: localStorage.getItem("id_number"),
+          full_name: localStorage.getItem("full_name"),
+          mobile_number: localStorage.getItem("mobile_number"),
+          office_name: localStorage.getItem("office_name"),
+          office_address: localStorage.getItem("office_address"),
+          position: localStorage.getItem("position")
+        };
+  
+        if (user.full_name) {
+          this.user = user;
         }
+      }
     }
-
-}
-</script>
+  };
+  </script>
+  
+  <style scoped>
+  .container {
+    max-width: 800px;
+  }
+  
+  .info-box {
+    background: #f9f9f9;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    padding: 8px 12px;
+  }
+  
+  .info-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: #d3dbe2;
+    text-transform: uppercase;
+    margin-bottom: 2px;
+    display: block;
+  }
+  
+  .info-value {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #212529;
+  }
+  
+  .btn-sm {
+    font-size: 0.875rem;
+    padding: 4px 12px;
+  }
+  </style>
+  

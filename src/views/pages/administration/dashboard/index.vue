@@ -85,6 +85,6 @@ export default
     }
 }
 .page-title{
-    color: #007bff;
+    color: #000000;
 }
 </style>

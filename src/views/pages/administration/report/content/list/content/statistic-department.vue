@@ -1,6 +1,6 @@
 <template>
     <div class="card card-body shadow-sm border-0 rounded-0">
-      <h3 class="mb-0">Number of Department Borrow</h3>
+      <h3 class="mb-0">Number of Equipment</h3>
       <div class="metric-chart">
         <canvas ref="barReport" height="300"></canvas>
       </div>

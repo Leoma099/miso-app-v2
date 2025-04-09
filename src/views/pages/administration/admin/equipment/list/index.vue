@@ -1,7 +1,7 @@
 <template>
 
     <div class="d-flex justify-content-between align-items-center mb-3">
-        <h1 class="page-title mb-0">LIST OF ITEM</h1>
+        <h1 class="page-title mb-0">LIST OF EQUIPMENT</h1>
         <div class="col-md-3 ">
             <input type="text" v-model="searchQuery" @input="fetchEquipment" placeholder="Search equipment..."
                 class="form-control rounded-0">
@@ -16,14 +16,14 @@
                 <table class="table table-bordered mb-0">
                     <thead>
                         <tr>
+                            <th class="table-header">EQUIPMENT TYPE</th>
+                            <th class="table-header">USERNAME</th>
+                            <th class="table-header">DEPARTMENT</th>
                             <th class="table-header">PROPERTY NUMBER</th>
                             <th class="table-header">SERIAL NUMBER</th>
-                            <th class="table-header">EQUIPMENT TYPE</th>
                             <th class="table-header">BRAND</th>
                             <th class="table-header">MODEL</th>
-                            <th class="table-header">CONDITION</th>
-                            <th class="table-header">AVAILABILITY</th>
-                            <th class="table-header">QUANTITY</th>
+                            <th class="table-header">STATUS</th>
                         </tr>
                     </thead>
 

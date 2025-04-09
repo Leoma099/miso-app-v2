@@ -1,6 +1,6 @@
 <template>
 
-    <h1 class="page-title mb-0">DEPARTMENT LIST</h1>
+    <h1 class="page-title mb-0">LIST OF DEPARTMENT</h1>
 
     <div class="mt-3">
         
@@ -10,7 +10,7 @@
                 <div>
                     <router-link
                         :to="'/administration/department/create'"
-                        class="btn rounded-0 button-color">Add New Department
+                        class="btn rounded-0 button-color">Add Department
                     </router-link>
                 </div>
                 <div class="col-md-3">

@@ -2,7 +2,7 @@
 
     <div class="animate animate-fade-in">
 
-        <h1 class="page-title mb-0">Create New Equipment</h1>
+        <h1 class="page-title mb-0">ADD EQUIPMENT</h1>
 
         <main-component v-if="$route.meta.subPage === 'main'" />
 

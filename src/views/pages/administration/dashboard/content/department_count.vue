@@ -2,7 +2,7 @@
 
     <div class="card card-body shadow-sm border-0 rounded-0">
 
-        <p class="mb-0">Number of Department Borrow</p>
+        <p class="mb-0">Number of Department Borrowed</p>
 
         <div class="metric-chart">
             <canvas ref="barReport" height="300"></canvas>
@@ -66,10 +66,10 @@ export default
                     {
                     label: "Number of Department Borrowed",
                     data: values,
-                    backgroundColor: "#367096", // Bar color
+                    backgroundColor: "#d6403e", // Bar color
                     borderColor: "#2c5f7f", // Border color for bars
                     borderWidth: 1, // Border width for bars
-                    hoverBackgroundColor: "#2c5f7f", // Hover effect color
+                    hoverBackgroundColor: "#b13836", // Hover effect color
                     hoverBorderColor: "#1e3d56", // Hover border color
                     },
                 ],
