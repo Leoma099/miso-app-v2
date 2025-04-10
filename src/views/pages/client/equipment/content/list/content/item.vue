@@ -27,21 +27,6 @@
             </router-link>
         </div>
 
-
-
-        <!-- <div>
-            <div class="item">
-                <img :src="getPhotoUrl(item.photo)" alt="User Photo" v-if="item.photo">
-                <div class="overlay">
-                    <router-link
-                        :to="`/client/borrow/create?id=${item?.id}`">
-                        VIEW
-                    </router-link>
-                </div>
-            </div>
-            <p class="item-title"><strong>{{ item.type }}</strong></p>
-        </div> -->
-
     </div>
 
     <div class="col-md-2 mb-3" v-else>
@@ -98,7 +83,7 @@ export default
             }
 
             // Correct storage URL (Laravel serves files via public/storage)
-            return `http://api.miso-backend.loc/storage/${photoPath}`;
+            return `http://127.0.0.1:8000/storage/${photoPath}`;
         },
     }
 };

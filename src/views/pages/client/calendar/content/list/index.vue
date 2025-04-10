@@ -271,7 +271,7 @@ export default {
                 }
 
                 // Send data to API
-                const response = await apiClient.post('/calendarWalkin', {
+                const response = await apiClient.post('/calendar', {
                     event,
                     date,
                     place,

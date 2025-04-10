@@ -2,14 +2,15 @@
     <tr>
         <td class="table-data">
             <div v-if="isLoading" class="shimmer-loader"></div>
+            <span v-else>{{ item.type }}</span>
+        </td>
+        <td class="table-data">
+            <div v-if="isLoading" class="shimmer-loader"></div>
             <span v-else>{{ item.property_number }}</span>
         </td>
         <td class="table-data">
             <div v-if="isLoading" class="shimmer-loader"></div>
             <span v-else>{{ item.serial_number }}</span>
-        </td>        <td class="table-data">
-            <div v-if="isLoading" class="shimmer-loader"></div>
-            <span v-else>{{ item.type }}</span>
         </td>
         <td class="table-data">
             <div v-if="isLoading" class="shimmer-loader"></div>
@@ -26,7 +27,7 @@
         <td class="table-data">
             <div v-if="isLoading" class="shimmer-loader"></div>
             <div v-else>
-                <router-link :to="`/management/equipment/${item.id}`" class="btn btn-sm btn-info rounded-0 me-3">View</router-link>
+                <!-- <router-link :to="`/management/equipment/${item.id}`" class="btn btn-sm btn-info rounded-0 me-3">View</router-link> -->
                 <router-link :to="`/management/equipment/${item.id}/edit`" class="btn btn-sm btn-warning rounded-0 me-3">Edit</router-link>
                 <button class="btn btn-sm btn-danger rounded-0" @click="deleteEquipment()">Delete</button>
             </div>

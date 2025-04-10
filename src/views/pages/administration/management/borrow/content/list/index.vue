@@ -81,28 +81,35 @@ export default
 
         data() {
             return {
-
-                items: [], // Your actual data
+                items: [],
+                previousStatuses: [],
                 searchQuery: "",
                 isLoading: false,
                 isEmpty: false,
                 perPage: 10,
-                currentPage: 1
-
+                currentPage: 1,
+                checkInterval: null
             }
         },
 
         mounted() {
-            this.fetchBorrower();
+            this.fetchBorrower(true);
+            this.startStatusWatcher();
+        },
+
+        beforeUnmount()
+        {
+            clearInterval(this.checkInterval);
         },
 
         methods:
         {
-            async fetchBorrower()
+            async fetchBorrower(saveStatus = false)
             {
+                if (this.isLoading) return;
+                this.isLoading = true;
                 try
                 {
-                    this.isLoading = true;
                     const response = await apiClient.get(`/borrow`, {
                         params: {
                             search: this.searchQuery,
@@ -114,13 +121,52 @@ export default
                     console.log("Fetched Borrow Data:", response.data); // Debugging
 
                     this.items = response.data;
-                    this.isEmpty = this.items.length === 0; // Check if items array is empty
+                    this.isEmpty = this.items.length === 0;
+
+                    if (saveStatus)
+                    {
+                        this.previousStatuses = this.items.map(item => item.status);
+                    }
+
                     this.isLoading = false;
                 }
                 catch (error)
                 {
                     console.error("Error fetching borrow:", error);
                 }
+                finally
+                {
+                    this.isLoading = false;
+                }
+            },
+
+            startStatusWatcher()
+            {
+                this.checkInterval = setInterval(async () => {
+                    try {
+                        const response = await apiClient.get(`/borrow`, {
+                            params: {
+                                search: this.searchQuery,
+                                page: this.currentPage,
+                                perPage: this.perPage
+                            }
+                        });
+
+                        const newItems = response.data;
+                        const newStatuses = newItems.map(item => item.status);
+
+                        const hasStatusChanged = newStatuses.some(
+                            (status, index) => status !== this.previousStatuses[index]
+                        );
+
+                        if (hasStatusChanged) {
+                            this.items = newItems;
+                            this.previousStatuses = newStatuses;
+                        }
+                    } catch (error) {
+                        console.error("Error checking status updates:", error);
+                    }
+                }, 5000);
             },
 
             async exportFile()

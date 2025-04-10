@@ -71,91 +71,92 @@
 import apiClient from "@/services/index"; // Import your API client
 import ItemComponent from "./content/item";
 
-export default {
-    components: {
+export default
+{
+    components:
+    {
         ItemComponent,
     },
 
-    data() {
+    data()
+    {
         return {
             items: [],
+            previousStatuses: [],
             searchQuery: "",
             isLoading: false,
+            isEmpty: false,
             perPage: 10,
             currentPage: 1,
-            totalEntries: 0,
-            isEmpty: false,
+            checkInterval: null
         };
     },
 
-    computed: {
-        totalPages() {
-            return Math.ceil(this.totalEntries / this.perPage);
-        },
-        startEntry() {
-            return (this.currentPage - 1) * this.perPage + 1;
-        },
-        endEntry() {
-            return Math.min(this.currentPage * this.perPage, this.totalEntries);
-        },
-        visiblePages() {
-            const pages = [];
-            const maxPages = 6;
-            let start = Math.max(1, this.currentPage - Math.floor(maxPages / 2));
-            let end = Math.min(this.totalPages, start + maxPages - 1);
-
-            for (let i = start; i <= end; i++) {
-                pages.push(i);
-            }
-            return pages;
-        }
+    mounted()
+    {
+        this.fetchBorrower(true); // initial fetch with saving statuses
+        this.startStatusWatcher();
+    },
+    
+    beforeUnmount()
+    {
+        clearInterval(this.checkInterval);
     },
 
-    mounted() {
-        this.fetchBorrower();
-    },
-
-    methods: {
-        async fetchBorrower()
-        {
+    methods:
+    {
+        async fetchBorrower(saveStatus = false) {
+            if (this.isLoading) return;
+            this.isLoading = true;
             try {
-                this.isLoading = true;
                 const response = await apiClient.get(`/borrow`, {
-                    params:{
-                        search: this.searchQuery
+                    params: {
+                        search: this.searchQuery,
+                        page: this.currentPage,
+                        perPage: this.perPage
                     }
                 });
-                console.log("Fetched Borrow Data:", response.data); // Debugging
                 this.items = response.data;
                 this.isEmpty = this.items.length === 0;
-                this.isLoading = false;
+                if (saveStatus) {
+                    this.previousStatuses = this.items.map(item => item.status);
+                }
             } catch (error) {
-                console.error("Error fetching borrow:", error.response?.data || error);
+                console.error("Error fetching borrow:", error);
+            } finally {
                 this.isLoading = false;
             }
         },
+        startStatusWatcher() {
+            this.checkInterval = setInterval(async () => {
+                try {
+                    const response = await apiClient.get(`/borrow`, {
+                        params: {
+                            search: this.searchQuery,
+                            page: this.currentPage,
+                            perPage: this.perPage
+                        }
+                    });
 
-        goToPage(page) {
-            if (page >= 1 && page <= this.totalPages) {
-                this.currentPage = page;
-                this.fetchBorrower();
-            }
-        },
+                    const newItems = response.data;
+                    const newStatuses = newItems.map(item => item.status);
 
-        prevPage() {
-            if (this.currentPage > 1) {
-                this.currentPage--;
-                this.fetchBorrower();
-            }
-        },
+                    const hasStatusChanged = newStatuses.some(
+                        (status, index) => status !== this.previousStatuses[index]
+                    );
 
-        nextPage() {
-            if (this.currentPage < this.totalPages) {
-                this.currentPage++;
-                this.fetchBorrower();
-            }
+                    if (hasStatusChanged) {
+                        this.items = newItems;
+                        this.previousStatuses = newStatuses;
+                    }
+                } catch (error) {
+                    console.error("Error checking status updates:", error);
+                }
+            }, 5000);
         }
     }
+
+
 };
 </script>
 
