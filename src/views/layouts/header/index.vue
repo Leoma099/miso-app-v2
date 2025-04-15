@@ -20,7 +20,7 @@
 
                     <h4 class="mb-0" style="padding-inline: 10px;">Notification</h4>
 
-                    <div v-if="items.length > 0">
+                    <div v-if="items.length > 0" class="scrollable">
                         <item-component
                             class="notification mt-2"
                             v-for="(item, index) in items"
@@ -251,7 +251,7 @@ box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 border-radius: 5px;
 overflow: hidden;
 z-index: 1000;
-max-height: auto;
+height: auto;
 padding: 10px;
 }
 

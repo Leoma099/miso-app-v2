@@ -9,10 +9,16 @@
 
                 <div class="miso-card">
 
-                    <div class="d-flex align-items-center">
-                        <div class="miso-circle-available"></div>
-                        <div class="ms-2">
-                            <p class="mb-0 fw-bold">Available</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="d-flex align-items-center">
+                            <div class="miso-circle-available"></div>
+                            <div class="ms-2">
+                                <p class="mb-0 fw-bold">Available</p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <span>Qty: {{ item.quantity }}</span>
                         </div>
                     </div>
 
@@ -83,7 +89,7 @@ export default
             }
 
             // Correct storage URL (Laravel serves files via public/storage)
-            return `http://127.0.0.1:8000/storage/${photoPath}`;
+            return `http://api.miso-backend.loc/storage/${photoPath}`;
         },
     }
 };

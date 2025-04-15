@@ -2,10 +2,20 @@ export default [
     {
         path: '/equipment/list',
         name: 'List / Equipment',
-        component: () => import('@/views/pages/administration/admin/equipment'),
+        component: () => import('@/views/pages/administration/admin/available'),
         meta:
         {
             name: 'Equipment',
+            page: 'list',
+        },
+    },
+    {
+        path: '/pending/list',
+        name: 'List / Pending',
+        component: () => import('@/views/pages/administration/admin/pending'),
+        meta:
+        {
+            name: 'Pending',
             page: 'list',
         },
     },
@@ -16,26 +26,6 @@ export default [
         meta:
         {
             name: 'Borrow',
-            page: 'list',
-        },
-    },
-    {
-        path: '/account/list',
-        name: 'List / Account',
-        component: () => import('@/views/pages/administration/admin/account'),
-        meta:
-        {
-            name: 'Account',
-            page: 'list',
-        },
-    },
-    {
-        path: '/available-equipment/list',
-        name: 'List / Available Equipment',
-        component: () => import('@/views/pages/administration/admin/available-equipment'),
-        meta:
-        {
-            name: 'Available Equipment',
             page: 'list',
         },
     },

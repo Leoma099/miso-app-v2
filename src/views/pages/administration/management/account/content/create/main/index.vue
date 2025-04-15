@@ -6,14 +6,27 @@
 
             <div class="row">
 
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <div class="form-group mb-3">
                         <label for="" class="form-label">* ID Number:</label>
-                        <input type="text" class="form-control rounded-0" placeholder="ex.1234567" v-model="form.id_number" maxlength="9" required>
+                        <div class="d-flex">
+                            <input
+                                v-for="(digit, index) in idDigits"
+                                :key="index"
+                                type="tel"
+                                maxlength="1"
+                                pattern="\d*"
+                                class="form-control form-control-sm rounded-0 text-center"
+                                v-model="idDigits[index]"
+                                @input="onDigitInput(index, $event)"
+                                @keydown.backspace="onBackspace(index, $event)"
+                                required
+                            />
+                        </div>
                     </div>
                 </div>
 
-                <div class="col-md-8">
+                <div class="col-md-6">
                     <div class="form-group mb-3">
                         <label for="" class="form-label">* Full Name:</label>
                         <input type="text" class="form-control rounded-0" placeholder="ex. Juan Dela Cruz" v-model="form.full_name" required>
@@ -47,17 +60,20 @@
 
             <div class="form-group mb-3">
                 <label for="" class="form-label">* Department Address / Office Address:</label>
-                <select class="form-select rounded-0" v-model="form.office_address" required>
-                    <option value="" disabled selected>--Select Department--</option>
-                    <option v-for="(department, index) in departments" :key="index" :value="department.office_address">
-                        {{ department.office_address }}
-                    </option>
-                </select>
+                <input
+                    type="text"
+                    class="form-control rounded-0"
+                    placeholder="ex. SBMA"
+                    v-model="form.office_address"
+                    readonly
+                    required
+                />
             </div>
+
 
             <div class="form-group mb-3">
                 <label for="" class="form-label">* Address:</label>
-                <input type="text" class="form-control rounded-0" placeholder="ex. SBMA" v-model="form.address" required>
+                <input type="text" class="form-control rounded-0" placeholder="ex. Olongapo City" v-model="form.address" required>
             </div>
 
             <div class="row">
@@ -130,7 +146,8 @@ export default
                 office_address: "",
                 office_name: "",
                 position: "",
-            }
+            },
+            idDigits: Array(13).fill(""),
         };
     },
 
@@ -184,6 +201,41 @@ export default
             {
                 console.error("Error occurred:", error);
             }
+        },
+
+        onDigitInput(index, event)
+        {
+            const value = event.target.value.replace(/\D/g, "");
+            this.idDigits[index] = value; // FIXED: removed this.$set
+
+            if (value && index < 12)
+            {
+                this.$nextTick(() =>
+                {
+                    event.target.nextElementSibling?.focus();
+                });
+            }
+
+            this.form.id_number = this.idDigits.join('');
+        },
+
+        onBackspace(index, event)
+        {
+            if (event.key === "Backspace" && !this.idDigits[index] && index > 0)
+            {
+                this.$nextTick(() =>
+                {
+                    event.target.previousElementSibling?.focus();
+                });
+            }
+        }
+    },
+
+    watch:
+    {
+        'form.office_name'(newVal) {
+            const selected = this.departments.find(d => d.office_name === newVal);
+            this.form.office_address = selected ? selected.office_address : "";
         }
     }
 }

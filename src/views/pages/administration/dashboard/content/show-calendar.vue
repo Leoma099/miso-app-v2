@@ -1,7 +1,11 @@
 <template>
   
     <div class="card card-body shadow-sm rounded-0 border-0">
-        <div ref="calendar" class="calendar"></div>
+        <router-link
+            :to="'/administration/calendar'"
+            style="text-decoration: none;">
+            <div ref="calendar" class="calendar"></div>
+        </router-link>
     </div>
 
 </template>

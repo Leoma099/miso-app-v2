@@ -34,6 +34,7 @@
                             <th class="table-header">SERIAL NUMBER</th>
                             <th class="table-header">BRAND</th>
                             <th class="table-header">MODEL</th>
+                            <th class="table-header">QTY</th>
                             <th class="table-header">STATUS</th>
                             <th class="table-header">ACTION</th>
                         </tr>

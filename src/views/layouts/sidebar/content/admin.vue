@@ -23,14 +23,14 @@
                     <router-link
                         :to="'/equipment/list'"
                         :class="{ 'active': $route.path.includes('/equipment/list')}">
-                        <i class="bx bx-box me-2"></i>Equipment
+                        <i class="bx bx-box me-2"></i>Available
                     </router-link>
                 </li>
                 <li>
                     <router-link
-                        :to="'/available-equipment/list'"
-                        :class="{ 'active': $route.path.includes('/available-equipment/list')}">
-                        <i class="bx bx-box me-2"></i>Available Equipment
+                        :to="'/pending/list'"
+                        :class="{ 'active': $route.path.includes('/pending/list')}">
+                        <i class="bx bx-box me-2"></i>Pending
                     </router-link>
                 </li>
                 <li>
@@ -38,13 +38,6 @@
                         :to="'/borrow/list'"
                         :class="{ 'active': $route.path.includes('/borrow/list')}">
                         <i class="bx bx-archive me-2"></i>Borrow
-                    </router-link>
-                </li>
-                <li>
-                    <router-link
-                    :to="'/account/list'"
-                    :class="{ 'active': $route.path.includes('/account/list')}">
-                        <i class="bx bx-group me-2"></i>Account
                     </router-link>
                 </li>
             </ul>
@@ -119,7 +112,7 @@
          <li>
             <a href="#" @click="toggleDropdown3()">
                 <div class="d-flex justify-content-between align-items-center">
-                    <div class="mb-0"><i class="bx bx-clipboard me-2"></i>Category</div>
+                    <div class="mb-0"><i class="bx bx-category me-2"></i>Category</div>
                     <i class="bx bx-caret-right" ref="caret3"></i>
                 </div>
             </a>
@@ -136,6 +129,13 @@
                         :class="{ 'active': $route.path.includes('/administration/delivery')}"
                         :to="'/administration/delivery'">
                         <i class="bx bx-cart me-2"></i>Delivery
+                    </router-link>
+                </li>
+                <li>
+                    <router-link
+                        :class="{ 'active': $route.path.includes('/administration/brand')}"
+                        :to="'/administration/brand'">
+                        <i class="bx bx-cart me-2"></i>Brand
                     </router-link>
                 </li>
             </ul>

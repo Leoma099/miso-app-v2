@@ -1,46 +1,45 @@
 <template>
 
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <h1 class="page-title mb-0">LIST OF EQUIPMENTS</h1>
-        <div class="col-md-3 ">
-            <input type="text" v-model="searchQuery" @input="fetchEquipment" placeholder="Search equipment..."
-                class="form-control rounded-0">
-        </div>
-    </div>
+    <h1 class="page-title mb-0">LIST OF BRAND</h1>
 
     <div class="mt-3">
 
         <div class="card card-body shadow-sm border-0 rounded-0">
 
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <div>
+                    <router-link
+                        :to="'/administration/brand/create'"
+                        class="btn rounded-0 button-color">Add New Brand
+                    </router-link>
+                </div>
+                <div class="col-md-3 ">
+                    <input type="text" v-model="searchQuery" @input="fetchBrand" placeholder="Search here"
+                        class="form-control rounded-0">
+                </div>
+            </div>
+
             <div class="table-responsive table-scrollable">
                 <table class="table table-bordered mb-0">
                     <thead>
                         <tr>
-                            <th class="table-header">EQUIPMENT TYPE</th>
-                            <th class="table-header">PROPERTY NUMBER</th>
-                            <th class="table-header">SERIAL NUMBER</th>
                             <th class="table-header">BRAND</th>
-                            <th class="table-header">MODEL</th>
-                            <th class="table-header">STATUS</th>
+                            <th class="table-header">DESCRIPTION</th>
                         </tr>
                     </thead>
-
                     <tbody v-if="!isEmpty">
                         <item-component
                             v-for="(item, index) in isLoading ? new Array(items.length || perPage).fill(null) : items"
                             :key="item?.id || index" :item="item" :isLoading="isLoading" />
                     </tbody>
-
                     <tbody v-else>
                         <tr>
                             <td colspan="8" class="text-center">No Data Record</td>
                         </tr>
                     </tbody>
-
                 </table>
             </div>
 
-            <!-- Pagination is here -->
             <div class="pagination-container">
                 <div class="entries-info">
                     Showing {{ (currentPage - 1) * perPage + 1 }} to {{ currentPage * perPage }} of {{ items.length }} records
@@ -51,6 +50,7 @@
             </div>
 
         </div>
+
     </div>
 
 </template>
@@ -61,34 +61,37 @@ import ItemComponent from "./content/item"
 export default
 {
 
-    components:
+    data()
     {
-        ItemComponent,
-    },
-
-    data() {
-        return {
-            items: [], // Your actual data
+        return{
+            items: [],
             searchQuery: "",
             isLoading: false,
             isEmpty: false,
             perPage: 10,
             currentPage: 1
-        };
+        }
     },
 
-    mounted() {
-        this.fetchEquipment();
+    components:
+    {
+        ItemComponent
+    },
+
+    mounted()
+    {
+        this.fetchBrand();
     },
 
     methods:
     {
-        async fetchEquipment() {
+        async fetchBrand()
+        {
             try
             {
                 this.isLoading = true;
                 setTimeout(async () => {
-                    const response = await apiClient.get(`/equipment`, {
+                    const response = await apiClient.get(`/brand`, {
                         params: {
                             search: this.searchQuery,
                             page: this.currentPage,
@@ -96,26 +99,23 @@ export default
                         }
                     });
 
-                    console.log("Fetched Equipment Data:", response.data); // Debugging
+                    console.log("Fetched Brand Data:", response.data); // Debugging
 
-                    this.items = response.data.data;
+                    this.items = response.data;
                     this.isEmpty = this.items.length === 0; // Check if items array is empty
                     this.isLoading = false;
                 }, 1000);
             }
             catch (error)
             {
-                console.error("Error fetching equipment:", error);
+                console.error("Error fetching brand:", error);
                 this.isLoading = false;
                 this.isEmpty = true; // Assume empty on error
             }
-        },
+        }
+    }
 
-    },
-
-
-
-};
+}
 </script>
 
 <style scoped>

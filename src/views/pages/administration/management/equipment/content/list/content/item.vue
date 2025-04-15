@@ -22,6 +22,10 @@
         </td>
         <td class="table-data">
             <div v-if="isLoading" class="shimmer-loader"></div>
+            <span v-else>{{ item.quantity }}</span>
+        </td>
+        <td class="table-data">
+            <div v-if="isLoading" class="shimmer-loader"></div>
             <span v-else>{{ item.equipmentStatus }}</span>
         </td>
         <td class="table-data">

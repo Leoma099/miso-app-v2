@@ -5,17 +5,9 @@
                 {{ item.notified_by.full_name }}
             </span>{{ item.message }}.
         </p>
-        <!-- <small v-if="!markLoading">
-            <span v-if="!item.is_read">
-                UNREAD
-            </span>
-            <span v-else>
-                READ
-            </span>
-        </small>
-        <small v-else>
-            Loading...
-        </small> -->
+        <div class="text-end">
+            <small><i>Created at {{ formatDate(item.created_at) }}</i></small>
+        </div>
     </div>
 </template>
 
@@ -67,6 +59,20 @@ export default
                 this.markLoading = false;
             }
             
+        },
+
+        formatDate(datetime)
+        {
+            const date = new Date(datetime);
+            const options = {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: 'numeric',
+                minute: '2-digit',
+                hour12: true
+            };
+            return date.toLocaleString('en-US', options);
         }
     }
 }

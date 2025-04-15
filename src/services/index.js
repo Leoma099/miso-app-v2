@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Create an Axios instance
 const apiClient = axios.create({
-    baseURL: 'http://127.0.0.1:8000/api', // Replace with your Laravel API URL
+    baseURL: 'http://api.miso-backend.loc/api', // Replace with your Laravel API URL
     headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${localStorage.getItem("access_token")}`,
