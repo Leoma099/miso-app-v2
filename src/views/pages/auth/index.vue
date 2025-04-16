@@ -100,6 +100,9 @@ export default {
                 localStorage.setItem('office_address', response.data.office_address);
                 localStorage.setItem('position', response.data.position);
                 localStorage.setItem('mobile_number', response.data.mobile_number);
+                localStorage.setItem('username', response.data.username);
+                localStorage.setItem('email', response.data.email);
+                localStorage.setItem('address', response.data.address);
                 window.location.href = '/';
             } catch (error) {
                 console.error('Login failed:', error);

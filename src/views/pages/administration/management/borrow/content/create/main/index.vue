@@ -127,13 +127,14 @@
                         <div class="form-group mb-3">
                             <label class="form-label">* Status:</label>
                             <select
-                                class="form-select form-select-sm"
+                                class="form-select form-select-sm rounded-0"
                                 v-model="form.status"
                                 required>
                                 <option value="0" selected disabled>--Select Status--</option>
                                 <option value="1" >Pending</option>
                                 <option value="2" >Approved</option>
-                                <option value="3" >Returned</option>
+                                <option value="3" >Declined</option>
+                                <option value="4" >Returned</option>
                             </select>
                         </div>
                     </div>

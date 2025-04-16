@@ -129,8 +129,6 @@ export default
                 {
                     this.items = response.data.data;
                     this.notificationCount = this.items.filter(item => !item.is_read).length;
-
-                    console.log("Notification fetched successfully:", response.data.data);
                 }
                 else
                 {

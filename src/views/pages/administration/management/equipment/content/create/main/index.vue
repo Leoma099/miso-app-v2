@@ -1,6 +1,6 @@
 <template>
 
-    <div class="col-4 mx-auto">
+    <div class="col-md-5 mx-auto">
 
         <form @submit.prevent="submit()" class="mt-4">
 
@@ -103,31 +103,31 @@
                         </div>
                     </div>
 
-                    <div class="row">
+                </div>
 
-                        <div class="col-md-8">
-                            <div class="form-group mb-3">
-                                <label for="" class="form-label">* Type:</label>
-                                <input
-                                    type="text"
-                                    class="form-control rounded-0"
-                                    placeholder="ex. Laptop"
-                                    v-model="form.type"
-                                    required>
-                            </div>
+                <div class="row">
+
+                    <div class="col-md-8">
+                        <div class="form-group mb-3">
+                            <label for="" class="form-label">* Type:</label>
+                            <input
+                                type="text"
+                                class="form-control rounded-0"
+                                placeholder="ex. Laptop"
+                                v-model="form.type"
+                                required>
                         </div>
+                    </div>
 
-                        <div class="col-md-4">
-                            <div class="form-group mb-3">
-                                <label for="" class="form-label">* Quantity:</label>
-                                <input
-                                    type="text"
-                                    class="form-control rounded-0"
-                                    v-model="form.quantity"
-                                    required>
-                            </div>
+                    <div class="col-md-4">
+                        <div class="form-group mb-3">
+                            <label for="" class="form-label">* Quantity:</label>
+                            <input
+                                type="text"
+                                class="form-control rounded-0"
+                                v-model="form.quantity"
+                                required>
                         </div>
-
                     </div>
 
                 </div>

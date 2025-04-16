@@ -4,9 +4,13 @@
             <h1 class="page-title mb-3">BORROWED FORM</h1>
 
             <div class="row">
+
                 <div class="col-md-4">
+
                     <div class="card card-body border-0 shadow-sm rounded-0">
+
                         <p class="mb-3"><strong>EQUIPMENT INFO</strong></p>
+
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <label class="form-label mb-0">EQUIPMENT TYPE:</label>
                             <input type="text" class="form-control form-control-sm input-field border-0" v-model="form.type" disabled>
@@ -20,12 +24,17 @@
                             <input type="text" class="form-control form-control-sm input-field border-0" v-model="form.model" disabled>
                         </div>
                     </div>
+
                 </div>
 
                 <div class="col-md-8">
+
                     <div class="card card-body border-0 shadow-sm rounded-0">
+
                         <div class="row">
+
                             <div class="col-md-6">
+
                                 <p class="mb-3"><strong>PERSONAL INFO</strong></p>
 
                                 <div class="d-flex justify-content-between align-items-center mb-3">
@@ -48,8 +57,11 @@
                                     <label class="form-label mb-0">POSITION:</label>
                                     <input type="text" class="form-control form-control-sm input-field rounded-0" v-model="form.position">
                                 </div>
+                                
                             </div>
+
                             <div class="col-md-6">
+
                                 <p class="mb-3"><strong>BORROW EQUIPMENT INFO</strong></p>
 
                                 <div class="d-flex justify-content-between align-items-center mb-3">
@@ -64,9 +76,12 @@
                                     <label class="form-label mb-0">DESCRIPTION:</label>
                                     <textarea cols="30" rows="5" class="form-control form-control-sm input-field rounded-0" v-model="form.purpose"></textarea>
                                 </div>
+
                             </div>
                         </div>
+
                     </div>
+
                 </div>
             </div>
 

@@ -54,6 +54,9 @@ export default
             localStorage.removeItem('office_address');
             localStorage.removeItem('position');
             localStorage.removeItem('mobile_number');
+            localStorage.removeItem('username');
+            localStorage.removeItem('email');
+            localStorage.removeItem('address');
 
             // Redirect the user to the login page and reload the page to reset everything
             window.location.href = '/signin';

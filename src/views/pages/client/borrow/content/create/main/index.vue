@@ -84,13 +84,29 @@
 
                 <h5 class="page-title">EQUIPMENT INFO</h5>
 
-                <div class="form-group mb-3">
-                    <label class="form-label">* Equipment Type:</label>
-                    <input
-                        type="text"
-                        class="form-control form-control-sm rounded-0"
-                        v-model="form.type"
-                        disabled>
+                <div class="row">
+
+                    <div class="col-md-8">
+                        <div class="form-group mb-3">
+                            <label class="form-label">* Equipment Type:</label>
+                            <input
+                                type="text"
+                                class="form-control form-control-sm rounded-0"
+                                v-model="form.type"
+                                disabled>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group mb-3">
+                            <label class="form-label">* Quantity:</label>
+                            <input
+                                type="text"
+                                class="form-control form-control-sm rounded-0"
+                                v-model="form.quantity">
+                        </div>
+                    </div>
+
                 </div>
 
                 <div class="row mb-3">
@@ -194,6 +210,7 @@ export default
                 model: "",
                 equipment_id: this.$route.query.id, // Get from URL
                 property_number: "",
+                quantity: "",
 
                 // OTHER INFO
                 date_borrow: this.getCurrentDate(),
@@ -242,6 +259,7 @@ export default
                 this.form.brand = equipment.brand;
                 this.form.model = equipment.model;
                 this.form.property_number = equipment.property_number;
+                this.form.quantity = equipment.quantity;
             }
             catch (error)
             {

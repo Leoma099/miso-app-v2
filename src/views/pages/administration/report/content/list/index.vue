@@ -72,8 +72,8 @@
 
             <div class="col-md-9">
 
-                <div class="card card-body shadow-sm border-0" v-if="!isRecordShow"></div>
-                <div class="card card-body shadow-sm border-0" v-else>
+                <div class="card card-body shadow-sm rounded-0 border-0" v-if="!isRecordShow"></div>
+                <div class="card card-body shadow-sm rounded-0 border-0" v-else>
                     <div class="table-responsive table-scrollable">
                         <table class="table table-bordered mb-0">
                             <thead>
