@@ -24,16 +24,46 @@
             <div v-if="isLoading" class="shimmer-loader"></div>
             <span v-else>{{ item.date_return }}</span>
         </td>
-        <td>
+        <td class="table-data">
             <div v-if="isLoading" class="shimmer-loader"></div>
-            <div v-else>
-                <router-link :to="`/management/borrow/${item.id}/edit`" class="btn btn-sm btn-warning rounded-0 me-3">Edit</router-link>
-                <button type="button" class="btn btn-sm btn-danger rounded-0" @click="deleteBorrow()">Delete</button>
-            </div>
+            <span :class="formatStatus(item.status).badgeClass" v-else>
+                {{ formatStatus(item.status).label }}
+            </span>
         </td>
         <td class="table-data">
             <div v-if="isLoading" class="shimmer-loader"></div>
-            <span v-else>{{ formatStatus(item.status) }}</span>
+            <div v-else>
+                <div v-if="!isApproved && !isDeclined && !isReturned && !isRecieved">
+                    <button
+                        type="button"
+                        class="btn btn-success btn-sm rounded-0 me-3"
+                        @click="markAsApproved">
+                        <i class="bx bx-check"></i>
+                    </button>
+                    <button
+                        type="button"
+                        class="btn btn-danger btn-sm rounded-0"
+                        @click="markAsDeclined"
+                        :disabled="isProcessing">
+                        <i class="bx bx-x"></i>
+                    </button>
+                </div>
+                <div v-else-if="isRecieved && !isReturned">
+                    <button
+                        type="button"
+                        class="btn btn-info btn-sm rounded-0"
+                        @click="markAsReturned"
+                        :disabled="isProcessing">
+                        <i class="bx bx-archive-in"></i>
+                    </button>
+                </div>
+                <div v-else>
+                    <p v-if="isApproved">Marked as Approved</p>
+                    <p v-if="isDeclined">Marked as Declined</p>
+                    <p v-if="isReturned">Marked as Returned</p> <!-- Show "Returned" message -->
+                    <p v-if="isProcessing">Processing...</p>
+                </div>
+            </div>
         </td>
     </tr>
 </template>
@@ -49,25 +79,42 @@ export default
             isLoading: Boolean
         },
 
+        computed:
+        {
+            isApproved() {
+            return this.item.status === 2;
+            },
+            isDeclined() {
+                return this.item.status === 3;
+            },
+            isRecieved() {
+                return this.item.status === 4;
+            },
+            isReturned() {
+                return this.item.status === 5;
+            }
+        },
+
+        data()
+        {
+            return{
+                isProcessing: false,
+            }
+        },
+
         methods:
         {
             formatStatus(status)
             {
-                console.log("Item status:", status); // Debugging
-                const numStatus = parseInt(status, 10);
-                if (numStatus === 1)
+                const statuses =
                 {
-                    return "Pending";
-                }
-                else if (numStatus === 2) {
-                    return "Approved";
-                }
-                else if (numStatus === 3) {
-                    return "Returned";
-                }
-                else {
-                    return "n/a";
-                }
+                    1: { label: "Pending", badgeClass: "badge text-bg-light" },  // Yellow
+                    2: { label: "Approved", badgeClass: "badge text-bg-primary" }, // Blue
+                    3: { label: "Declined", badgeClass: "badge text-bg-success" }, // Green
+                    4: { label: "Recieved", badgeClass: "badge text-bg-warning" }, // Red
+                    5: { label: "Returned", badgeClass: "badge text-bg-info" } // Red
+                };
+                return statuses[status] || { label: "n/a", badgeClass: "badge bg-secondary" };
             },
 
             async deleteBorrow()
@@ -85,6 +132,69 @@ export default
                 {
                     console.error("Error deleteing:", error);
                     alert("Failed to delete")
+                }
+            },
+
+            async markAsApproved()
+            {
+                this.isProcessing = true;
+                try
+                {
+                    const response = await apiClient.put(`/borrowApprove/${this.item.id}`);
+                    console.log('Approved successfully:', response.data);
+                    this.item.status = 2;
+                    alert('Marked as approved successfully!');
+                }
+                catch (error)
+                {
+                    console.error('Approval failed:', error);
+                    alert('Failed to mark as approved.');
+                }
+                finally
+                {
+                    this.isProcessing = false; // reset flag once process completes
+                }
+            },
+
+            async markAsDeclined()
+            {
+                this.isProcessing = true;
+                try
+                {
+                    const response = await apiClient.put(`/borrowDecline/${this.item.id}`); // Add endpoint for declining
+                    console.log('Declined successfully:', response.data);
+                    this.item.status = 3; // Update the item status to declined
+                    alert('Marked as declined successfully!');
+                }
+                catch (error)
+                {
+                    console.error('Decline failed:', error);
+                    alert('Failed to mark as declined.');
+                }
+                finally
+                {
+                    this.isProcessing = false;
+                }
+            },
+
+            async markAsReturned()
+            {
+                this.isProcessing = true;
+                try
+                {
+                    const response = await apiClient.put(`/borrowReturn/${this.item.id}`); // Add endpoint for declining
+                    console.log('Returned successfully:', response.data);
+                    this.item.status = 5; // Update the item status to declined
+                    alert('Marked as returned successfully!');
+                }
+                catch (error)
+                {
+                    console.error('Returned failed:', error);
+                    alert('Failed to mark as returned.');
+                }
+                finally
+                {
+                    this.isProcessing = false;
                 }
             }
         }

@@ -38,8 +38,9 @@
                             <th class="table-header">CONTACT #</th>
                             <th class="table-header">DATE BORROWED</th>
                             <th class="table-header">DATE RETURNED</th>
-                            <th class="table-header">ACTION</th>
+                            <!-- <th class="table-header">ACTION</th> -->
                             <th class="table-header">STATUS</th>
+                            <th class="table-header">PERMISSION</th>
                         </tr>
                     </thead>
                     <tbody v-if="!isEmpty">

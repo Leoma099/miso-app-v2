@@ -112,7 +112,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-8">
+                    <div class="col-md-6">
                         <div class="form-group mb-3">
                             <label class="form-label">* Equipment Type:</label>
                             <input
@@ -123,19 +123,24 @@
                                 required>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
+                        <div class="form-group mb-3">
+                            <label class="form-label">* Quantity:</label>
+                            <input
+                                type="number"
+                                min="1"
+                                class="form-control form-control-sm rounded-0"
+                                v-model="form.quantity">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
                         <div class="form-group mb-3">
                             <label class="form-label">* Status:</label>
-                            <select
-                                class="form-select form-select-sm rounded-0"
-                                v-model="form.status"
-                                required>
-                                <option value="0" selected disabled>--Select Status--</option>
-                                <option value="1" >Pending</option>
-                                <option value="2" >Approved</option>
-                                <option value="3" >Declined</option>
-                                <option value="4" >Returned</option>
-                            </select>
+                            <input
+                                type="text"
+                                :value="formatStatus(form.status)"
+                                class="form-control form-control-sm rounded-0"
+                                disabled>
                         </div>
                     </div>
                 </div>
@@ -232,6 +237,7 @@ export default
                 brand: "",
                 model: "",
                 property_number: "",
+                quantity: 1,
 
                 // OTHER INFO
                 date_borrow: this.getCurrentDate(),
@@ -285,6 +291,25 @@ export default
             catch(error)
             {
                 console.error("Error occured:", error);
+            }
+        },
+
+        formatStatus(status)
+        {
+            console.log("Item status:", status); // Debugging
+            const numStatus = parseInt(status, 10);
+            if (numStatus === 1)
+            {
+                return "Pending";
+            }
+            else if (numStatus === 2) {
+                return "Approved";
+            }
+            else if (numStatus === 3) {
+                return "Returned";
+            }
+            else {
+                return "n/a";
             }
         },
     }

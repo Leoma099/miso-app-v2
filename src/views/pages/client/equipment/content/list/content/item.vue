@@ -1,6 +1,6 @@
 <template>
 
-    <div class="col-md-2 mb-3" v-if="!ifAvailable">
+    <div class="col-md-2 mb-3" v-if="!isUnavailable">
 
         <div>
             <router-link
@@ -39,10 +39,15 @@
 
         <div class="miso-card">
 
-            <div class="d-flex align-items-center">
-                <div class="miso-circle-not-available"></div>
-                <div class="ms-2">
-                    <p class="mb-0 fw-bold">Not Available</p>
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="d-flex align-items-center">
+                    <div class="miso-circle-not-available"></div>
+                    <div class="ms-2">
+                        <p class="mb-0 fw-bold">Not Available</p>
+                    </div>
+                </div>
+                <div>
+                    <span>Qty: {{ item.quantity }}</span>
                 </div>
             </div>
 
@@ -71,7 +76,7 @@ export default
     data()
     {
         return{
-            ifAvailable: this.item.availability === 2 // 2 means Not Available
+            isUnavailable: this.item.quantity === 0
         }
     },
 

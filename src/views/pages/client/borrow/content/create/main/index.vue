@@ -101,7 +101,8 @@
                         <div class="form-group mb-3">
                             <label class="form-label">* Quantity:</label>
                             <input
-                                type="text"
+                                type="number"
+                                min="1"
                                 class="form-control form-control-sm rounded-0"
                                 v-model="form.quantity">
                         </div>
@@ -210,12 +211,12 @@ export default
                 model: "",
                 equipment_id: this.$route.query.id, // Get from URL
                 property_number: "",
-                quantity: "",
 
                 // OTHER INFO
                 date_borrow: this.getCurrentDate(),
                 date_return: "",
                 purpose: "",
+                quantity: 1,
             },
         };
     },
@@ -259,7 +260,6 @@ export default
                 this.form.brand = equipment.brand;
                 this.form.model = equipment.model;
                 this.form.property_number = equipment.property_number;
-                this.form.quantity = equipment.quantity;
             }
             catch (error)
             {
@@ -269,15 +269,29 @@ export default
 
         async submit()
         {
+            if (!this.form.purpose || !this.form.date_borrow || !this.form.date_return)
+            {
+                alert("Please complete the borrow info fields.");
+                return;
+            }
+
+            if (this.form.quantity <= 0)
+            {
+                alert("Quantity must be greater than 0.");
+                return;
+            }
+
             try
             {
                 const response = await apiClient.post("/borrow", this.form);
                 console.log(response.data);
+                alert("Request borrow submitted. Please wait for the approval. Thank you!");
                 this.$router.push("/client/borrow");
             }
             catch (error)
             {
                 console.error("Error submitting borrow request:", error.response?.data || error.message);
+                alert("Something went wrong: " + (error.response?.data?.message || "Unknown error"));
             }
         }
     }

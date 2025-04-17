@@ -10,6 +10,10 @@
         </td>
         <td class="table-data">
             <div v-if="isLoading" class="shimmer-loader"></div>
+            <span v-else>{{ item.quantity }}</span>
+        </td>
+        <td class="table-data">
+            <div v-if="isLoading" class="shimmer-loader"></div>
             <span v-else>{{ item?.date_borrow || 'N/A' }}</span>
         </td>
         <td class="table-data">
@@ -23,17 +27,17 @@
         <td class="table-data">
             <div v-if="isLoading" class="shimmer-loader"></div>
             <div v-else>
-                <div v-if="!isReturned">
+                <div v-if="!isRecieved">
                     <button
                         type="button"
                         class="btn btn-primary btn-sm rounded-0"
                         @click="markAsReturned"
-                        :disabled="item?.status === 1">
-                        RETURNED
+                        :disabled="item?.status === 1 || item?.status === 3 || item?.status === 5">
+                        Recieved
                     </button>
                 </div>
                 <div v-else>
-                    <p>Marked as Returned</p>
+                    <p>Marked as Recieved</p>
                 </div>
             </div>
         </td>
@@ -50,19 +54,25 @@ export default {
     },
     data() {
         return {
-            isReturned: this.item?.status === 3 // Check if already returned
+            isRecieved: this.item?.status === 4 // Check if already recieved
         };
     },
-    methods: {
-        formatStatus(status) {
+    methods:
+    {
+        formatStatus(status)
+        {
             if (status === null || status === undefined) return "N/A"; // Prevent null/undefined errors
             const numStatus = parseInt(status, 10);
             if (numStatus === 1) return "Pending";
             else if (numStatus === 2) return "Approved";
-            else if (numStatus === 3) return "Returned";
+            else if (numStatus === 3) return "Declined";
+            else if (numStatus === 4) return "Recieved";
+            else if (numStatus === 5) return "Returned";
             else return "n/a";
         },
-        async markAsReturned() {
+
+        async markAsReturned()
+        {
             try {
                 const response = await apiClient.put(`/borrow/${this.item.id}/return`);
                 if (response.data.message === 'Marked as returned') {

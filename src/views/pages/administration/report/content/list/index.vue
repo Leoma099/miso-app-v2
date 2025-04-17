@@ -48,7 +48,7 @@
                                 <input
                                     type="text"
                                     class="form-control form-control-sm rounded-0"
-                                    placeholder="Enter property number"
+                                    placeholder="ex. 900-0001"
                                     v-model="filters.property_number">
                             </div>
                         </div>
@@ -58,7 +58,7 @@
                                 <input
                                     type="text"
                                     class="form-control form-control-sm rounded-0"
-                                    placeholder="Enter equipment"
+                                    placeholder="ex. Laptop"
                                     v-model="filters.type">
                             </div>
                         </div>
@@ -82,8 +82,6 @@
                                     <th class="table-header">EQUIPMENT TYPE</th>
                                     <th class="table-header">BRAND</th>
                                     <th class="table-header">MODEL</th>
-                                    <th class="table-header">CONDITION</th>
-                                    <th class="table-header">STATUS</th>
                                     <th class="table-header">DATE BORROWED</th>
                                     <th class="table-header">DATE RETURNED</th>
                                     <th class="table-header">OFFICE NAME</th>

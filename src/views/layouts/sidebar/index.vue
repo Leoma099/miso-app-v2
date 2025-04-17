@@ -58,7 +58,6 @@ export default
             localStorage.removeItem('email');
             localStorage.removeItem('address');
 
-            // Redirect the user to the login page and reload the page to reset everything
             window.location.href = '/signin';
         }
     }

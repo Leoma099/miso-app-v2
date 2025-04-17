@@ -26,7 +26,9 @@
         </td>
         <td class="table-data">
             <div v-if="isLoading" class="shimmer-loader"></div>
-            <span v-else>{{ formatStatus(item.status) }}</span>
+            <span :class="formatStatus(item.status).badgeClass" v-else>
+                {{ formatStatus(item.status).label }}
+            </span>
         </td>
     </tr>
 </template>
@@ -46,21 +48,15 @@ export default
         {
             formatStatus(status)
             {
-                console.log("Item status:", status); // Debugging
-                const numStatus = parseInt(status, 10);
-                if (numStatus === 1)
+                const statuses =
                 {
-                    return "Pending";
-                }
-                else if (numStatus === 2) {
-                    return "Approved";
-                }
-                else if (numStatus === 3) {
-                    return "Returned";
-                }
-                else {
-                    return "n/a";
-                }
+                    1: { label: "Pending", badgeClass: "badge text-bg-light" },  // Yellow
+                    2: { label: "Approved", badgeClass: "badge text-bg-primary" }, // Blue
+                    3: { label: "Declined", badgeClass: "badge text-bg-success" }, // Green
+                    4: { label: "Recieved", badgeClass: "badge text-bg-warning" }, // Red
+                    5: { label: "Returned", badgeClass: "badge text-bg-info" } // Red
+                };
+                return statuses[status] || { label: "n/a", badgeClass: "badge bg-secondary" };
             },
 
             async deleteBorrow()

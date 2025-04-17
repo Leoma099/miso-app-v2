@@ -100,7 +100,8 @@
                                 <option value="1">Pending</option>
                                 <option value="2">Approved</option>
                                 <option value="3">Declined</option>
-                                <option value="4">Returned</option>
+                                <option value="4">Received</option>
+                                <option value="5">Returned</option>
                             </select>
                         </div>
                     </div>

@@ -1,10 +1,12 @@
 <template>
     <tr>
         <td class="table-data">
-            <router-link :to="`/administration/equipment/view?id=${item?.id}`">
-                <div v-if="isLoading" class="shimmer-loader"></div>
-                <span v-else>{{ item.full_name }}</span>
-            </router-link>
+            <div v-if="isLoading" class="shimmer-loader"></div>
+            <span v-else>{{ item.full_name }}</span>
+        </td>
+        <td class="table-data">
+            <div v-if="isLoading" class="shimmer-loader"></div>
+            <span v-else>{{ item.type }}</span>
         </td>
         <td class="table-data">
             <div v-if="isLoading" class="shimmer-loader"></div>
@@ -13,18 +15,6 @@
         <td class="table-data">
             <div v-if="isLoading" class="shimmer-loader"></div>
             <span v-else>{{ item.model }}</span>
-        </td>
-        <td class="table-data">
-            <div v-if="isLoading" class="shimmer-loader"></div>
-            <span v-else>{{ formatCondition(item.condition) }}</span>
-        </td>
-        <td class="table-data">
-            <div v-if="isLoading" class="shimmer-loader"></div>
-            <span v-else>{{ formatAvailability(item.availability) }}</span>
-        </td>
-        <td class="table-data">
-            <div v-if="isLoading" class="shimmer-loader"></div>
-            <span v-else>{{ formatStatus(item.status) }}</span>
         </td>
         <td class="table-data">
             <div v-if="isLoading" class="shimmer-loader"></div>
