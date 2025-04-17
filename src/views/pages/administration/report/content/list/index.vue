@@ -228,13 +228,30 @@ export default
         {
             try
             {
-                const response = await apiClient.get("/borrowExport", {
+                const params = {
+                    date_borrow: this.filters.date_borrow,
+                    date_return: this.filters.date_return,
+                    office_name: this.filters.office_name,
+                    full_name: this.filters.full_name,
+                    property_number: this.filters.property_number,
+                    type: this.filters.type,
+                };
+
+                const response = await apiClient.get("/borrowRecordExport", {
+                    params,
                     responseType: 'blob'
                 });
+
                 const url = window.URL.createObjectURL(new Blob([response.data]));
                 const link = document.createElement('a');
                 link.href = url;
-                link.setAttribute('download', 'equipment-list.csv');
+                
+                // Get the filename from the `Content-Disposition` header or hardcode it based on the date
+                const filename = response.headers['content-disposition']
+                    ? response.headers['content-disposition'].split('filename=')[1]
+                    : `borrow-list-record-${new Date().toISOString().split('T')[0]}.xlsx`;
+
+                link.setAttribute('download', filename);
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);

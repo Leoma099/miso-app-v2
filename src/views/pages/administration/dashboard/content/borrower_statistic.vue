@@ -34,7 +34,7 @@ export default
                 const response = await apiClient.get("/borrow-statistics");
                 const borrowStatus = response.data;
 
-                this.createDoughnutChart(borrowStatus.pending, borrowStatus.approved, borrowStatus.returned);
+                this.createDoughnutChart(borrowStatus.pending, borrowStatus.approved, borrowStatus.declined, borrowStatus.recieved, borrowStatus.returned);
             }
             catch (error)
             {
@@ -42,7 +42,7 @@ export default
             }
         },
 
-        createDoughnutChart(pending, approved, returned)
+        createDoughnutChart(pending, approved, declined, recieved, returned)
         {
             if (this.doughnutChart)
             {
@@ -51,12 +51,12 @@ export default
 
             const data =
             {
-                labels: ["Pending", "Approved", "Returned"],
+                labels: ["Pending", "Approved", "Declined", "Recieved", "Returned"],
                 datasets:
                 [
                     {
-                        data: [pending, approved, returned], // Real data values
-                        backgroundColor: ["#f0f0f0", "#367096", "#64adc4"],
+                        data: [pending, approved, declined, recieved, returned], // Real data values
+                        backgroundColor: ["#FFA500", "#3CB371", "#D9534F", "#5F9EA0", "#B0B0B0"],
                         hoverOffset: 10, // Adds hover effect
                     },
                 ],
@@ -72,7 +72,7 @@ export default
                 {
                     legend:
                     {
-                        position: "bottom", // Legend positioned on the right
+                        position: "right", // Legend positioned on the right
                     },
                     tooltip:
                     {
