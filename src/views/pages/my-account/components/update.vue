@@ -101,7 +101,7 @@
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
                                     <label for="" class="form-label">Mobile Number:</label>
-                                    <input type="text" class="form-control rounded-0" placeholder="ex. 09xxxxxxxx" v-model="form.mobile_number" required>
+                                    <input type="text" class="form-control rounded-0" placeholder="ex. 09xxxxxxxx" maxlength="11" v-model="form.mobile_number" required>
                                 </div>
                             </div>
                         </div>

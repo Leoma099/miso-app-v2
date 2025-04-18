@@ -167,12 +167,17 @@
 
                     <div class="col-md-6">
                         <label class="form-label">* Brand:</label>
-                        <input
-                            type="text"
-                            class="form-control form-control-sm rounded-0"
-                            v-model="form.brand"
-                            placeholder="ex. SAMSUNG"
-                            required>
+                        <select
+                            class="form-select rounded-0"
+                            v-model="form.brand">
+                            <option value="" selected disabled>--Select Brand--</option>
+                            <option
+                                v-for="(brand, index) in brands"
+                                :key="index"
+                                :value="brand.brand">
+                                {{ brand.brand }}
+                            </option>
+                        </select>
                     </div>
 
                     <div class="col-md-6">
@@ -266,12 +271,14 @@ export default
             departments: [],
             idDigits: Array(13).fill(""),
             propertyDigits: Array(7).fill(""),
+            brands: [],
         }
     },
 
     mounted()
     {
         this.fetchDepartment();
+        this.fetchBrand();
     },
 
     methods:
@@ -285,6 +292,20 @@ export default
             return `${year}-${month}-${day}`;
         },
 
+        async fetchBrand()
+        {
+            try
+            {
+                const response = await apiClient.get('/brand');
+                this.brands = response.data;
+                console.log("Brand fetched successfully:", response.data);
+            }
+            catch(error)
+            {
+                console.error("Error occurred:", error);
+            }
+        },
+
         async submit()
         {
             try
@@ -296,6 +317,7 @@ export default
             }
             catch(error)
             {
+                alert("Added borrow successfully", error);
                 console.error("Error occured:", error);
             }
         },

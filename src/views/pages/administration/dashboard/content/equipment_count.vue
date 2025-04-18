@@ -2,7 +2,7 @@
 
     <div class="card card-body shadow-sm border-0 rounded-0">
 
-        <p class="mb-0">Number of Equipment Borrowed</p>
+        <p class="mb-0">Most Borrowed Equipment</p>
 
         <div class="metric-chart">
             <canvas ref="barReport" height="300"></canvas>
@@ -59,7 +59,7 @@ export default
                 labels: labels,
                 datasets: [
                 {
-                    label: "Number of Equipment Borrowed",
+                    label: "No of Equipment Borrowed",
                     data: values,
                     backgroundColor: "#367096", // Bar color
                     borderColor: "#2c5f7f", // Border color for bars

@@ -2,7 +2,7 @@
 
     <div class="card card-body shadow-sm border-0 rounded-0">
 
-        <p class="mb-0">Number of Department Borrow</p>
+        <p class="mb-0">Most Department Borrow</p>
 
         <div class="metric-chart">
             <canvas ref="barReport" height="300"></canvas>
@@ -64,7 +64,7 @@ export default
                 labels: labels,
                 datasets: [
                     {
-                    label: "Number of Department Borrowed",
+                    label: "No of Department Borrowed",
                     data: values,
                     backgroundColor: "#367096", // Bar color
                     borderColor: "#2c5f7f", // Border color for bars
