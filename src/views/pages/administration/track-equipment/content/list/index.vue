@@ -20,11 +20,11 @@
                         <thead>
                             <tr>
                                 <th class="table-header">BORROWER NAME</th>
-                                <th class="table-header">DEPARTMENT</th>
                                 <th class="table-header">EQUIPMENT TYPE</th>
-                                <th class="table-header">PROPERTY NUMBER</th>
                                 <th class="table-header">BRAND</th>
                                 <th class="table-header">MODEL</th>
+                                <th class="table-header">PROPERTY NUMBER</th>
+                                <th class="table-header">DEPARTMENT</th>
                             </tr>
                         </thead>
                         <tbody v-if="!isEmpty">
