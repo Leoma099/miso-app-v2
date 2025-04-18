@@ -1,6 +1,6 @@
 <template>
 
-    <div class="col-md-6 mx-auto">
+    <div class="col-md-8 mx-auto">
 
         <div class="card card-body shadow-sm border-0 rounded-0">
 
@@ -11,14 +11,21 @@
                 <div class="row mb-3">
                     
                     <div class="col-md-4">
-                        <label class="form-label">* Id Number:</label>
-                        <input
-                            type="text"
-                            class="form-control form-control-sm rounded-0"
-                            maxlength="9"
-                            v-model="form.id_number"
-                            placeholder="ex. 000000001"
-                            required>
+                        <label for="" class="form-label">* ID Number:</label>
+                        <div class="d-flex">
+                            <input
+                                v-for="(digit, index) in idDigits"
+                                :key="index"
+                                type="tel"
+                                maxlength="1"
+                                pattern="\d*"
+                                class="form-control form-control-sm rounded-0 text-center"
+                                v-model="idDigits[index]"
+                                @input="onDigitInput(index, $event)"
+                                @keydown.backspace="onBackspace(index, $event)"
+                                required
+                            />
+                        </div>
                     </div>
 
                     <div class="col-md-8">
@@ -101,12 +108,12 @@
 
                 <div class="fom-group mb-3">
 
-                    <label class="form-label">* Property Number:</label>
+                    <label class="form-label">* Equipment Type:</label>
                     <input
                         type="text"
                         class="form-control form-control-sm rounded-0"
-                        v-model="form.property_number"
-                        placeholder="ex. AB123456789"
+                        v-model="form.type"
+                        placeholder="ex. Laptop"
                         required>
 
                 </div>
@@ -114,13 +121,24 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group mb-3">
-                            <label class="form-label">* Equipment Type:</label>
-                            <input
-                                type="text"
-                                class="form-control form-control-sm rounded-0"
-                                v-model="form.type"
-                                placeholder="ex. Laptop"
-                                required>
+                            <label for="" class="form-label">* Property Number:</label>
+                            <div class="d-flex">
+                                <template v-for="(digit, index) in 8">
+                                <input
+                                    v-if="index !== 3"
+                                    :key="'input-' + index"
+                                    type="tel"
+                                    maxlength="1"
+                                    pattern="\d*"
+                                    class="form-control form-control-sm rounded-0 text-center"
+                                    v-model="propertyDigits[index > 3 ? index - 1 : index]"
+                                    @input="onPropertyDigitInput(index, $event)"
+                                    @keydown.backspace="onPropertyBackspace(index, $event)"
+                                    required
+                                />
+                                <span v-else :key="'dash-' + index" class="px-2">-</span>
+                                </template>
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-3">
@@ -246,6 +264,8 @@ export default
                 status: "1",
             },
             departments: [],
+            idDigits: Array(13).fill(""),
+            propertyDigits: Array(7).fill(""),
         }
     },
 
@@ -312,6 +332,61 @@ export default
                 return "n/a";
             }
         },
+
+        onDigitInput(index, event)
+        {
+            const value = event.target.value.replace(/\D/g, "");
+            this.idDigits[index] = value; // FIXED: removed this.$set
+
+            if (value && index < 12)
+            {
+                this.$nextTick(() =>
+                {
+                    event.target.nextElementSibling?.focus();
+                });
+            }
+
+            this.form.id_number = this.idDigits.join('');
+        },
+
+        onBackspace(index, event)
+        {
+            if (event.key === "Backspace" && !this.idDigits[index] && index > 0)
+            {
+                this.$nextTick(() =>
+                {
+                    event.target.previousElementSibling?.focus();
+                });
+            }
+        },
+
+        onPropertyDigitInput(index, event)
+        {
+            const actualIndex = index > 3 ? index - 1 : index;
+            const value = event.target.value.replace(/\D/g, "");
+            this.propertyDigits[actualIndex] = value;
+
+            if (value && index < 7) {
+                this.$nextTick(() => {
+                const nextInput = event.target.parentElement.querySelectorAll("input")[index + 1 - (index >= 3 ? 1 : 0)];
+                nextInput?.focus();
+                });
+            }
+
+            this.form.property_number = this.propertyDigits.slice(0, 3).join("") + "-" + this.propertyDigits.slice(3).join("");
+        },
+
+        onPropertyBackspace(index, event)
+        {
+            const actualIndex = index > 3 ? index - 1 : index;
+            if (event.key === "Backspace" && !this.propertyDigits[actualIndex] && actualIndex > 0) {
+                this.$nextTick(() => {
+                const inputs = event.target.parentElement.querySelectorAll("input");
+                const prevInput = inputs[index - 1 - (index > 4 ? 1 : 0)];
+                prevInput?.focus();
+                });
+            }
+        }
     }
 }
 </script>
